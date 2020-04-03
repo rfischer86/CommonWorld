@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 
 interface T {
   level: number;
@@ -20,6 +21,10 @@ export class Logger {
     this.logbook.map(log => {
       console.log(log);
     });
+  }
+
+  appEndLogBook(logger: Logger) {
+    logger.logbook.map(log => this.logbook.push(log) );
   }
 
   private nThInfo(input: T): T {
@@ -48,4 +53,17 @@ export class Logger {
       return errorMethode;
     }
   }
+}
+
+@Injectable()
+export class LogMessages {
+  public idExistIn(object: string, key: string): string {
+    return `The key ${key} already exsist in ${object}`;
+  }
+
+  public idNotExistIn(object: string, key: string): string {
+    return `The key ${key} do not exsist in ${object}`;
+  }
+
+
 }

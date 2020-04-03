@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Result } from 'src/app/shared/classes/result/result';
+import { DOMService, DOMElement } from 'src/app/shared/services/DOM/dom-element.service';
+import { Logger } from 'src/app/shared/classes/Logger/logger';
+import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 
 @Component({
   selector: 'app-main',
@@ -9,11 +12,18 @@ import { Result } from 'src/app/shared/classes/result/result';
 export class MainComponent implements OnInit {
 
   result = new Result();
+  logger = new Logger();
+  DOMself: DOMElement;
 
   constructor(
-
+    private DOM: DOMService
   ) {
-    this.result.log.addLog('Hallo Constructor');
+    const _ = this.DOM.create(DOMTypes.root, null, DOMTypes.root);
+    if (_.success.isFalse()) {
+      this.logger.appEndLogBook(_.log);
+    } else {
+      this.DOMself = _.output;
+    }
   }
 
   ngOnInit() {

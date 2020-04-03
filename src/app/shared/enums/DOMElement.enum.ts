@@ -1,6 +1,9 @@
-export const enum DOMElements {
+export const enum DOMTypes {
   title = 'title',
   header = 'header',
   buttonBar = 'buttonBar',
-  expansionPanel = 'expansionPanel'
+  expansionPanel = 'expansionPanel',
+  root = 'root',
+  sidenave = 'sidenave',
+  None = 0,
 }

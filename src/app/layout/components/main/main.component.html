@@ -1,1 +1,8 @@
-<p>main works!</p>
+<div class="main" fxLayout="column" fxFlexFill >
+  <app-header> </app-header>
+  <div class="body" fxLayout="row nowrap" fxLayoutAlign="start">
+    <app-sidenav [parentId]="DOMself.id" ></app-sidenav>
+    <app-body></app-body>
+  </div>
+  <app-footer></app-footer>
+</div>
