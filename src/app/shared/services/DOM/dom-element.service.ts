@@ -80,7 +80,7 @@ export class DOMElement {
   providedIn: 'root'
 })
 export class DOMService {
-  DOMElementList: {[key: string]: DOMElement};
+  DOMElementList: {[key: string]: DOMElement} = {};
   DOMElementSubscriptions: {[key: string]: BehaviorSubject<Result<any, any>>};
 
   constructor(
@@ -116,7 +116,7 @@ export class DOMService {
     if (!DOMid) {
       DOMid = this.getRrandomId();
     }
-    if (this.hasId(DOMid)) {
+    if (!!DOMid && this.hasId(DOMid)) {
       _.success.isFalse();
       _.log.addLog(new LogMessages().idExistIn('DOM', DOMid));
       return _;
@@ -134,13 +134,14 @@ export class DOMService {
 
     this.DOMElementList[DOMid] = DOMelement;
     this.DOMElementList[DOMid].getInputSupscription(DOMTypes.root).output.subscribe(
-      _ => this.processEvent(_)
-    )
+      e => this.processEvent(e)
+    );
     _.output = DOMelement;
     return _;
   }
 
   processEvent(_: Result<any, any>): void {
+    if (!_) { return; }
     if (!this.hasId(_.toId)) {
       _.log.addLog(`DOM has tp stop this Event, because teh id ${_.toId} do not exist`);
       _.log.addLog(JSON.stringify(_));
