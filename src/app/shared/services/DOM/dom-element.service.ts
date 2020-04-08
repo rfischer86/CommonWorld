@@ -37,7 +37,7 @@ export class DOMElement {
     const _ =  new Result<null, BehaviorSubject<Result<IN, OUT>>>();
     if (this.hasChild(childId)) {
       _.log.addLog(new LogMessages().idExistIn('parent DOM element', childId));
-      _.success.isFalse();
+      _.success.setFalse();
     } else {
       this.children[childId] = new BehaviorSubject<Result<IN, OUT>>(null);
     }
@@ -56,7 +56,7 @@ export class DOMElement {
     _.fromId = this.id;
     if (!this.hasChild(id)) {
       _.log.addLog(new LogMessages().idNotExistIn('parent DOM element', id));
-      _.success.isFalse();
+      _.success.setFalse();
     } else {
       this.self.next(_);
       delete this.children[id];
@@ -95,7 +95,7 @@ export class DOMService {
   getById(id: string ): Result<DOMElement, any> {
     const result = new Result<DOMElement, any>();
     result.output = this.DOMElementList[id];
-    if (!result.output) {result.success.isFalse(); }
+    if (!result.output) {result.success.setFalse(); }
     return result;
   }
 
@@ -117,7 +117,7 @@ export class DOMService {
       DOMid = this.getRrandomId();
     }
     if (!!DOMid && this.hasId(DOMid)) {
-      _.success.isFalse();
+      _.success.setFalse();
       _.log.addLog(new LogMessages().idExistIn('DOM', DOMid));
       return _;
     }

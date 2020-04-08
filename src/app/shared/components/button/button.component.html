@@ -1,0 +1,19 @@
+<ng-container *ngIf="states.finishInit.value">
+  <div *ngFor="let button of buttonList; let i = index;"
+    fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.5em"
+    [class]="'button ' + button.type"
+    [class.warn]="button.htmlState===htmlStates.warn"
+    [class.primary]="button.htmlState===htmlStates.primary"
+    [class.accent]="button.htmlState===htmlStates.accent"
+    [class.white]="button.htmlState===htmlStates.white"
+    [class.gray]="button.htmlState===htmlStates.gray"
+    [class.black]="button.htmlState===htmlStates.black"
+    [class.disabled]="button.buttonState===buttonStates.disabled"
+    [class.hidden]="button.buttonState===buttonStates.hidden"
+    (click)="doClick($event, i)">
+    <mat-icon [style.font-size]="button.size" *ngIf="button.index===i">{{button.icon}}</mat-icon>
+    <span *ngIf="button.index===i">{{button.text}}</span>
+</div>
+
+
+</ng-container>

@@ -1,8 +1,8 @@
-<div class="main" fxLayout="column" fxFlexFill >
-  <app-header> </app-header>
-  <div class="body" fxLayout="row nowrap" fxLayoutAlign="start">
+<div *ngIf="state.finishInit.value" class="main" fxLayout="column" fxFlexFill >
+  <app-header  [parentId]="DOMself.id" > </app-header>
+  <div class="body" fxLayout="row nowrap" fxLayoutAlign="start start">
     <app-sidenav [parentId]="DOMself.id" ></app-sidenav>
-    <app-body></app-body>
+    <app-body [parentId]="DOMself.id"></app-body>
   </div>
-  <app-footer></app-footer>
+  <app-footer [parentId]="DOMself.id"></app-footer>
 </div>

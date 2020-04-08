@@ -1,0 +1,29 @@
+@import '../../../../assets/styles/variable.scss';
+
+.mat-icon{
+  height: auto;
+  width: auto;
+  margin-right: 0 !important;
+}
+
+.button{
+  &.icon {
+    &.warn{
+      color: $warn;
+    }
+    &.primary{
+      color: $primary;
+    }
+    &.accent{
+      color: $accent;
+    }
+    &.hidden{
+      display: none;
+    }
+    &.disabled{
+      opacity: 0.33;
+    }
+
+  }
+
+}

@@ -9,6 +9,9 @@ export enum ActionType {
   destroy = 'destroy',
   update = 'update',
   trigger = 'trigger',
+  toggel = 'toggel',
+  close = 'close',
+  open = 'open'
 }
 
 export class Result <T, D> {
@@ -19,7 +22,7 @@ export class Result <T, D> {
   input: T;
   output: D;
   log: Logger = new Logger();
-  success: State = new State();
+  success: State = new State(true);
   states: StateDict;
   // constructor() {}
 }

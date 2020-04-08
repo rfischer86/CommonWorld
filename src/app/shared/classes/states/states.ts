@@ -1,5 +1,8 @@
 export class State {
-  value = true;
+  value: boolean;
+  constructor(value: boolean = false) {
+    this.value = value;
+  }
   setTure(): void     { this.value = true; }
   isTure(): boolean   { return this.value; }
   setFalse(): void    { this.value = false; }
@@ -12,6 +15,8 @@ export class States {
   editModt = new State();
   loading = new State();
   expanded = new State();
+  open = new State();
+  finishInit = new State();
 
   toStateDict(): StateDict {
     const stateDict = {} as StateDict;
@@ -19,6 +24,8 @@ export class States {
     stateDict.editModt = this.expanded.value;
     stateDict.loading = this.loading.value;
     stateDict.expanded = this.expanded.value;
+    stateDict.open = this.open.value;
+    stateDict.finishInit = this.finishInit.value;
     return stateDict;
   }
 }
@@ -28,6 +35,8 @@ export interface StateDict {
   editModt?: boolean;
   loading?: boolean;
   expanded?: boolean;
+  open?: boolean;
+  finishInit?: boolean;
 }
 
 

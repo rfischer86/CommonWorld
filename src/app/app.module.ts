@@ -4,32 +4,39 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './layout/components/main/main.component';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
-import { TitleComponent } from './shared/components/title/title.component';
-import { ButtonPanelComponent } from './shared/components/button-panel/button-panel.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { BodyComponent } from './shared/components/body/body.component';
-import { DOMService } from './shared/services/DOM/dom-element.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from './shared/shared.module';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    FooterComponent,
-    HeaderComponent,
-    SidenavComponent,
-    TitleComponent,
-    ButtonPanelComponent,
-    BodyComponent
   ],
   imports: [
+    SharedModule,
+    CommonModule,
     BrowserModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+    }}),
   ],
-  providers: [DOMService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

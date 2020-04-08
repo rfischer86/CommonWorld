@@ -4,6 +4,6 @@ export const enum DOMTypes {
   buttonBar = 'buttonBar',
   expansionPanel = 'expansionPanel',
   root = 'root',
-  sidenave = 'sidenave',
+  sidenav = 'sidenav',
   None = 0,
 }
