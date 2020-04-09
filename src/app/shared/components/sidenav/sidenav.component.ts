@@ -6,13 +6,22 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Result, ActionType } from '../../classes/result/result';
 import { States } from '../../classes/states/states';
 
+
+export enum NavTypes {
+  menu ='menu',
+  profile = 'profile',
+  search = 'search'
+}
+
+
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
-  @Input() parentId;
+  @Input() parentId: string;
+  @Input() navType: string;
   DOMself: DOMElement;
   logger = new Logger();
   states = new States()
@@ -22,7 +31,7 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit() {
-    const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, DOMTypes.sidenav);
+    const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, DOMTypes.sidenav + this.navType);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
     } else {
@@ -32,7 +41,9 @@ export class SidenavComponent implements OnInit {
   }
 
   processDOMEvent(event:  Result<any, any>) {
-    if (!event) return;
+    console.log(event);
+    console.log(this.navType)
+    if (!event || this.navType!==event.option) return;
     switch(event.action) {
       case (ActionType.toggel):
         this.states.open.toggleState();
@@ -41,6 +52,7 @@ export class SidenavComponent implements OnInit {
         this.states.open.setFalse()
         break;
       case (ActionType.open):
+        this.states.open.setTrue()
         break;
       }
   }

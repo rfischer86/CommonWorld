@@ -17,7 +17,7 @@ export class ButtonComponent implements OnInit {
   states = new States();
   @Input() set setButtons(buttonList: Button[] ) {
     this.buttonList = buttonList;
-    this.states.finishInit.setTure();
+    this.states.finishInit.setTrue();
   }
   buttonList: Button[] = [];
   @Input() state = 0;

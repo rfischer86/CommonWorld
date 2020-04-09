@@ -102,7 +102,7 @@ export class DOMService {
   add(element: DOMElement, parentDOMid: string = null ): void {
     this.DOMElementList[element.id] = element;
     const result = this.getById(parentDOMid);
-    if (result.success.isTure()) {
+    if (result.success.isTrue()) {
       result.output.children.addDOMElement(element);
     }
   }

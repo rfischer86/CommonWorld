@@ -1,10 +1,14 @@
+
+
+
+
 export class State {
   value: boolean;
   constructor(value: boolean = false) {
     this.value = value;
   }
-  setTure(): void     { this.value = true; }
-  isTure(): boolean   { return this.value; }
+  setTrue(): void     { this.value = true; }
+  isTrue(): boolean   { return this.value; }
   setFalse(): void    { this.value = false; }
   isFalse(): boolean  { return !this.value; }
   toggleState(): void { this.value = this.value ? false : true; }
@@ -17,6 +21,8 @@ export class States {
   expanded = new State();
   open = new State();
   finishInit = new State();
+  dict = {} as {[key: string]: State}
+  list = [] as State[];
 
   toStateDict(): StateDict {
     const stateDict = {} as StateDict;
@@ -28,7 +34,16 @@ export class States {
     stateDict.finishInit = this.finishInit.value;
     return stateDict;
   }
+
+  addStateToDict(key: string, state: State = null) {
+    if (state)  {
+       return this.dict[key] = state;
+    } else {
+      this.dict[key] = new State();
+    }
+  }
 }
+
 
 export interface StateDict {
   createMode?: boolean;
