@@ -29,7 +29,6 @@ export class ButtonComponent implements OnInit {
 
   doClick(event, index) {
     const button = this.buttonList[index];
-    console.log(this.buttonList)
     button.action(button.self, button.data)
     if(!!button.nextButton && button.nextButton<this.buttonList.length) {
       this.state = button.nextButton;

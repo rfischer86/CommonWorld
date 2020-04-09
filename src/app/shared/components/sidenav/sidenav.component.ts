@@ -33,7 +33,6 @@ export class SidenavComponent implements OnInit {
 
   processDOMEvent(event:  Result<any, any>) {
     if (!event) return;
-    console.log(event);
     switch(event.action) {
       case (ActionType.toggel):
         this.states.open.toggleState();

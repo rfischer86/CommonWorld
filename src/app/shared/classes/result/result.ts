@@ -18,6 +18,7 @@ export class Result <T, D> {
   type: DOMTypes;
   action: ActionType;
   fromId: string;
+  option: string;
   toId: string;
   input: T;
   output: D;

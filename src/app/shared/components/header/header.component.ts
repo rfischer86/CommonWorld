@@ -87,9 +87,11 @@ export class HeaderComponent implements OnInit {
 
   clickMenue(self: any, data: any) {
     const _ = new  Result<any, any>();
-    console.log(_);
-    _.toId = DOMTypes.sidenav;
+    _.toId = DOMTypes.main;
+    _.option = DOMTypes.sidenav
     _.action = ActionType.toggel;
+    self.DOM.processEvent(_);
+    _.toId = DOMTypes.sidenav;
     self.DOM.processEvent(_);
   }
 

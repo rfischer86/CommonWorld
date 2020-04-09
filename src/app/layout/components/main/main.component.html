@@ -1,8 +1,12 @@
 <div *ngIf="state.finishInit.value" class="main" fxLayout="column" fxFlexFill >
   <app-header  [parentId]="DOMself.id" > </app-header>
-  <div class="body" fxLayout="row nowrap" fxLayoutAlign="start start">
-    <app-sidenav [parentId]="DOMself.id" ></app-sidenav>
-    <app-body [parentId]="DOMself.id"></app-body>
+  <div class="main-body" [class.open]="state.open.value" fxLayout="row nowrap" fxLayoutAlign="start start">
+    <div class="app-sidenav" >
+      <app-sidenav class="app-sidenav" [parentId]="DOMself.id" ></app-sidenav>
+    </div>
+    <div class="app-body">
+      <app-body fxFlexFill  [parentId]="DOMself.id"></app-body>
+    </div>
   </div>
   <app-footer [parentId]="DOMself.id"></app-footer>
 </div>

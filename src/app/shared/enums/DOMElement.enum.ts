@@ -6,4 +6,5 @@ export const enum DOMTypes {
   root = 'root',
   sidenav = 'sidenav',
   None = 0,
+  main= 'main'
 }
