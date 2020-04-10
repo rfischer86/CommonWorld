@@ -4,18 +4,24 @@ import { DOMTypes } from '../../enums/DOMElement.enum';
 
 
 export enum ActionType {
+  add = 'add',
   save = 'save',
+  edit = 'edit',
   create = 'create',
   destroy = 'destroy',
+  delete = 'delete',
   update = 'update',
   trigger = 'trigger',
   toggel = 'toggel',
   close = 'close',
-  open = 'open'
+  open = 'open',
+  load = 'load',
+  transmit = 'transmit'
 }
 
 export class Result <T, D> {
   type: DOMTypes;
+  fromType: DOMTypes;
   action: ActionType;
   fromId: string;
   option: string;

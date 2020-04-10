@@ -2,17 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DOMService, DOMElement } from '../../services/DOM/dom-element.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Result, ActionType } from '../../classes/result/result';
 import { States } from '../../classes/states/states';
-
-
-export enum NavTypes {
-  menu ='menu',
-  profile = 'profile',
-  search = 'search'
-}
-
+import { NavData } from '../../classes/navData/nav.data';
 
 @Component({
   selector: 'app-sidenav',
@@ -24,7 +16,9 @@ export class SidenavComponent implements OnInit {
   @Input() navType: string;
   DOMself: DOMElement;
   logger = new Logger();
-  states = new States()
+  states = new States();
+  navData: NavData;
+
   constructor(
     private DOM: DOMService,
   ) {
@@ -41,9 +35,12 @@ export class SidenavComponent implements OnInit {
   }
 
   processDOMEvent(event:  Result<any, any>) {
-    console.log(event);
-    console.log(this.navType)
-    if (!event || this.navType!==event.option) return;
+    if (!event) return;
+    this.toggleOpenState(event);
+    this.loadData(event);
+  }
+
+  toggleOpenState(event:  Result<any, any>) {
     switch(event.action) {
       case (ActionType.toggel):
         this.states.open.toggleState();
@@ -55,6 +52,27 @@ export class SidenavComponent implements OnInit {
         this.states.open.setTrue()
         break;
       }
+  }
+
+  loadData(event:  Result<any, any>) {
+    switch(event.action) {
+      case (ActionType.load):
+        this.navData = new NavData().getById(event.input as string).output;
+        console.log(this.navData)
+        break;
+      case (ActionType.transmit):
+        this.navData = new NavData(event.input as NavData);
+        break;
+    }
+  }
+
+  clickNavElement(data: NavData) {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.body;
+    _.fromType = DOMTypes.sidenav;
+    _.input = data;
+    _.action = ActionType.load;
+    this.DOM.processEvent(_);
   }
 
 }

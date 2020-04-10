@@ -12,13 +12,13 @@
   filter: drop-shadow(0px 10px 8px $gray-light);
   display: block;
   overflow: hidden;
-  width: 0 ;
   height: 100%;
-  div{
+  box-sizing: content-box;
+  .content {
+    padding: 1em 1em 1em 0;
     display: block;
-    white-space: nowrap;
-  }
-  &.open{
-    width: 100%;
+    div{
+      white-space: nowrap;
+    }
   }
 }

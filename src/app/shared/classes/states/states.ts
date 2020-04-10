@@ -16,7 +16,7 @@ export class State {
 
 export class States {
   createMode = new State();
-  editModt = new State();
+  editMode = new State();
   loading = new State();
   expanded = new State();
   open = new State();

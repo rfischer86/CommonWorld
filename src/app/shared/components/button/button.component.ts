@@ -30,7 +30,7 @@ export class ButtonComponent implements OnInit {
   doClick(event, index) {
     const button = this.buttonList[index];
     button.action(button.self, button.data)
-    if(!!button.nextButton && button.nextButton<this.buttonList.length) {
+    if(button.nextButton!==null && button.nextButton<this.buttonList.length) {
       this.state = button.nextButton;
     }
   }

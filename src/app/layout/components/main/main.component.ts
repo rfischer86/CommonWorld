@@ -4,8 +4,7 @@ import { DOMService, DOMElement } from 'src/app/shared/services/DOM/dom-element.
 import { Logger } from 'src/app/shared/classes/Logger/logger';
 import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 import { States, State } from 'src/app/shared/classes/states/states';
-import { NavTypes } from 'src/app/shared/components/sidenav/sidenav.component';
-
+import { NavTypes } from 'src/app/shared/enums/navTypes';
 
 enum NavState{
   body = 'body',
@@ -45,10 +44,29 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.result.log.addLog('Hallo Init');
     this.result.log.printLog();
     this.states.finishInit.setTrue();
+    this.initProfileNav();
+    this.initMenuNav();
   }
+
+  initProfileNav() {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.sidenav + NavTypes.profile;
+    _.input = 'profile';
+    _.action = ActionType.load;
+    this.DOM.addEventToQueue(_, 1000);
+  }
+
+  initMenuNav() {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.sidenav + NavTypes.menu;
+    _.input = 'menu';
+    _.action = ActionType.load;
+    this.DOM.addEventToQueue(_, 1000);
+  }
+
+
 
   processDOMEvent(event:  Result<any, any>) {
     if (!event) return;

@@ -11,6 +11,7 @@ import { BodyComponent } from './components/body/body.component';
 import { DOMService } from './services/DOM/dom-element.service';
 import { AppComponent } from '../app.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { SidenavItemComponent } from './components/sidenav/sidenavItem/sidenavItem.component';
 
 @NgModule({
   declarations:
@@ -20,7 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
     SidenavComponent,
     TitleComponent,
     ButtonComponent,
-    BodyComponent
+    BodyComponent,
+    SidenavItemComponent
   ],
   imports: [
     CommonModule,

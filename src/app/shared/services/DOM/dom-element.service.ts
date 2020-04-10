@@ -82,7 +82,7 @@ export class DOMElement {
 export class DOMService {
   DOMElementList: {[key: string]: DOMElement} = {};
   DOMElementSubscriptions: {[key: string]: BehaviorSubject<Result<any, any>>};
-
+  eventQueue: {event: Result<any, any>, timestamp: Date, latency: number}[] = [];
   constructor(
   ) {
 
@@ -137,13 +137,34 @@ export class DOMService {
       e => this.processEvent(e)
     );
     _.output = DOMelement;
+    this.checkQueue();
     return _;
   }
 
-  processEvent(_: Result<any, any>): void {
+  addEventToQueue(event: Result<any, any>, latency: number ){
+    this.eventQueue.push({event, timestamp: new Date(), latency})
+  }
+
+  checkQueue() {
+    const now = new Date().getMilliseconds();
+    this.eventQueue = this.eventQueue.filter((event) =>
+      now < event.timestamp.getUTCMilliseconds() + event.latency
+    )
+    this.eventQueue.map(( event => {
+      if ( this.hasId(event.event.toId) ) {
+        this.processEvent(event.event);
+        event.latency = 0;
+      }
+    }))
+    this.eventQueue = this.eventQueue.filter((event) =>
+      now < event.timestamp.getUTCMilliseconds() + event.latency
+    )
+  }
+
+  processEvent(_: Result<any, any>): boolean {
     if (!_) { return; }
     if (!this.hasId(_.toId)) {
-      _.log.addLog(`DOM has tp stop this Event, because teh id ${_.toId} do not exist`);
+      _.log.addLog(`DOM has to stop this Event, because the id ${_.toId} do not exist`);
       _.log.addLog(JSON.stringify(_));
       _.log.printLog();
       return;

@@ -5,6 +5,8 @@ export const enum DOMTypes {
   expansionPanel = 'expansionPanel',
   root = 'root',
   sidenav = 'sidenav',
+  sidenavItem = 'sidenavItem',
   None = 0,
-  main= 'main'
+  main= 'main',
+  body= 'body'
 }

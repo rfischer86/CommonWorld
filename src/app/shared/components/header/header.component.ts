@@ -6,7 +6,7 @@ import { Logger } from '../../classes/Logger/logger';
 import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { Result, ActionType } from '../../classes/result/result';
 import { HtmlState } from '../../enums/htmlStates';
-import { NavTypes } from '../sidenav/sidenav.component';
+import { NavTypes } from '../../enums/navTypes';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   actiomButtonList = [] as Button[];
   DOMself: DOMElement;
   logger = new Logger();
-
   constructor(
     private DOM: DOMService,
   ) {
@@ -93,18 +92,10 @@ export class HeaderComponent implements OnInit {
     _.type = DOMTypes.sidenav;
     _.action = ActionType.toggel;
     self.DOM.processEvent(_);
-
-    const _2 = new  Result<any, any>();
-    _2.toId = DOMTypes.sidenav + NavTypes.menu;
-    _2.option = NavTypes.menu
-    _2.action = ActionType.toggel;
-    self.DOM.processEvent(_2);
-
   }
 
   clickSearch(self: any, data: any) {
     const _ = new  Result<any, any>();
-    // console.log(_);
     // _.toId = DOMTypes.sidenav;
     // _.action = ActionType.toggel;
     // self.DOM.processEvent(_);
@@ -117,12 +108,6 @@ export class HeaderComponent implements OnInit {
     _.type = DOMTypes.sidenav;
     _.action = ActionType.toggel;
     self.DOM.processEvent(_);
-
-    const _2 = new  Result<any, any>();
-    _2.toId = DOMTypes.sidenav + NavTypes.profile;
-    _2.option = NavTypes.profile
-    _2.action = ActionType.toggel;
-    self.DOM.processEvent(_2);
   }
 
 

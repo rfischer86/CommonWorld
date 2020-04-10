@@ -1,0 +1,43 @@
+
+@import '../../../../../assets/styles/variable.scss';
+
+:host{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.sidenav-item{
+  z-index: 13;
+  background-color: $white;
+  overflow: hidden;
+  .hidden{
+    display: none !important;
+  }
+  .content {
+    &:hover{
+      background-color: $gray-lighter;
+    }
+    width: 100%;
+    .name{
+      background-color:  rgba(0,0,0,0);;
+      border: none;
+      color: $black;
+      &.active{
+        font-style: oblique;
+      }
+    }
+
+    .buttons{
+
+    }
+  }
+  &.open{
+    width: 100%;
+  }
+  .sub-nav-items{
+    .tab{
+      display: block;
+      padding-left: 1em;
+    }
+  }
+}
