@@ -1,0 +1,18 @@
+{
+    "name": "error-stack-parser",
+    "repository": "stacktracejs/error-stack-parser",
+    "description": "Extract meaning from JS Errors",
+    "version": "2.0.0",
+    "keywords": [
+        "stacktrace",
+        "error",
+        "stack"
+    ],
+    "main": "error-stack-parser.js",
+    "scripts": [
+        "error-stack-parser.js"
+    ],
+    "dependencies": {
+        "stacktracejs/stackframe": "1.0.2"
+    }
+}

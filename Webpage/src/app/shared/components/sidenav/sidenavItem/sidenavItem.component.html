@@ -1,0 +1,14 @@
+<div class="sidenav-item" fxLayout="column">
+
+  <div class="content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
+    <input #sidenavText [disabled]="!states.editMode.value"  (keyup)="updateName($event)" [class.active]="states.editMode.value"type="text" class="name" [value]="navData.name">
+    <div class="buttons" fxLayout="row nowrap">
+      <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+    </div>
+  </div>
+  <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>
+    <div class="tab" *ngFor="let navItem of navData.navData">
+      <app-sidenav-item  [setNavData]="navItem" [parentId]="DOMself.id"></app-sidenav-item>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+@import '../../../../assets/styles/variable.scss';
+@import '../../../../assets/styles/mixin.scss';
+
+.mat-icon{
+  height: auto;
+  width: auto;
+  margin-right: 0 !important;
+}
+
+.button{
+  @include notSelectable();
+  @include notDragable();
+  box-sizing: border-box;
+  cursor: pointer;
+  &.icon {
+    transition: 0.5s;
+    z-index: 10;
+    .mat-icon{
+      padding: 0 2px 2px 0;
+      filter: drop-shadow(3px 3px 2px $gray);
+    }
+    &.warn{
+      color: $warn;
+    }
+    &.primary{
+      color: $primary;
+    }
+    &.accent{
+      color: $accent;
+    }
+    &.hidden{
+      display: none;
+    }
+    &.disabled{
+      opacity: 0.33;
+    }
+    &:hover{
+      .mat-icon{
+        padding: 2px 0 0 2px;
+        filter: drop-shadow(1px 1px 2px $gray);
+      }
+    }
+    &:active {
+      &.warn {
+        color: $warn-dark;
+      }
+      &.primary{
+        color: $primary-dark;
+      }
+      &.accent{
+        color: $accent-dark;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,24 @@
+
+@import '../../../../assets/styles/variable.scss';
+
+:host{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.sidenav{
+  z-index: 10;
+  background-color: $white;
+  filter: drop-shadow(8px 8px 8px $gray-light);
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: content-box;
+  .content {
+    padding: 1em 1em 1em 0;
+    display: block;
+    div{
+      white-space: nowrap;
+    }
+  }
+}

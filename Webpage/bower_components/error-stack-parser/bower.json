@@ -1,0 +1,34 @@
+{
+    "name": "error-stack-parser",
+    "main": "./dist/error-stack-parser.js",
+    "homepage": "https://github.com/stacktracejs/error-stack-parser",
+    "authors": [
+        "Eric Wendelin <me@eriwen.com> (https://www.eriwen.com)",
+        "Victor Homyakov <vkhomyackov@gmail.com> (https://github.com/victor-homyakov)"
+    ],
+    "description": "Extract meaning from JS Errors",
+    "dependencies": {
+        "stackframe": "^1.0.2"
+    },
+    "moduleType": [
+        "amd",
+        "globals",
+        "node"
+    ],
+    "keywords": [
+        "stacktrace",
+        "stack-trace",
+        "backtrace",
+        "cross-browser",
+        "framework-agnostic",
+        "error",
+        "debugger"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "spec",
+        "coverage"
+    ]
+}

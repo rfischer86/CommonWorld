@@ -1,0 +1,5 @@
+<div [class.open]="states.open.value" fxLayout="column" fxLayoutAlign="start" fxLayoutGap="0.5em" class="sidenav">
+  <div class="content" [class.open]="states.open.value">
+    <app-sidenav-item *ngIf="states.finishInit.value" [setNavData]="navData" [open]="true" [parentId]="DOMself.id"></app-sidenav-item>
+  </div>
+</div>

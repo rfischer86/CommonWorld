@@ -1,0 +1,7 @@
+@import '../../../../assets/styles/variable.scss';
+
+.header{
+  padding: 0.5em;
+  z-index: 10;background-color: $white;
+  filter: drop-shadow(4px 6px 4px $gray);
+}
