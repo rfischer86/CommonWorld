@@ -11,7 +11,7 @@
       <mat-icon class="suffix" *ngIf="states.visible.value" (click)="toggleVisibility()">visibility_off</mat-icon>
       <mat-icon class="suffix" *ngIf="!states.visible.value" (click)="toggleVisibility()">visibility</mat-icon>
     </div>
-    <div fxLayout="row" fxFlexFill>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="0.5em">
       <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
     </div>
 

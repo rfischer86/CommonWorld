@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
     button.icon = 'account_circle';
     button.index = 0;
     button.self = this;
-    button.buttonState = ButtonState.hidden;
+    button.buttonState = ButtonState.active;
     button.htmlState = HtmlState.primary;
     button.nextButton = 0;
     button.size = '2em';

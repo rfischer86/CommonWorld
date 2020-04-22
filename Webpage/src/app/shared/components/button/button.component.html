@@ -10,9 +10,10 @@
     [class.black]="button.htmlState===htmlStates.black"
     [class.disabled]="button.buttonState===buttonStates.disabled"
     [class.hidden]="button.buttonState===buttonStates.hidden"
+    [class.active]="button.buttonState===buttonStates.active"
     (click)="doClick($event, i)">
     <mat-icon [style.font-size]="button.size" *ngIf="state===i">{{button.icon}}</mat-icon>
-    <span *ngIf="state===i">{{button.text}}</span>
+    <span *ngIf="state===i &&  button.type===buttonTypes.normal">{{button.text}}</span>
 </div>
 
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -37,12 +38,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
+    BrowserModule,
     FlexLayoutModule,
     MatIconModule,
     MatProgressBarModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,,
+    ReactiveFormsModule
   ],
   exports:[
     FooterComponent,

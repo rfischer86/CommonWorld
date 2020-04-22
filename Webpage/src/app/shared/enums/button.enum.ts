@@ -1,7 +1,6 @@
 export enum ButtonTypes {
   icon = 'icon',
-  normal = 'normal',
-  iconNormal = 'iconNormal'
+  normal = 'normal'
 }
 
 export enum ButtonState{

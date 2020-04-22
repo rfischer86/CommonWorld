@@ -21,8 +21,9 @@ export class States {
   expanded = new State();
   open = new State();
   finishInit = new State();
-  visible = {} as State;
-  loggedIn = {} as State;
+  visible = new State();
+  valid = new State();
+  loggedIn = new State();
   dict = {} as {[key: string]: State}
   list = [] as State[];
 

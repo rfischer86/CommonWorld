@@ -17,6 +17,13 @@ export class ButtonComponent implements OnInit {
   states = new States();
   @Input() set setButtons(buttonList: Button[] ) {
     this.buttonList = buttonList;
+    this.buttonList.map(el => {
+      console.log(el.buttonState);
+      if (!el.buttonState) {
+        el.buttonState = ButtonState.active;
+      }
+      console.log(el.buttonState);
+    })
     this.states.finishInit.setTrue();
   }
   buttonList: Button[] = [];
@@ -28,6 +35,11 @@ export class ButtonComponent implements OnInit {
   }
 
   doClick(event, index) {
+    console.log(this.buttonList[index].buttonState,event);
+    if(
+         this.buttonList[index].buttonState===ButtonState.disabled
+      || this.buttonList[index].buttonState===ButtonState.hidden
+    ) { return; }
     const button = this.buttonList[index];
     button.action(button.self, button.data)
     if(button.nextButton!==null && button.nextButton<this.buttonList.length) {

@@ -2,6 +2,7 @@ import { ButtonState, ButtonTypes } from '../enums/button.enum';
 import { HtmlState } from '../enums/htmlStates';
 
 export interface Button {
+  name: string,
   type: ButtonTypes,
   buttonState: ButtonState,
   htmlState: HtmlState,
