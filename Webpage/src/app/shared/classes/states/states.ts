@@ -21,8 +21,11 @@ export class States {
   expanded = new State();
   open = new State();
   finishInit = new State();
+  visible = {} as State;
+  loggedIn = {} as State;
   dict = {} as {[key: string]: State}
   list = [] as State[];
+
 
   toStateDict(): StateDict {
     const stateDict = {} as StateDict;

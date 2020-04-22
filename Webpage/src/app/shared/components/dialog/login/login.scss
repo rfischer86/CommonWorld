@@ -1,0 +1,27 @@
+@import '../../../../../assets/styles/variable.scss';
+
+
+.login-wrapper {
+  width: 35em;
+  height: 15em;
+  display: block;
+  position: relative;
+  background-color: $white;
+  .field{
+    height: unset;
+    width: unset;
+    input{
+      height: 2em;
+      width: 30em;
+      margin-left: auto;
+      margin-right: auto;
+      cursor: pointer;
+    }
+    .suffix{
+      position: absolute;
+      right: 3.5em;
+      margin-top: 5px;
+    }
+  }
+
+}

@@ -1,0 +1,11 @@
+<div *ngIf="overlayData" fxLayout="row" fxFlexFill fxLayoutAlign="center space-around" class="overlay-outer-wrapper" [ngSwitch]="overlayType">
+  <div  fxLayout="column" class="overlay-inner-wrapper" fxLayoutAlign="space-around center">
+    <div class="overlay-container">
+      <div class="close">
+        <mat-icon (click)="closeOverlay()">close</mat-icon>
+      </div>
+      <app-login-dialog *ngSwitchCase="overlayTypes.login" ></app-login-dialog>
+    </div>
+  </div>
+
+</div>

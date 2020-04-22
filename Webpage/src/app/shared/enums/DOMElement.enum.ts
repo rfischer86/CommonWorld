@@ -8,6 +8,8 @@ export const enum DOMTypes {
   sidenav = 'sidenav',
   sidenavItem = 'sidenavItem',
   None = 0,
-  main= 'main',
-  body= 'body'
+  main = 'main',
+  body = 'body',
+  overlay = 'overlay',
+  dialog = 'dialog'
 }

@@ -7,6 +7,7 @@ import { States } from '../../classes/states/states';
 import { NavData } from '../../classes/navData/nav.data';
 import { SidenavItemService } from './sidenavItem/sidenavItem.service';
 import { RestResponse } from '../../interfaces/rest.interface';
+import { User } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-sidenav',
@@ -20,12 +21,11 @@ export class SidenavComponent implements OnInit {
   logger = new Logger();
   states = new States();
   navData: NavData;
-
+  user = {} as User;
   constructor(
     private DOM: DOMService,
-    private entityService: SidenavItemService
-  ) {
-  }
+    private entityService: SidenavItemService,
+  ) {   }
 
   ngOnInit() {
     const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, DOMTypes.sidenav + this.navType);
@@ -38,6 +38,7 @@ export class SidenavComponent implements OnInit {
   }
 
   processDOMEvent(event:  Result<any, any>) {
+    console.log('event', event);
     if (!event) return;
     this.toggleOpenState(event);
     this.loadData(event);
@@ -58,7 +59,6 @@ export class SidenavComponent implements OnInit {
   }
 
   loadData(event:  Result<any, any>) {
-    console.log('event', event)
     switch(event.action) {
       case (ActionType.load):
         this.entityService.get(event.toApiId).subscribe(

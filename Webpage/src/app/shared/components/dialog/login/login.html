@@ -1,0 +1,19 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngIf="states.finishInit.value" class="login-wrapper" fxLayout="column" fxLayoutGap="1em">
+    <div class="title">{{text.login.title}}</div>
+    <app-note [note]="note"></app-note>
+    <div class="field" fxLayout="row">
+      <input matInput type="email" [placeholder]="text.general.email" formControlName="email" />
+    </div>
+    <!-- <mat-error *ngIf="form.get('email').invalid">{{ 'error.email_invalid' | translate }}</mat-error> -->
+    <div class="field" fxLayout="row">
+      <input matInput #password type="password" [placeholder]="text.general.password" formControlName="password" />
+      <mat-icon class="suffix" *ngIf="states.visible.value" (click)="toggleVisibility()">visibility_off</mat-icon>
+      <mat-icon class="suffix" *ngIf="!states.visible.value" (click)="toggleVisibility()">visibility</mat-icon>
+    </div>
+    <div fxLayout="row" fxFlexFill>
+      <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+    </div>
+
+  </div>
+</form>

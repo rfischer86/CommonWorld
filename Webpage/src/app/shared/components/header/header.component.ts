@@ -7,6 +7,7 @@ import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { Result, ActionType } from '../../classes/result/result';
 import { HtmlState } from '../../enums/htmlStates';
 import { NavTypes } from '../../enums/navTypes';
+import { UserService } from '../../services/User/user.service';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   DOMself: DOMElement;
   logger = new Logger();
   constructor(
+    private userService: UserService,
     private DOM: DOMService,
   ) {
 

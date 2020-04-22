@@ -10,11 +10,15 @@ import { ButtonComponent } from './components/button/button.component';
 import { BodyComponent } from './components/body/body.component';
 import { DOMService } from './services/DOM/dom-element.service';
 import { AppComponent } from '../app.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { SidenavItemComponent } from './components/sidenav/sidenavItem/sidenavItem.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SidenavItemService } from './components/sidenav/sidenavItem/sidenavItem.service';
 import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
+import { OverlayComponent } from './components/overlay/overlay.component';
+import { NoteComponent } from './components/note/note.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { LoginDialogComponent } from './components/dialog/login/login';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations:
@@ -26,14 +30,19 @@ import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
     ButtonComponent,
     BodyComponent,
     SidenavItemComponent,
-    ArcordeonComponent
+    ArcordeonComponent,
+    OverlayComponent,
+    NoteComponent,
+    LoginDialogComponent
   ],
   imports: [
     CommonModule,
     FlexLayoutModule,
     MatIconModule,
-    TranslateModule,
-    HttpClientModule
+    MatProgressBarModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,,
   ],
   exports:[
     FooterComponent,
@@ -41,12 +50,16 @@ import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
     SidenavComponent,
     TitleComponent,
     ButtonComponent,
-    BodyComponent
+    BodyComponent,
+    OverlayComponent,
+    ArcordeonComponent,
+    NoteComponent,
+    LoginDialogComponent
   ],
   providers: [
     DOMService,
     HttpClient,
-    SidenavItemService
+    SidenavItemService,
   ],
   bootstrap: [AppComponent]
 })

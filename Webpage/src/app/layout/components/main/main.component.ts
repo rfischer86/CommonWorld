@@ -5,6 +5,10 @@ import { Logger } from 'src/app/shared/classes/Logger/logger';
 import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 import { States, State } from 'src/app/shared/classes/states/states';
 import { NavTypes } from 'src/app/shared/enums/navTypes';
+import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';
+import { User } from 'src/app/shared/interfaces/user.interface';
+import { UserService } from 'src/app/shared/services/User/user.service';
+import { Text } from 'src/assets/i18n/app.text';
 
 enum NavState{
   body = 'body',
@@ -20,7 +24,7 @@ enum NavState{
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-
+  Text = new Text();
   result = new Result();
   logger = new Logger();
   DOMself: DOMElement;
@@ -29,10 +33,12 @@ export class MainComponent implements OnInit {
   menueNavState = new State();
   NavTypes = NavTypes;
   navState = NavState.body;
-
+  overlayEvent: Result<any,any>;
+  user = { } as User;
   constructor(
-    private DOM: DOMService
-  ) {
+    private DOM: DOMService,
+    private userService: UserService
+    ) {
     const _ = this.DOM.create(DOMTypes.main, null, DOMTypes.main);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
@@ -41,6 +47,10 @@ export class MainComponent implements OnInit {
       this.DOMself = _.output;
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
     }
+    this.userService.getUserSubscribtion().subscribe(
+      user =>  this.user = user,
+      error => console.error(error)
+    );
   }
 
   ngOnInit() {
@@ -75,6 +85,10 @@ export class MainComponent implements OnInit {
     if (event.type === DOMTypes.sidenav) {
       this.toggleNav(event);
     }
+    if (event.type === DOMTypes.overlay) {
+      this.openOverlay(event);
+    }
+
   }
 
   toggleNav(event: Result<any, any>){
@@ -83,7 +97,12 @@ export class MainComponent implements OnInit {
     if (event.option === NavTypes.menu) {
       state = this.menueNavState;
     }
-    if (event.option === NavTypes.profile) {
+    if (!this.userService.isLoggedin() && event.option === NavTypes.profile ) {
+      if (event.option === NavTypes.profile) {
+        this.openLoginDialog();
+        return;
+      }
+
       state = this.profieNavState;
     }
     if (!state) return;
@@ -113,7 +132,27 @@ export class MainComponent implements OnInit {
         break;
 
     }
+  }
+
+  openOverlay(event) {
+    if(event.type === ActionType.open) {
+      this.overlayEvent = event;
+    }
+    if(event.type === ActionType.open) {
+      this.overlayEvent = null;
+    }
 
   }
+
+  openLoginDialog() {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.dialog;
+    _.fromType = DOMTypes.main;
+    _.fromId = this.DOMself.id;
+    _.action = ActionType.load;
+    _.option = OverlayTypes.login;
+    this.DOM.processEvent(_);
+  }
+
 
 }
