@@ -15,11 +15,9 @@ import { AuthService } from 'src/app/shared/services/REST/auth.service';
 import { Authenticate } from 'src/app/shared/interfaces/auth.interface';
 import { UserService } from 'src/app/shared/services/User/user.service';
 
-enum NavState{
-  body = 'body',
-  navBody = 'navBody',
-  bodyNav = 'bodyNav',
-  navBodyNav = 'navBodyNav'
+enum LoginButtons{
+  login = 'login',
+  register = 'register'
 }
 
 @Component({
@@ -51,7 +49,6 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
     private userService: UserService,
     private DOM: DOMService
   ) {
-    this.createForm();
     const _ = this.DOM.create(DOMTypes.overlay, DOMTypes.dialog, OverlayTypes.login);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
@@ -65,8 +62,8 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.result.log.printLog();
     this.createButtons();
+    this.createForm();
     this.states.finishInit.setTrue();
-
   }
 
   processDOMEvent(event:  Result<any, any>) {
@@ -118,25 +115,30 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
 
   createForm() {
     this.form = this.formBuilder.group({
-     email: [null, [ Validators.email, Validators.required]],
-     password: [null, [ Validators.minLength(8), Validators.required ]]
+     email: ['q@q.q', [ Validators.email, Validators.required]],
+     password: ['123123123', [ Validators.minLength(8), Validators.required ]],
+     name: null,
     });
-    this.states.valid.setFalse();
+    this.states.valid.value = !this.form.invalid;
     this.form.statusChanges.subscribe(() => {
       if (this.states.valid.value !== this.form.invalid) {;
         this.states.valid.toggleState();
-        this.buttonList.map(buttonList => {
-          buttonList.map(button => {
-            if (button.name==='login') {
-              button.buttonState = this.form.invalid ? ButtonState.disabled : ButtonState.active;
-            }
-          })
-        });
+        this.controlButtonsStates(LoginButtons.login, this.states.valid.value)
         this.note.error = null
       }
     });
+    this.controlButtonsStates(LoginButtons.login, !this.states.valid.value);
   }
 
+  controlButtonsStates(buttonName: LoginButtons, disabled: boolean) {
+    this.buttonList.map(buttonList => {
+      buttonList.map(button => {
+        if (button.name === buttonName) {
+          button.buttonState = disabled ? ButtonState.disabled : ButtonState.active;
+        }
+      })
+    });
+  }
 
   createButtons() {
     this.buttonList.push(this.createLoginButton());
@@ -145,7 +147,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
 
   createLoginButton(): Button[] {
     const loginButton = {} as Button;
-    loginButton.name = 'login'
+    loginButton.name = LoginButtons.login
     loginButton.action = this.clickLogin;
     loginButton.icon = 'fingerprint';
     loginButton.buttonState = ButtonState.disabled
@@ -161,6 +163,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
 
   createRegisterButton(): Button[] {
     const registerButton = {} as Button;
+    registerButton.name = LoginButtons.register;
     registerButton.action = this.clickRegister;
     registerButton.icon = 'person_add';
     registerButton.text = this.text.general.register;
@@ -174,6 +177,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
 
     const registerButton2 = {} as Button;
     registerButton2.action = this.clickRegister;
+    registerButton.name = LoginButtons.register;
     registerButton2.icon = 'person_add';
     registerButton2.text = this.text.general.register;
     registerButton2.index = 1;
@@ -193,7 +197,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
     _.toId =  OverlayTypes.login;
     _.fromType = DOMTypes.overlay;
     _.input = data;
-    _.option = 'login';
+    _.option = LoginButtons.login;
     _.action = ActionType.request;
     self.DOM.processEvent(_);
   }
@@ -203,6 +207,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
   }
 
   clickRegister(self: LoginDialogComponent ) {
+    console.log(self.states.valid)
     const _ = new  Result<any, any>();
     if(self.checkboxes.isTrue()) {
       _.toId =  OverlayTypes.login;
@@ -219,8 +224,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
       _.toId =  OverlayTypes.login;
       _.fromType = DOMTypes.overlay;
       _.action = ActionType.request;
-      _.option = 'register';
-
+      _.option = LoginButtons.register;
     }
     self.DOM.processEvent(_);
 

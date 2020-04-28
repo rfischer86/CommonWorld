@@ -33,6 +33,7 @@ export class Result <T, D> {
   option: string;
   input: T;
   output: D;
+  name: string;
   log: Logger = new Logger();
   success: State = new State(true);
   states: StateDict;

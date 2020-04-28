@@ -18,6 +18,7 @@ enum NavState{
 }
 
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -49,7 +50,10 @@ export class MainComponent implements OnInit {
     }
     this.userService.getUserSubscribtion().subscribe(
       user =>  {
-        this.user = user
+        this.user = user;
+        if(this.user.apiId){
+          this.initProfileNav(this.user.apiId);
+        }
       },
       error => console.error(error)
     );
@@ -58,23 +62,24 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.result.log.printLog();
     this.states.finishInit.setTrue();
-    this.initProfileNav();
     this.initMenuNav();
   }
 
-  initProfileNav() {
+  initProfileNav(userApiId: string) {
     const _ = new  Result<any, any>();
     _.toId = DOMTypes.sidenav + NavTypes.profile;
-    _.input = 'profile';
-    _.toApiId = '11111111111121';
+    _.input = NavTypes.profile;
+    _.name = NavTypes.profile;
+    _.toApiId = userApiId;
     _.action = ActionType.load;
-    this.DOM.addEventToQueue(_, 1000);
+    this.DOM.processEvent(_);
   }
 
   initMenuNav() {
     const _ = new  Result<any, any>();
     _.toId = DOMTypes.sidenav + NavTypes.menu;
-    _.input = 'menu';
+    _.input = NavTypes.menu;
+    _.name = NavTypes.menu;
     _.toApiId = '1222222222222225';
     _.action = ActionType.load;
     this.DOM.addEventToQueue(_, 1000);

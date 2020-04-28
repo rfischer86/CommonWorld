@@ -8,6 +8,7 @@ import { NavData } from '../../classes/navData/nav.data';
 import { SidenavItemService } from '../../services/REST/sidenavItem.service';
 import { RestResponse } from '../../interfaces/rest.interface';
 import { User } from '../../interfaces/user.interface';
+import { NavTypes } from '../../enums/navTypes';
 
 @Component({
   selector: 'app-sidenav',
@@ -24,7 +25,7 @@ export class SidenavComponent implements OnInit {
   user = {} as User;
   constructor(
     private DOM: DOMService,
-    private entityService: SidenavItemService,
+    private navItemService: SidenavItemService,
   ) {   }
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class SidenavComponent implements OnInit {
       this.logger.appEndLogBook(_.log);
     } else {
       this.DOMself = _.output;
+      console.log(this.DOMself.id);
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
     }
   }
@@ -58,22 +60,26 @@ export class SidenavComponent implements OnInit {
   }
 
   loadData(event:  Result<any, any>) {
+    console.log(event);
     switch(event.action) {
       case (ActionType.load):
-        this.entityService.get(event.toApiId).subscribe(
+        this.navItemService.get(event.toApiId).subscribe(
           (data: RestResponse<NavData>) => {
+            console.log(data);
             this.navData = data.result;
             if(!this.navData.navData) {this.navData.navData = []};
             this.states.finishInit.setTrue();
+
           },
           error => {
-            this.navData = new NavData().getByDomId(event.input).output;
+            console.log(error);
+            this.navData = new NavData();
             this.navData.apiId = event.toApiId;
+            this.navData.type = event.name as NavTypes;
             this.states.finishInit.setTrue();
-            this.entityService.create(this.navData).subscribe(
+            this.navItemService.create(this.navData).subscribe(
               data2 => console.log(data2),
               error2 => console.log(error2)
-
             )
           }
         )

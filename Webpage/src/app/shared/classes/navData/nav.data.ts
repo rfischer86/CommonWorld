@@ -5,11 +5,13 @@ export class NavData {
   domId: string;
   apiId: string;
   name: string;
+  type: NavTypes;
   link: string;
   navData = [] as NavData[];
 
   constructor(data: NavData = {} as NavData) {
     this.name =  data.name;
+    this.type =  data.type;
     this.link =  data.link;
     if (!this.name) { this.name = 'Neu Element'; }
     if (!data.navData) { data.navData = []};
@@ -23,20 +25,7 @@ export class NavData {
     const _ = new Result<any,NavData>();
     if ( id === NavTypes.menu) {
       const profileNav = new NavData();
-      // profileNav.addItem('Gruppen')
-      // profileNav.addItem('Rollen')
-      // profileNav.addItem('Beiträge')
-
       _.output = profileNav;
-      return _;
-    }
-    if ( id === NavTypes.profile) {
-      const menuNav = new NavData();
-      menuNav.addItem('ToDo');
-      menuNav.addItem('Time Table');
-      menuNav.addItem('Internal Structure');
-      menuNav.addItem('Data');
-      _.output = menuNav;
       return _;
     }
     const navItems = this.navData.filter(nav => navItems.id = id)

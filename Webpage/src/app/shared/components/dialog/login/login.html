@@ -3,7 +3,7 @@
     <div class="title">{{text.login.title}}</div>
     <app-note [note]="note"></app-note>
     <div class="field" fxLayout="row" *ngIf="!checkboxes.value">
-      <input matInput #name type="name" [placeholder]="text.general.name" formControlName="email" />
+      <input matInput #name type="name" [placeholder]="text.general.name" formControlName="name" />
     </div>
     <div class="field" fxLayout="row">
       <input matInput #email type="email" [placeholder]="text.general.email" formControlName="email" />
