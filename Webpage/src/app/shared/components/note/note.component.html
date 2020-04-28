@@ -1,3 +1,5 @@
-<div *ngIf="note.success" class="box-note box-success">{{ note.success }}</div>
-<div *ngIf="note.error" class="box-note box-error">{{ note.error }}</div>
-<mat-progress-bar *ngIf="note.loading" mode="indeterminate"></mat-progress-bar>
+<div class="note-wrapper">
+  <div *ngIf="note.success" class="box-note box-success">{{ note.success }}</div>
+  <div *ngIf="note.error" class="box-note box-error">{{ note.error }}</div>
+  <mat-progress-bar *ngIf="note.loading" mode="indeterminate"></mat-progress-bar>
+</div>

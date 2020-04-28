@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Button } from '../../interfaces/button';
 import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { States } from '../../classes/states/states';
 import { HtmlState } from '../../enums/htmlStates';
+import { ActionType, Result } from '../../classes/result/result';
 
 @Component({
   selector: 'app-button',
@@ -18,11 +19,9 @@ export class ButtonComponent implements OnInit {
   @Input() set setButtons(buttonList: Button[] ) {
     this.buttonList = buttonList;
     this.buttonList.map(el => {
-      console.log(el.buttonState);
       if (!el.buttonState) {
         el.buttonState = ButtonState.active;
       }
-      console.log(el.buttonState);
     })
     this.states.finishInit.setTrue();
   }
@@ -35,7 +34,6 @@ export class ButtonComponent implements OnInit {
   }
 
   doClick(event, index) {
-    console.log(this.buttonList[index].buttonState,event);
     if(
          this.buttonList[index].buttonState===ButtonState.disabled
       || this.buttonList[index].buttonState===ButtonState.hidden

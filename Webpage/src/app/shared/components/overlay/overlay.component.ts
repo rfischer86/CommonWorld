@@ -3,7 +3,7 @@ import { Button } from '../../interfaces/button';
 import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { States } from '../../classes/states/states';
 import { HtmlState } from '../../enums/htmlStates';
-import { Result } from '../../classes/result/result';
+import { Result, ActionType } from '../../classes/result/result';
 import { OverlayTypes } from '../../enums/overlayTypes';
 import { DOMElement, DOMService } from '../../services/DOM/dom-element.service';
 import { UserService } from '../../services/User/user.service';
@@ -27,9 +27,7 @@ export class OverlayComponent implements OnInit {
   logger = new Logger();
   constructor (
     private DOM: DOMService,
-  ){
-    console.log('init overlay')
-  }
+  ){ }
 
   ngOnInit() {
     const _ = this.DOM.create(DOMTypes.dialog, DOMTypes.main, DOMTypes.dialog);
@@ -43,10 +41,13 @@ export class OverlayComponent implements OnInit {
   }
 
   processDOMEvent(event: Result<any, any>) {
-    console.log('event', event);
     if(!event) {return}
     this.overlayData = event;
     this.overlayType = event.option as OverlayTypes;
+    if (event.action===ActionType.close) {
+      this.closeOverlay();
+    };
+
   }
 
   closeOverlay() {

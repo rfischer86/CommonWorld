@@ -1,4 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import './assets/styles/variable.scss';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+// .mat-checkbox{
+//   .mat-checkbox-layout{
+//     .mat-checkbox-inner-container {
+//       background-color: $gray-light;
+//       &:active {
+//         background-color: $primary-dark;
+//       }
+//     }
+//   }
+// }
+
+// .mat-checkbox-checked{
+//   background-color: red;
+//   .mat-checkbox-layout{
+//     background-color: blue;
+//     .mat-checkbox-inner-container
+//     {
+//       // background-color: $primary;
+//       background-color:green !important;
+
+
+//     }
+//   }
+// }

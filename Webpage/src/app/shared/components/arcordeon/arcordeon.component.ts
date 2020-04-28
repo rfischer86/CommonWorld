@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DOMService, DOMElement } from '../../services/DOM/dom-element.service';
-import { ArcordeonService } from './arcordeon.service';
+import { ArcordeonService } from '../../services/REST/arcordeon.service';
 import { ArcordeonData } from '../../classes/arcordeonData/arcordeon.data';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';

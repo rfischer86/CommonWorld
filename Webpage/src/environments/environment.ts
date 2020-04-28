@@ -4,10 +4,17 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://localhost:5000/api/',
+  apiURL: 'http://localhost:5000/api/',
+  authURL: 'http://localhost:4000/',
   api: {
     nav: 'nav',
     arcordeon: 'arcordeon'
+  },
+  auth: {
+    authenticate: 'authenticate',
+    users: 'users',
+    groups: 'groups',
+    roles: 'roles',
   }
 };
 

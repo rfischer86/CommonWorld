@@ -8,7 +8,7 @@ import { NavData } from '../../../classes/navData/nav.data';
 import { ButtonTypes } from 'src/app/shared/enums/button.enum';
 import { Button } from 'src/app/shared/interfaces/button';
 import { HtmlState } from 'src/app/shared/enums/htmlStates';
-import { SidenavItemService } from './sidenavItem.service';
+import { SidenavItemService } from '../../../services/REST/sidenavItem.service';
 
 
 @Component({
@@ -45,7 +45,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('navData', this.navData)
     if(!this.navData.domId) { this.navData.domId = Math.floor(Math.random() *10 ** 10).toString()};
     const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, this.navData.domId);
     if (_.success.isFalse()) {
@@ -209,7 +208,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         break;
       case (ActionType.save):
         this.navData.name = event.input;
-        console.log('this.navData', this.navData);
         this.states.editMode.setTrue();
         this.entityService.update(this.navData).subscribe(
           data => { console.log(data)},
@@ -223,8 +221,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         this.navData.navData.push(newNavItem);
         this.entityService.create(newNavItem).subscribe(
           data => {
-            console.log(this.navData);
-            console.log(this.navData.apiId,  newNavItem.apiId);
             this.entityService.addItem(this.navData.apiId, newNavItem.apiId).subscribe(
               data2 => console.log(data2),
               error => console.log(error)
@@ -249,7 +245,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
 
   updateName(event: KeyboardEvent) {
     this.navData.name = (this.sidenavText as ElementRef).nativeElement.value;
-    console.log('this.navData.name', this.navData.name);
   }
 
   deleteNavItem(navItem: NavData, event: Result<string, any>): boolean {
@@ -270,11 +265,9 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   }
 
   loadData(event:  Result<any, any>) {
-    console.log('event', event);
     switch(event.action) {
       case (ActionType.load):
         this.navData = new NavData().getByDomId(event.toApiId).output;
-        console.log('this.navData', this.navData)
         break;
       case (ActionType.transmit):
         this.navData = new NavData(event.input as NavData);
@@ -292,7 +285,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    console.log('destroy sidenav item');
     const _ = new  Result<any, any>();
     _.toId = this.domId;
     _.action = ActionType.destroy;

@@ -2,14 +2,24 @@
   <div *ngIf="states.finishInit.value" class="login-wrapper" fxLayout="column" fxLayoutGap="1em">
     <div class="title">{{text.login.title}}</div>
     <app-note [note]="note"></app-note>
-    <div class="field" fxLayout="row">
-      <input matInput type="email" [placeholder]="text.general.email" formControlName="email" />
+    <div class="field" fxLayout="row" *ngIf="!checkboxes.value">
+      <input matInput #name type="name" [placeholder]="text.general.name" formControlName="email" />
     </div>
+    <div class="field" fxLayout="row">
+      <input matInput #email type="email" [placeholder]="text.general.email" formControlName="email" />
+    </div>
+
     <!-- <mat-error *ngIf="form.get('email').invalid">{{ 'error.email_invalid' | translate }}</mat-error> -->
     <div class="field" fxLayout="row">
       <input matInput #password type="password" [placeholder]="text.general.password" formControlName="password" />
       <mat-icon class="suffix" *ngIf="states.visible.value" (click)="toggleVisibility()">visibility_off</mat-icon>
       <mat-icon class="suffix" *ngIf="!states.visible.value" (click)="toggleVisibility()">visibility</mat-icon>
+    </div>
+    <div class="checkboxes" >
+      <div [class.hidden]="checkboxes.value"  fxLayout="column">
+        <mat-checkbox (click)="agb.toggleState()" color="primary">AGB</mat-checkbox>
+        <mat-checkbox (click)="datapolicy.toggleState()" color="primary"> Datenschutzverordnung</mat-checkbox>
+      </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="0.5em">
       <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>

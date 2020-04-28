@@ -1,5 +1,7 @@
 <ng-container *ngIf="states.finishInit.value">
-  <div *ngFor="let button of buttonList; let i = index;"
+  <ng-container *ngFor="let button of buttonList; let i = index;">
+    <div
+    *ngIf="state===i"
     fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="0.5em"
     [class]="'button ' + button.type"
     [class.warn]="button.htmlState===htmlStates.warn"
@@ -12,9 +14,10 @@
     [class.hidden]="button.buttonState===buttonStates.hidden"
     [class.active]="button.buttonState===buttonStates.active"
     (click)="doClick($event, i)">
-    <mat-icon [style.font-size]="button.size" *ngIf="state===i">{{button.icon}}</mat-icon>
-    <span *ngIf="state===i &&  button.type===buttonTypes.normal">{{button.text}}</span>
-</div>
+      <mat-icon [style.font-size]="button.size">{{button.icon}}</mat-icon>
+      <span *ngIf="button.type===buttonTypes.normal">{{button.text}}</span>
+    </div>
+  </ng-container>
 
 
 </ng-container>

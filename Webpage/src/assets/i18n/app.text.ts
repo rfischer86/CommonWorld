@@ -14,12 +14,21 @@ export class Text {
     logout: 'abmelden',
     register: 'registrieren',
     email: 'E-Mail',
-    password: 'Password'
+    password: 'Password',
+    name: 'Name'
   };
-  tooltip:{
-  }
-  note: {
+  errorMsg = {
+    register: 'Es müssen alle Feder ausgefüllt sein, damit Sie sich registrieren können.',
+    login: 'Passwort und E-Mail stimmen nicht überein'
+  };
+  successMsg = {
+    login: 'Sie sind nun angemeldet.',
+    register: 'Sie haben sich erfolgreich angemeldet und sind bereits angemeldet.'
+  };
+  tooltip = {
+  };
+  note = {
 
-  }
+  };
 
 }

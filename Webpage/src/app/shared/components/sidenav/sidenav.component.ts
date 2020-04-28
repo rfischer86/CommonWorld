@@ -5,7 +5,7 @@ import { Logger } from '../../classes/Logger/logger';
 import { Result, ActionType } from '../../classes/result/result';
 import { States } from '../../classes/states/states';
 import { NavData } from '../../classes/navData/nav.data';
-import { SidenavItemService } from './sidenavItem/sidenavItem.service';
+import { SidenavItemService } from '../../services/REST/sidenavItem.service';
 import { RestResponse } from '../../interfaces/rest.interface';
 import { User } from '../../interfaces/user.interface';
 
@@ -38,7 +38,6 @@ export class SidenavComponent implements OnInit {
   }
 
   processDOMEvent(event:  Result<any, any>) {
-    console.log('event', event);
     if (!event) return;
     this.toggleOpenState(event);
     this.loadData(event);
@@ -63,13 +62,11 @@ export class SidenavComponent implements OnInit {
       case (ActionType.load):
         this.entityService.get(event.toApiId).subscribe(
           (data: RestResponse<NavData>) => {
-            console.log(data);
             this.navData = data.result;
             if(!this.navData.navData) {this.navData.navData = []};
             this.states.finishInit.setTrue();
           },
           error => {
-            // console.log(error);
             this.navData = new NavData().getByDomId(event.input).output;
             this.navData.apiId = event.toApiId;
             this.states.finishInit.setTrue();

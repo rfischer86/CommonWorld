@@ -4,7 +4,7 @@
       <div class="close">
         <mat-icon (click)="closeOverlay()">close</mat-icon>
       </div>
-      <app-login-dialog *ngSwitchCase="overlayTypes.login" ></app-login-dialog>
+      <app-login-dialog [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.login" ></app-login-dialog>
     </div>
   </div>
 

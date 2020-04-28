@@ -13,13 +13,14 @@ import { DOMService } from './services/DOM/dom-element.service';
 import { AppComponent } from '../app.component';
 import { SidenavItemComponent } from './components/sidenav/sidenavItem/sidenavItem.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { SidenavItemService } from './components/sidenav/sidenavItem/sidenavItem.service';
+import { SidenavItemService } from './services/REST/sidenavItem.service';
 import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { NoteComponent } from './components/note/note.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoginDialogComponent } from './components/dialog/login/login';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations:
@@ -42,6 +43,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     MatIconModule,
     MatProgressBarModule,
+    MatCheckboxModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule

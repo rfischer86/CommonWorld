@@ -5,6 +5,7 @@ import { DOMTypes } from '../../enums/DOMElement.enum';
 
 export enum ActionType {
   add = 'add',
+  request = 'request',
   save = 'save',
   edit = 'edit',
   create = 'create',

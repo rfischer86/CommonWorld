@@ -1,0 +1,109 @@
+@import "~@angular/material/theming";
+@include mat-core();
+@import "./variable.scss";
+
+$mat-primary: (
+  50 : #f1f4ef,
+  100 : #dce4d8,
+  200 : #c4d3be,
+  300 : #acc1a3,
+  400 : #9bb390,
+  500 : #89a67c,
+  600 : #819e74,
+  700 : #769569,
+  800 : #6c8b5f,
+  900 : #597b4c,
+  A100 : #e5ffdb,
+  A200 : #c0ffa8,
+  A400 : #9bff75,
+  A700 : #88ff5c,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #000000,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$mat-warn: (
+  50 : #f9eeee,
+  100 : #f0d4d4,
+  200 : #e6b7b7,
+  300 : #db9a9a,
+  400 : #d48484,
+  500 : #cc6e6e,
+  600 : #c76666,
+  700 : #c05b5b,
+  800 : #b95151,
+  900 : #ad3f3f,
+  A100 : #ffffff,
+  A200 : #ffcccc,
+  A400 : #ff9999,
+  A700 : #ff7f7f,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$mat-accent: (
+    50 : #eef4f9,
+    100 : #d5e3ef,
+    200 : #bad0e4,
+    300 : #9ebdd9,
+    400 : #89aed1,
+    500 : #74a0c9,
+    600 : #6c98c3,
+    700 : #618ebc,
+    800 : #5784b5,
+    900 : #4473a9,
+    A100 : #ffffff,
+    A200 : #cce3ff,
+    A400 : #99c7ff,
+    A700 : #80b9ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$my-app-primary: mat-palette($mat-primary);
+$my-app-accent:  mat-palette($mat-accent, 500, 900, A100);
+$my-app-warn:    mat-palette($mat-warn);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);

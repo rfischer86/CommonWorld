@@ -48,7 +48,9 @@ export class MainComponent implements OnInit {
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
     }
     this.userService.getUserSubscribtion().subscribe(
-      user =>  this.user = user,
+      user =>  {
+        this.user = user
+      },
       error => console.error(error)
     );
   }
@@ -97,12 +99,11 @@ export class MainComponent implements OnInit {
     if (event.option === NavTypes.menu) {
       state = this.menueNavState;
     }
-    if (!this.userService.isLoggedin() && event.option === NavTypes.profile ) {
-      if (event.option === NavTypes.profile) {
+    if (event.option === NavTypes.profile) {
+      if (!this.userService.isLoggedin() ) {
         this.openLoginDialog();
         return;
       }
-
       state = this.profieNavState;
     }
     if (!state) return;
