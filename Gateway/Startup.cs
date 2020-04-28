@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Helpers;
-using WebApi.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Auth_Service;
 
 namespace WebApi
 {
@@ -22,7 +23,7 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            
             services.AddControllers();
 
             // configure strongly typed settings objects
@@ -31,27 +32,23 @@ namespace WebApi
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
+            var signingKey = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
+
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKey)
                 };
             });
 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+            // TokenDecryptionKey= new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kjvÖlmvoixclkmdkrtm5f50imsdfcouza")),
+            // IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("kjvÖlmvoixclkmdkrtm5f50imsdfcouza")),
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +63,7 @@ namespace WebApi
                 .AllowAnyHeader());
 
             app.UseAuthentication();
+            
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints => {

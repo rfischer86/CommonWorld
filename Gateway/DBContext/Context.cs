@@ -63,7 +63,13 @@ namespace Auth_DB_Context
        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<GroupRoleLink>()
-                .HasNoKey();
+                .HasKey(u => new { u.apiId });
+            modelBuilder.Entity<RolePrivilegeLink>()
+                .HasKey(u => new { u.apiId });
+            modelBuilder.Entity<GroupRoleLink>()
+                .HasKey(u => new { u.apiId });
+
+        
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

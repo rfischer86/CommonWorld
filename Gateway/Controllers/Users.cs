@@ -9,39 +9,41 @@ namespace UserController
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")] 
+    [Route("users")]
     public class UsersController : ControllerBase
     {
         private UserFactory factory = new UserFactory();
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult get(string id)
+        public ActionResult get(string id)
         {
             ServerResult<User> sr = factory.getById(id, false);
+            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 return Ok(sr);
             } else 
             {
-                return NotFound();
+                return BadRequest(sr);
             }
         }
 
         
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult create(User entity)
         {
-            ServerResult<User> sr = factory.create(entity, false);
+            ServerResult<User> sr = factory.create(entity, true);
             if (sr.success)
             {
                 return Ok(sr);
             } else 
             {
-                return NotFound();
+                return BadRequest(sr);
             }
         }
-        
+
         [HttpDelete]
         [Route("{id}")]
         public IActionResult delete(string id)
@@ -52,10 +54,9 @@ namespace UserController
                 return Ok(sr);
             } else 
             {
-                return NotFound();
+                return BadRequest(sr);
             }
         }
-
         [HttpPut]
         public IActionResult put(User entity)
         {

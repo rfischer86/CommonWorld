@@ -7,18 +7,15 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-
 namespace Helper
 {
     public class Helper
     {
-        public static int RandomId() {
+        public static string RandomId() {
             Random rnd = new Random();
-            int randId = rnd.Next(1, 10 ^ 16 );
-            print(randId.ToString());
+            string randId = Math.Round(rnd.NextDouble() * Math.Pow(10 , 16), 0).ToString();
             return randId;
         }
-
         public static void print(string line)
         {
             Console.Write(line);

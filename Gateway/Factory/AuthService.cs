@@ -10,8 +10,7 @@ using Auth_DB_Context;
 using WebApi.Helpers;
 
 namespace Auth_Service
-{
-    public interface IAuthService
+{    public interface IAuthService
     {
         ServerResult<Auth_DB_Context.User> Authenticate(string username, string password);
     }
@@ -21,14 +20,12 @@ namespace Auth_Service
 
         private AuthContext db = new AuthContext();
         
-        private readonly AppSettings _appSettings;
+        private AppSettings _appSettings;
 
-        public AuthService(string secretKey )
+        public AuthService( IOptions<AppSettings> appSettings)
         {
-            _appSettings = new AppSettings();
-            _appSettings.Secret = secretKey;
+            _appSettings = appSettings.Value;
         }
-
         public ServerResult<Auth_DB_Context.User> Authenticate(string email, string password)
         {
             ServerResult<Auth_DB_Context.User> sr = ServerResult<Auth_DB_Context.User>.create();
@@ -45,15 +42,16 @@ namespace Auth_Service
             {
                 Subject = new ClaimsIdentity(new Claim[] 
                 {
-                    new Claim(ClaimTypes.Name, sr.result.apiId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                    new Claim(ClaimTypes.Name, sr.result.apiId),
+                    new Claim("Role", "Admin"),
+                    new Claim(ClaimTypes.Country, "DE")
+                }), 
+		        Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             sr.result.token = tokenHandler.WriteToken(token);
             sr.result.WithoutPassword();
-
             return sr;
         }
     }

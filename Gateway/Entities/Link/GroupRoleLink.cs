@@ -1,13 +1,17 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Auth_DB_Context
 {    
     public class GroupRoleLink
     {
-        [Required]
+        [Key]
+        public string apiId { get; set; }
+
+        [ForeignKey("Group")]
         public string groupApiId { get; set; }
-        [Required]
+        
+        [ForeignKey("Role")]
         public string roleApiId { get; set; }
         public Role role { get; set; }
         public Group group { get; set; }
