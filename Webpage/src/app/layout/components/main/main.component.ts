@@ -152,7 +152,7 @@ export class MainComponent implements OnInit {
 
   openLoginDialog() {
     const _ = new  Result<any, any>();
-    _.toId = DOMTypes.dialog;
+    _.toId = DOMTypes.overlay;
     _.fromType = DOMTypes.main;
     _.fromId = this.DOMself.id;
     _.action = ActionType.load;

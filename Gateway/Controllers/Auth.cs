@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
-using System.Linq;
-using Auth_DB_Context;
-using User_Factory;
 using Auth_Service;
-using Helper;
-using WebApi.Helpers;
-using Microsoft.Extensions.Options;
 
 namespace AuthControllers
 {

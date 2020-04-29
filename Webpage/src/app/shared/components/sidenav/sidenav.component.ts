@@ -65,7 +65,6 @@ export class SidenavComponent implements OnInit {
       case (ActionType.load):
         this.navItemService.get(event.toApiId).subscribe(
           (data: RestResponse<NavData>) => {
-            console.log(data);
             this.navData = data.result;
             if(!this.navData.navData) {this.navData.navData = []};
             this.states.finishInit.setTrue();

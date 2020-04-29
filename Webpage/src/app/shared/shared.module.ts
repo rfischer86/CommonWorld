@@ -21,6 +21,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoginDialogComponent } from './components/dialog/login/login';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { RegisterGroupDialogComponent } from './components/dialog/register-group/register-group';
 
 @NgModule({
   declarations:
@@ -35,7 +36,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ArcordeonComponent,
     OverlayComponent,
     NoteComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    RegisterGroupDialogComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +60,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     OverlayComponent,
     ArcordeonComponent,
     NoteComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    RegisterGroupDialogComponent
   ],
   providers: [
     DOMService,

@@ -58,13 +58,13 @@ namespace BuildLogger.Migrations
 
             modelBuilder.Entity("BuildLogger_DB_Context.Nav", b =>
                 {
-                    b.Property<string>("APIid")
+                    b.Property<string>("apiId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("BodyId")
+                    b.Property<string>("NavapiId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NavAPIid")
+                    b.Property<string>("bodyId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("count")
@@ -76,9 +76,12 @@ namespace BuildLogger.Migrations
                     b.Property<string>("name")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("APIid");
+                    b.Property<string>("type")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("NavAPIid");
+                    b.HasKey("apiId");
+
+                    b.HasIndex("NavapiId");
 
                     b.ToTable("Nav");
                 });
@@ -91,17 +94,17 @@ namespace BuildLogger.Migrations
                     b.Property<string>("parent_API_Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("childAPIid")
+                    b.Property<string>("childapiId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("parentAPIid")
+                    b.Property<string>("parentapiId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("child_API_Id", "parent_API_Id");
 
-                    b.HasIndex("childAPIid");
+                    b.HasIndex("childapiId");
 
-                    b.HasIndex("parentAPIid");
+                    b.HasIndex("parentapiId");
 
                     b.ToTable("NavNav");
                 });
@@ -110,18 +113,18 @@ namespace BuildLogger.Migrations
                 {
                     b.HasOne("BuildLogger_DB_Context.Nav", null)
                         .WithMany("navData")
-                        .HasForeignKey("NavAPIid");
+                        .HasForeignKey("NavapiId");
                 });
 
             modelBuilder.Entity("BuildLogger_DB_Context.NavNav", b =>
                 {
                     b.HasOne("BuildLogger_DB_Context.Nav", "child")
                         .WithMany()
-                        .HasForeignKey("childAPIid");
+                        .HasForeignKey("childapiId");
 
                     b.HasOne("BuildLogger_DB_Context.Nav", "parent")
                         .WithMany()
-                        .HasForeignKey("parentAPIid");
+                        .HasForeignKey("parentapiId");
                 });
 #pragma warning restore 612, 618
         }

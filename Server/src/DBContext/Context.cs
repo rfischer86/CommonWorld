@@ -51,10 +51,10 @@ namespace BuildLogger_DB_Context
     public class BuildLoggerContext : DbContext
     {
         public DbSet<Error> Error { get; set; }
+        public DbSet<BuildLogRef> BuildLog { get; set; }
         public DbSet<Nav> Nav { get; set; }
         public DbSet<NavNav> NavNav { get; set; }
-        public DbSet<BuildLogRef> BuildLog { get; set; }
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NavNav>()
                 .HasKey(u => new { u.child_API_Id, u.parent_API_Id });

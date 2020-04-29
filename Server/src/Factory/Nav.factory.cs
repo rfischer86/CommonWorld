@@ -38,18 +38,23 @@ namespace Nav_Factory
             } else {
                 sr.succeed();
                 sr.result = new Nav();
-                // if (sr.result.apiId == null ) {
-                //     sr.result.apiId = Helper.Helper.RandomId();
-                // }
+                if (sr.result.apiId == null ) {
+                    sr.result.apiId = Helper.Helper.RandomId();
+                }
                 sr.result.count = 0;
                 sr.result.link = entity.link;
                 sr.result.name = entity.name;
                 sr.result.apiId = entity.apiId;
                 // sr.result.navParents = new List<NavNav>();
                 sr.error.addInfo(HttpError.getAddIdIntoTable(TabelList.Nav, sr.result.apiId));
-                // Helper.Helper.printObject(sr);
                 db.Add(sr.result);
                 db.SaveChanges();
+                if( entity.type == NavTypes.profile ) {
+                    createProfileNav(sr);
+                }
+                if( entity.type == NavTypes.menu ) {
+                    createProfileNav(sr);
+                }
             }
             return sr;
         }
@@ -61,13 +66,11 @@ namespace Nav_Factory
             if ( !sr.success ) {
                 return sr;
             }
-            // Helper.Helper.printObject(entity);
             Nav result;
             result = db.Nav.Find(entity.apiId);
             if (result == null ) {
                 sr.error.addMessage(HttpError.getNoTableEntryForValue("Nav", "id", entity.apiId), withMsg);
                 sr.fail();
-                Helper.Helper.print("fail");
                 return sr;
             }
             result.name = entity.name;
@@ -110,7 +113,6 @@ namespace Nav_Factory
             db.Add(navLink);
             db.Update(parent_entity);
             db.SaveChanges();
-            Helper.Helper.printObject(sr);
             return sr;
         } 
 
@@ -153,7 +155,6 @@ namespace Nav_Factory
 
             sr.result = parent_entity;
             db.SaveChanges();
-            Helper.Helper.printObject(sr);
             return sr;
         } 
 
@@ -170,18 +171,12 @@ namespace Nav_Factory
         public ServerResult<Nav> getById(string id, bool withMsg = true)
         {
             ServerResult<Nav> sr = ServerResult<Nav>.create();
-            Helper.Helper.print(id);
             sr.result = db.Nav.Find(id);
             if (sr.result == null ) {
-                sr.error.addMessage(HttpError.getNoTableEntryForValue("Nav", "id", id), withMsg);
+                sr.error.addMessage(HttpError.getNoTableEntryForValue("NavNav", "id", id), withMsg);
                 sr.fail();
             };
-            try {
-                Helper.Helper.printObject(
-                    db.NavNav
-                    .Where(el => el.parent_API_Id == id)
-                );
-                
+            try {                
                 sr.result.navData = db.NavNav
                     .Where(el => el.parent_API_Id == id)
                     .Select(el => el.child)
@@ -196,7 +191,6 @@ namespace Nav_Factory
         public ServerResult<Nav> deleteById(string id, bool withMsg = true)
         {
             ServerResult<Nav> sr  = getById(id, withMsg);
-            Helper.Helper.printObject(sr);
             if (sr.success)
             {   
                 if ( sr.result.count == 1) {
@@ -214,6 +208,48 @@ namespace Nav_Factory
                 }
             }
             return sr;
+        }
+         public  ServerResult<Nav> createProfileNav(ServerResult<Nav> sr) {
+                List<string> profileNavElements = new List<string>();
+                sr.result.navData = new List<Nav>();
+                profileNavElements.Add("Roles");
+                profileNavElements.Add("Groups");
+                profileNavElements.Add("ToDo");
+                profileNavElements.Add("Feed");
+                int index = 0;
+                foreach (string name in profileNavElements) {
+                    Nav nav = new Nav();
+                    nav.apiId = Helper.Helper.RandomId();
+                    nav.name = name;
+                    Helper.Helper.printObject(nav);
+                    Helper.Helper.printObject(sr);
+                    sr.contatenate(addNavItem(sr.result.apiId,nav.apiId, index, true), sr);
+                    sr.result.navData.Append(nav);
+                    db.Add(nav);
+                    db.SaveChanges();
+                    index += 1;
+                }
+             return sr;
+        }
+
+         public  ServerResult<Nav> createMenuNav(ServerResult<Nav> sr){
+                List<string> profileNavElements = new List<string>();
+                sr.result.navData = new List<Nav>();
+                profileNavElements.Add("Roles");
+                profileNavElements.Add("Internal Groups");
+                profileNavElements.Add("External Groups");
+                profileNavElements.Add("Calender");
+                int index = 0;
+                foreach (string name in profileNavElements) {
+                    sr.result.navData.Add(new Nav());
+                    Nav nav = sr.result.navData.Last();
+                    nav.apiId = Helper.Helper.RandomId();
+                    nav.name = name;
+                    db.SaveChanges();
+                    addNavItem(sr.result.apiId,nav.apiId, index, true);
+                    index += 1;
+                }
+             return sr;
         }
 
         public  ServerResult<Nav> passCreateGurd(Nav entity, bool withMsg = true) {

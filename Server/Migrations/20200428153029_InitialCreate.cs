@@ -39,21 +39,22 @@ namespace BuildLogger.Migrations
                 name: "Nav",
                 columns: table => new
                 {
-                    APIid = table.Column<string>(nullable: false),
-                    BodyId = table.Column<string>(nullable: true),
+                    apiId = table.Column<string>(nullable: false),
+                    bodyId = table.Column<string>(nullable: true),
                     count = table.Column<int>(nullable: false),
                     link = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true),
-                    NavAPIid = table.Column<string>(nullable: true)
+                    type = table.Column<string>(nullable: true),
+                    NavapiId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Nav", x => x.APIid);
+                    table.PrimaryKey("PK_Nav", x => x.apiId);
                     table.ForeignKey(
-                        name: "FK_Nav_Nav_NavAPIid",
-                        column: x => x.NavAPIid,
+                        name: "FK_Nav_Nav_NavapiId",
+                        column: x => x.NavapiId,
                         principalTable: "Nav",
-                        principalColumn: "APIid",
+                        principalColumn: "apiId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -63,40 +64,40 @@ namespace BuildLogger.Migrations
                 {
                     child_API_Id = table.Column<string>(nullable: false),
                     parent_API_Id = table.Column<string>(nullable: false),
-                    childAPIid = table.Column<string>(nullable: true),
-                    parentAPIid = table.Column<string>(nullable: true)
+                    childapiId = table.Column<string>(nullable: true),
+                    parentapiId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NavNav", x => new { x.child_API_Id, x.parent_API_Id });
                     table.ForeignKey(
-                        name: "FK_NavNav_Nav_childAPIid",
-                        column: x => x.childAPIid,
+                        name: "FK_NavNav_Nav_childapiId",
+                        column: x => x.childapiId,
                         principalTable: "Nav",
-                        principalColumn: "APIid",
+                        principalColumn: "apiId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_NavNav_Nav_parentAPIid",
-                        column: x => x.parentAPIid,
+                        name: "FK_NavNav_Nav_parentapiId",
+                        column: x => x.parentapiId,
                         principalTable: "Nav",
-                        principalColumn: "APIid",
+                        principalColumn: "apiId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nav_NavAPIid",
+                name: "IX_Nav_NavapiId",
                 table: "Nav",
-                column: "NavAPIid");
+                column: "NavapiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NavNav_childAPIid",
+                name: "IX_NavNav_childapiId",
                 table: "NavNav",
-                column: "childAPIid");
+                column: "childapiId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NavNav_parentAPIid",
+                name: "IX_NavNav_parentapiId",
                 table: "NavNav",
-                column: "parentAPIid");
+                column: "parentapiId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

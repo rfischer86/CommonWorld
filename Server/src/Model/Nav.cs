@@ -5,6 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BuildLogger_DB_Context
 {    
+    static class NavTypes
+    {
+        public const string profile = "profile";
+        public const string menu = "menue";
+    }
     public class Nav
     {
         // public Nav(){
@@ -17,6 +22,7 @@ namespace BuildLogger_DB_Context
         public int count {get; set;}
         public string link {get; set;}
         public string name { get; set; }
+        public string type { get; set; }
         
         public virtual List<Nav> navData { get; set; }
         // public virtual List<NavNav> navParents { get; set; }

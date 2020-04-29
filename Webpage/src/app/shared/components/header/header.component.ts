@@ -8,6 +8,7 @@ import { Result, ActionType } from '../../classes/result/result';
 import { HtmlState } from '../../enums/htmlStates';
 import { NavTypes } from '../../enums/navTypes';
 import { UserService } from '../../services/User/user.service';
+import { OverlayTypes } from '../../enums/overlayTypes';
 
 @Component({
   selector: 'app-header',
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit {
   createButtons(): void {
     this.menueButtonList.push(this.createMenueButton())
     this.actiomButtonList.push(this.createProfileButton());
+    this.actiomButtonList.push(this.createRegisterGroupButton());
     this.actiomButtonList.push(this.createSearchButton());
   }
 
@@ -65,7 +67,7 @@ export class HeaderComponent implements OnInit {
     button.icon = 'search';
     button.index = 0;
     button.self = this;
-    // button.buttonState = ButtonState.disabled;
+    button.buttonState = ButtonState.active;
     button.htmlState = HtmlState.primary;
     button.size = '2em';
     button.nextButton = 0;
@@ -86,6 +88,23 @@ export class HeaderComponent implements OnInit {
     button.type = ButtonTypes.icon;
     return button;
   }
+
+
+  createRegisterGroupButton(): Button {
+    const button = {} as Button;
+    button.action = this.clickRegisterGroup;
+    button.icon = 'group_add';
+    button.index = 0;
+    button.self = this;
+    button.buttonState = ButtonState.active;
+    button.htmlState = HtmlState.primary;
+    button.nextButton = 0;
+    button.size = '2em';
+    button.type = ButtonTypes.icon;
+    return button;
+  }
+
+
 
   clickMenue(self: any, data: any) {
     const _ = new  Result<any, any>();
@@ -112,5 +131,12 @@ export class HeaderComponent implements OnInit {
     self.DOM.processEvent(_);
   }
 
+  clickRegisterGroup(self: any, data: any) {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.overlay;
+    _.option = OverlayTypes.registerGroup;
+    _.action = ActionType.open;
+    self.DOM.processEvent(_);
+  }
 
 }

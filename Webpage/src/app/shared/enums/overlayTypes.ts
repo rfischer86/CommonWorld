@@ -1,4 +1,5 @@
 export enum OverlayTypes {
-  login = 'login'
+  login = 'login',
+  registerGroup = 'registerGroup'
 }
 

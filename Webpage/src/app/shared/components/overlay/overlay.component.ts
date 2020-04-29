@@ -30,8 +30,8 @@ export class OverlayComponent implements OnInit {
   ){ }
 
   ngOnInit() {
-    const _ = this.DOM.create(DOMTypes.dialog, DOMTypes.main, DOMTypes.dialog);
-    this.DOM.getById(DOMTypes.sidenav)
+    const _ = this.DOM.create(DOMTypes.overlay, DOMTypes.main, DOMTypes.overlay);
+    this.DOM.getById(DOMTypes.overlay)
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
     } else {

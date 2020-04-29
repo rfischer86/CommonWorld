@@ -5,6 +5,7 @@
         <mat-icon (click)="closeOverlay()">close</mat-icon>
       </div>
       <app-login-dialog [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.login" ></app-login-dialog>
+      <app-register-group-dialog [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.registerGroup" ></app-register-group-dialog>
     </div>
   </div>
 

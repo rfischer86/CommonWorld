@@ -29,7 +29,6 @@ namespace BuildLogger_ErrorControler
         [HttpPost]
         public ActionResult Post(Nav entity)
         {
-            Helper.Helper.print("post");
             ServerResult<Nav> sr = factory.create(entity, true);
             if (sr.success) 
             {

@@ -6,6 +6,10 @@ export class Text {
   login = {
     title: 'Anmeldung'
   };
+  group = {
+    create: 'Gruppe erstellen',
+    name: 'Gruppen Name'
+  };
   general = {
     ok : 'OK',
     back: 'zurück',
@@ -15,7 +19,7 @@ export class Text {
     register: 'registrieren',
     email: 'E-Mail',
     password: 'Password',
-    name: 'Name'
+    name: 'Name',
   };
   errorMsg = {
     register: 'Es müssen alle Feder ausgefüllt sein, damit Sie sich registrieren können.',

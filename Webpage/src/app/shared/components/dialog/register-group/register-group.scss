@@ -1,0 +1,40 @@
+@import '../../../../../assets/styles/variable.scss';
+
+
+.login-wrapper {
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  position: relative;
+  background-color: $white;
+  width: 25em;
+  .field{
+    height: unset;
+    width: unset;
+    input{
+      height: 2em;
+      width: 30em;
+      cursor: pointer;
+    }
+    .suffix{
+      position: absolute;
+      right: .5em;
+      margin-top: 5px;
+    }
+  }
+
+  transition: height 5s linear;
+  .checkboxes{
+    width: 100%;
+    height: fit-content;
+    margin-bottom: 1em !important;
+    display: block;
+    .hidden{
+      opacity: 0;
+      height: 0;
+      display: none;
+    }
+  }
+
+
+}
