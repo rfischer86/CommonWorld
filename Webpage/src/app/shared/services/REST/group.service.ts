@@ -27,11 +27,6 @@ export class GroupService {
     return this.http.put<RestResponse<Group>>(this.baseURL, data, header);
   }
 
-  deleteItem(parentId: string, childId: string): Observable<RestResponse<Group>> {
-    const header = this.restService.getHeaders();
-    return this.http.put<RestResponse<Group>>(this.baseURL, null, header);
-  }
-
   get(id: string): Observable<RestResponse<Group>> {
     const header = this.restService.getHeaders();
     const url = this.baseURL + '/' + id;
@@ -42,5 +37,11 @@ export class GroupService {
     const header = this.restService.getHeaders();
     const url = this.baseURL + '/' + id;
     return this.http.delete<RestResponse<Group>>(url, header);
+  }
+
+  search(text: string): Observable<RestResponse<Group>> {
+    const header = this.restService.getHeaders();
+    const url = this.baseURL + '?text=' + text;
+    return this.http.get<RestResponse<Group>>(url, header);
   }
 }

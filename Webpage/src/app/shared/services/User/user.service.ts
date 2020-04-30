@@ -17,6 +17,7 @@ export class UserService {
   userObservable = new BehaviorSubject<User>(this.user);
   states = new States();
   authURL = environment.authURL
+  baseURL = environment.authURL + environment.auth.users;
 
   constructor(
     private http: HttpClient,
@@ -64,5 +65,30 @@ export class UserService {
     const url = this.authURL + environment.auth.users
     return this.http.post<RestResponse<User>>(url, data, header);
   }
+
+
+  update(data: User): Observable<RestResponse<User>> {
+    const header = this.restService.getHeaders();
+    return this.http.put<RestResponse<User>>(this.baseURL, data, header);
+  }
+
+  get(id: string): Observable<RestResponse<User>> {
+    const header = this.restService.getHeaders();
+    const url = this.baseURL + '/' + id;
+    return this.http.get<RestResponse<User>>(url, header);
+  }
+
+  delete(id: string): Observable<RestResponse<User>> {
+    const header = this.restService.getHeaders();
+    const url = this.baseURL + '/' + id;
+    return this.http.delete<RestResponse<User>>(url, header);
+  }
+
+  search(text: string): Observable<RestResponse<User>> {
+    const header = this.restService.getHeaders();
+    const url = this.baseURL + '?text=' + text;
+    return this.http.get<RestResponse<User>>(url, header);
+  }
+
 
 }

@@ -18,7 +18,7 @@ import { KEY } from 'src/app/shared/enums/keyCodes.ts';
 import { GroupService } from 'src/app/shared/services/REST/group.service';
 import { Group } from 'src/app/shared/interfaces/group.interface';
 import { GroupUserLinkService } from 'src/app/shared/services/REST/groupUserLink.service';
-import { RolesType } from 'src/app/shared/interfaces/roles.interface';
+import { RolesType } from 'src/app/shared/interfaces/role.interface';
 
 enum DialogButtons{
   register = 'register'

@@ -9,6 +9,10 @@ import { HtmlState } from '../../enums/htmlStates';
 import { NavTypes } from '../../enums/navTypes';
 import { UserService } from '../../services/User/user.service';
 import { OverlayTypes } from '../../enums/overlayTypes';
+import { SearchServices } from '../search-field/search-field.interface';
+import { Text } from 'dist/commonty/assets/i18n/app.text';
+import { PopupTypes } from '../../enums/popupTypes';
+import { State } from '../../classes/states/states';
 
 @Component({
   selector: 'app-header',
@@ -17,11 +21,15 @@ import { OverlayTypes } from '../../enums/overlayTypes';
 })
 export class HeaderComponent implements OnInit {
   @Input() parentId;
-
+  text = new Text();
+  searchServices = SearchServices;
   menueButtonList = [] as Button[];
   actiomButtonList = [] as Button[];
   DOMself: DOMElement;
+  DOMid: string;
   logger = new Logger();
+  popupData: Result<any, any>;
+  openHome = new State(false);
   constructor(
     private userService: UserService,
     private DOM: DOMService,
@@ -36,14 +44,38 @@ export class HeaderComponent implements OnInit {
       this.logger.appEndLogBook(_.log);
     } else {
       this.DOMself = _.output;
+      this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event));
+      this.DOMid = this.DOMself.id;
     }
     this.createButtons();
+  }
+
+  processDOMEvent(event: Result<any, any>) {
+    if (!event){return};
+    if (event.action === ActionType.open && event.option === PopupTypes.home) {
+      this.openHomePopup();
+    }
+    if (event.action === ActionType.close && event.option === PopupTypes.home) {
+      this.closeHomePopup();
+    }
+  }
+
+  openHomePopup(){
+    const _ = new  Result<any, any>();
+    this.popupData = new Result<any,any>();
+    this.popupData.option = PopupTypes.home;
+    this.openHome.setTrue();
+  }
+
+  closeHomePopup(){
+    const _ = new  Result<any, any>();
+    this.openHome.setFalse();
   }
 
   createButtons(): void {
     this.menueButtonList.push(this.createMenueButton())
     this.actiomButtonList.push(this.createProfileButton());
-    this.actiomButtonList.push(this.createRegisterGroupButton());
+    this.actiomButtonList.push(this.createHomeButton());
     this.actiomButtonList.push(this.createSearchButton());
   }
 
@@ -89,11 +121,10 @@ export class HeaderComponent implements OnInit {
     return button;
   }
 
-
-  createRegisterGroupButton(): Button {
+  createHomeButton(): Button {
     const button = {} as Button;
-    button.action = this.clickRegisterGroup;
-    button.icon = 'group_add';
+    button.action = this.clickHome;
+    button.icon = 'home';
     button.index = 0;
     button.self = this;
     button.buttonState = ButtonState.active;
@@ -106,7 +137,7 @@ export class HeaderComponent implements OnInit {
 
 
 
-  clickMenue(self: any, data: any) {
+  clickMenue(self: HeaderComponent, data: any) {
     const _ = new  Result<any, any>();
     _.toId = DOMTypes.main;
     _.option = NavTypes.menu;
@@ -115,14 +146,14 @@ export class HeaderComponent implements OnInit {
     self.DOM.processEvent(_);
   }
 
-  clickSearch(self: any, data: any) {
+  clickSearch(self: HeaderComponent, data: any) {
     const _ = new  Result<any, any>();
     // _.toId = DOMTypes.sidenav;
     // _.action = ActionType.toggel;
     // self.DOM.processEvent(_);
   }
 
-  clickProfile(self: any, data: any) {
+  clickProfile(self: HeaderComponent, data: any) {
     const _ = new  Result<any, any>();
     _.toId = DOMTypes.main;
     _.option = NavTypes.profile;
@@ -131,7 +162,16 @@ export class HeaderComponent implements OnInit {
     self.DOM.processEvent(_);
   }
 
-  clickRegisterGroup(self: any, data: any) {
+  clickHome(self: HeaderComponent) {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.header;
+    _.option = PopupTypes.home;
+    _.type = DOMTypes.popup;
+    _.action = ActionType.open;
+    self.DOM.processEvent(_);
+  }
+
+  clickRegisterGroup(self: HeaderComponent, data: any) {
     const _ = new  Result<any, any>();
     _.toId = DOMTypes.overlay;
     _.option = OverlayTypes.registerGroup;
@@ -139,4 +179,7 @@ export class HeaderComponent implements OnInit {
     self.DOM.processEvent(_);
   }
 
+  onSelect(event){
+    console.log(event);
+  }
 }

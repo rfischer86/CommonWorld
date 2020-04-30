@@ -13,8 +13,10 @@ export const environment = {
   auth: {
     authenticate: 'authenticate',
     users: 'users',
-    groups: 'groups',
     roles: 'roles',
+    groups: 'groups',
+    groupRoleLink: 'groupRoleLink',
+    groupUserLink: 'groupUserLink',
   }
 };
 

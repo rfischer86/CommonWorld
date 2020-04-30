@@ -21,7 +21,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoginDialogComponent } from './components/dialog/login/login';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
 import { RegisterGroupDialogComponent } from './components/dialog/register-group/register-group';
+import { SearchFieldComponent } from './components/search-field/search-field.component';
+import { PopupComponent } from './components/popup/popup.component';
+import { PopupHomeComponent } from './components/popup/popups/home/home.component';
 
 @NgModule({
   declarations:
@@ -37,7 +41,10 @@ import { RegisterGroupDialogComponent } from './components/dialog/register-group
     OverlayComponent,
     NoteComponent,
     LoginDialogComponent,
-    RegisterGroupDialogComponent
+    RegisterGroupDialogComponent,
+    SearchFieldComponent,
+    PopupComponent,
+    PopupHomeComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +53,7 @@ import { RegisterGroupDialogComponent } from './components/dialog/register-group
     MatIconModule,
     MatProgressBarModule,
     MatCheckboxModule,
+    MatMenuModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
@@ -61,7 +69,10 @@ import { RegisterGroupDialogComponent } from './components/dialog/register-group
     ArcordeonComponent,
     NoteComponent,
     LoginDialogComponent,
-    RegisterGroupDialogComponent
+    SearchFieldComponent,
+    RegisterGroupDialogComponent,
+    PopupComponent,
+    PopupHomeComponent
   ],
   providers: [
     DOMService,

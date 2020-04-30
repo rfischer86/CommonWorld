@@ -11,5 +11,6 @@ export const enum DOMTypes {
   main = 'main',
   body = 'body',
   overlay = 'overlay',
-  dialog = 'dialog'
+  dialog = 'dialog',
+  popup = 'popup'
 }
