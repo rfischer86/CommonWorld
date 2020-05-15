@@ -14,6 +14,7 @@ import { PopupTypes } from '../../enums/popupTypes';
 export class PopupComponent implements OnInit, OnDestroy {
 
   @ViewChild('popup', {static: false}) popup;
+  @Input() parentId;
   popupTypes = PopupTypes;
   popupType: PopupTypes;
   states = new States();
@@ -24,7 +25,7 @@ export class PopupComponent implements OnInit, OnDestroy {
       this.latencTime.setTrue();
       setTimeout(() => this.latencTime.setFalse(), 500);
       this.states.open.setTrue();
-      this.popupData = data;
+      this.popupData = data.input;
       this.popupType = data.option as PopupTypes;
     } else {
       this.states.open.setFalse();
@@ -44,7 +45,7 @@ export class PopupComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const _ = this.DOM.create(DOMTypes.overlay, DOMTypes.main, DOMTypes.popup);
+    const _ = this.DOM.create(DOMTypes.popup, this.parentId, DOMTypes.popup);
     this.DOM.getById(DOMTypes.popup)
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
@@ -52,7 +53,6 @@ export class PopupComponent implements OnInit, OnDestroy {
       this.DOMself = _.output;
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
       this.DOMid = this.DOMself.id;
-      console.log(this.DOMid);
     }
   }
 
@@ -86,7 +86,6 @@ export class PopupComponent implements OnInit, OnDestroy {
       targetElement.stopPropagation();
       targetElement.preventDefault();
       this.closeOverlay();
-
     }
   }
 

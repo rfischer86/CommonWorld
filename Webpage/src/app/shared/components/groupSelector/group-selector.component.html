@@ -1,0 +1,14 @@
+<div class="group-selector" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="-0.5em">
+  <div *ngFor="let link of groupLinks; let i = index;" class="link" (click)="clickLink(link)" fxLayout="row"
+    fxLayoutAlign="center end" fxLayoutGap="0.5em" [class.selected]="link.apiId===selectedApiId">
+    <div>
+      <mat-icon *ngIf="!!link.icon">{{link.icon}}</mat-icon>
+    </div>
+    <span [class]="link.class">
+      {{link.name}}
+    </span>
+    <div class="close">
+      <mat-icon (click)="closeSelector(link)">close</mat-icon>
+    </div>
+  </div>
+</div>

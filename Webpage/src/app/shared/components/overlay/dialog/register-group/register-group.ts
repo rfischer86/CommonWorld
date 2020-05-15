@@ -73,15 +73,13 @@ export class RegisterGroupDialogComponent implements OnInit, OnDestroy{
     }
 
     if (event.action === ActionType.request && event.option === DialogButtons.register) {
-       this.groupService.post(event.input as Group).subscribe(
+      this.groupService.post(event.input as Group).subscribe(
         data => {
-          console.log(data);
           this.note.success = this.text.successMsg.register
           // this.groupUserLinkService.post(data.result, this.userService.getUser(), RolesType.admin);
           setTimeout(() => this.close(), 2000);
         },
         error => {
-          console.log(error);
           this.note.error = this.text.errorMsg.register
           setTimeout(() => this.note.error = null, 2000)
         }
@@ -166,7 +164,6 @@ export class RegisterGroupDialogComponent implements OnInit, OnDestroy{
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event.key);
     if (event.key === KEY.ENTER) {
       this.onSubmit()
     }

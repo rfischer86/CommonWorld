@@ -39,6 +39,7 @@ export class BodyComponent implements OnInit {
 
   loadBody(navData: NavData) {
     this.navData = navData;
+    console.log('this.navData', this.navData);
     console.log('TODO: Implement load body');
   }
 

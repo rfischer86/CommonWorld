@@ -2,13 +2,17 @@
   <app-header  [parentId]="DOMself.id" > </app-header>
   <div [class]="'main-body ' + navState" fxLayout="row nowrap" fxLayoutAlign="start start">
     <div class="nav-left" >
-      <app-sidenav [navType]="NavTypes.menu" class="app-sidenav" [parentId]="DOMself.id" ></app-sidenav>
+      <app-sidenav [navType]="NavTypes.menu" class="app-sidenav" [parentId]="DOMself.id" >
+        <app-group-sidenav></app-group-sidenav>
+      </app-sidenav>
     </div>
     <div class="app-body">
       <app-body fxFlexFill  [parentId]="DOMself.id"></app-body>
     </div>
     <div class="nav-right" >
-      <app-sidenav [navType]="NavTypes.profile" class="app-sidenav-profile" [parentId]="DOMself.id" ></app-sidenav>
+      <app-sidenav [navType]="NavTypes.profile" class="app-sidenav-profile" [parentId]="DOMself.id" >
+        <app-user-sidenav></app-user-sidenav>
+      </app-sidenav>
     </div>
   </div>
   <app-footer [parentId]="DOMself.id"></app-footer>

@@ -3,6 +3,7 @@ import { HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http
 import { TranslateService } from '@ngx-translate/core';
 import { throwError as observableThrowError,  throwError as _throw  } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Helper } from '../Helper/helper.service';
 
 
 export interface RestHeader {
@@ -18,16 +19,21 @@ export class RestService {
 
   constructor(
     protected translationService: TranslateService,
+    private helper: Helper
     ) { }
 
-  getHeaders(params: {[key: string]: string} = null, mimeType = 'application/json'): RestHeader {
+  getHeaders(params: {[key: string]: string} = null, mimeType = 'application/json', withToken = true): RestHeader {
     const header = {} as RestHeader;
     header.headers = new HttpHeaders({
       'Content-Type': mimeType,
       'Accept-Language': 'de',
     });
+    if (withToken) {
+      const token = this.helper.getToken();
+      header.headers = header.headers.append('Authorization', token)
+    }
     if (this.translationService != null && this.translationService.currentLang != null) {
-      header.headers = header.headers.set('Accept-Language', this.translationService.currentLang);
+      header.headers = header.headers.append('Accept-Language', this.translationService.currentLang);
     }
     if (params) {
       header.params = this.getParams(params);

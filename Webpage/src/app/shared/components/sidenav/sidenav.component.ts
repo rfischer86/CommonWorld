@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
 import { DOMService, DOMElement } from '../../services/DOM/dom-element.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
@@ -16,8 +16,10 @@ import { NavTypes } from '../../enums/navTypes';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  @ViewChild(TemplateRef) content: TemplateRef < any >;
+
   @Input() parentId: string;
-  @Input() navType: string;
+  @Input() navType: NavTypes;
   DOMself: DOMElement;
   logger = new Logger();
   states = new States();
@@ -34,7 +36,6 @@ export class SidenavComponent implements OnInit {
       this.logger.appEndLogBook(_.log);
     } else {
       this.DOMself = _.output;
-      console.log(this.DOMself.id);
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
     }
   }
@@ -60,7 +61,6 @@ export class SidenavComponent implements OnInit {
   }
 
   loadData(event:  Result<any, any>) {
-    console.log(event);
     switch(event.action) {
       case (ActionType.load):
         this.navItemService.get(event.toApiId).subscribe(
@@ -71,7 +71,6 @@ export class SidenavComponent implements OnInit {
 
           },
           error => {
-            console.log(error);
             this.navData = new NavData();
             this.navData.apiId = event.toApiId;
             this.navData.type = event.name as NavTypes;
@@ -94,6 +93,7 @@ export class SidenavComponent implements OnInit {
     _.toId = DOMTypes.body;
     _.fromType = DOMTypes.sidenav;
     _.input = data;
+    _.option = data.type;
     _.action = ActionType.load;
     this.DOM.processEvent(_);
   }

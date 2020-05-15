@@ -1,8 +1,14 @@
 <div class="sidenav-item" fxLayout="column">
 
-  <div class="content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
-    <input #sidenavText [disabled]="!states.editMode.value"  (keyup)="updateName($event)" [class.active]="states.editMode.value"type="text" class="name" [value]="navData.name">
-    <div class="buttons" fxLayout="row nowrap">
+  <div class.hidden="firstElement" (click)="clickNavElement(navData)" class="content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
+    <input #sidenavText
+      [disabled]="!states.editMode.value"
+      (keyup)="updateName($event)"
+      [class.active]="states.editMode.value" type="text"
+      class="name"
+      (click)="clickNavElement(navData)"
+      [value]="navData.name">
+    <div class="buttons" fxLayout="row nowrap"(click)="clickButtonDiv($event)">
       <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
     </div>
   </div>

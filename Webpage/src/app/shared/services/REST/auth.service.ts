@@ -23,7 +23,7 @@ export class AuthService {
   ) { }
 
   auth(data: Authenticate): Observable<RestResponse<User>> {
-    const header = this.restService.getHeaders();
+    const header = this.restService.getHeaders({}, 'application/json', false);
     const url = this.authURL + environment.auth.authenticate
     return this.http.post<RestResponse<User>>(url, data, header);
   }

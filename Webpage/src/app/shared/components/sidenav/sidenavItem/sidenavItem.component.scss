@@ -1,5 +1,6 @@
 
 @import '../../../../../assets/styles/variable.scss';
+@import '../../../../../assets/styles/mixin.scss';
 
 :host{
   width: 100% !important;
@@ -14,21 +15,19 @@
     display: none !important;
   }
   .content {
+    @include notSelectable();
+    @include hoverNav-strong();
     &:hover{
-      background-color: $gray-lighter;
+      background-color: $gray;
     }
     width: 100%;
     .name{
-      background-color:  rgba(0,0,0,0);;
+      background-color:  rgba(0,0,0,0);
       border: none;
       color: $black;
       &.active{
         font-style: oblique;
       }
-    }
-
-    .buttons{
-
     }
   }
   &.open{

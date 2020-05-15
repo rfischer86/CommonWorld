@@ -1,10 +1,8 @@
 <div #popup class="popup-outer-wrapper"
   [ngSwitch]="popupType">
   <div class="popup-container">
-    <!-- <div class="close">
-      <mat-icon (click)="closeOverlay()">close</mat-icon>
-    </div> -->
     <app-home-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.home"></app-home-popup>
+    <app-search-field-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.search" [popupAction]="popupData"></app-search-field-popup>
   </div>
 
 </div>

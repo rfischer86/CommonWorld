@@ -1,6 +1,24 @@
 @import '../../../../assets/styles/variable.scss';
+@import '../../../../assets/styles/mixin.scss';
 
 :host{
   z-index: 11;
   background-color: $white ;
+}
+
+.footer{
+  padding: 0.25em;
+  background-color: $white;
+  filter: drop-shadow(-2px 0px 5px $gray-dark);
+  .link{
+    span{
+      color: $link;
+      font-size: 0.7em;
+      display: block;
+      @include hoverButton-soft();
+      &:hover{
+        color: $link-dark;
+      }
+    }
+  }
 }

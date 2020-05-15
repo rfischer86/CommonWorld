@@ -3,6 +3,7 @@ export interface User {
   name: string;
   apiId: string;
   email: string;
+  token?: string;
 }
 
 export interface UserGroups{

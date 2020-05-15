@@ -1,22 +1,15 @@
 <form [formGroup]="form" (onSubmit)="null">
-  <div class="search-field" fxLayout="column" #searchField>
-    <div class="content" *ngIf="isLoaded">
-      <input
-        *ngIf="isEditMode"
-        type="text"
-        (keyup)="updateElementList($event)"
-        (blur)="controlSelection()"
-        (click)="updateElementList($event)"
-        formControlName="searchString"
-        [matMenuTriggerFor]="docMenu">
-      <input
-        *ngIf="!isEditMode"
-        type="text"
-        readonly
-        formControlName="searchString">
+  <div class="search-field-wrapper">
+    <div class="search-field" fxLayout="column" #searchField>
+      <div class="content" *ngIf="isLoaded">
+        <input *ngIf="isEditMode" type="text" (keyup)="updateElementList($event)"
+          formControlName="searchString" placeholder="searchServices"
+        >
+      </div>
+      <div class="search-result">
+        <button mat-menu-item *ngFor="let opt of elementList" [value]="opt"
+          (click)="setElement(opt)">{{opt.name}}</button>
+      </div>
     </div>
-    <mat-menu #docMenu="matMenu" >
-      <button mat-menu-item *ngFor="let opt of elementList" [value]="opt" (click)="setElement(opt)">{{opt.name}}</button>
-    </mat-menu>
   </div>
 </form>

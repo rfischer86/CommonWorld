@@ -171,7 +171,6 @@ export class DOMService {
     switch (true) {
       case (_.action === ActionType.destroy):
         this.delete(_.toId);
-        // this.DOMElementList[_.toId].destroy();
         break;
       case (_.action !== ActionType.destroy):
         this.DOMElementList[_.toId].self.next(_);

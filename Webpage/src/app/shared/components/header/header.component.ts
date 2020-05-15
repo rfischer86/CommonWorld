@@ -52,11 +52,22 @@ export class HeaderComponent implements OnInit {
 
   processDOMEvent(event: Result<any, any>) {
     if (!event){return};
-    if (event.action === ActionType.open && event.option === PopupTypes.home) {
-      this.openHomePopup();
+    if (event.action === ActionType.open){
+      if (event.option === PopupTypes.home) {
+        this.openHomePopup();
+      }
+      if (event.option === PopupTypes.search) {
+        this.openSearchPopup(event);
+      }
     }
-    if (event.action === ActionType.close && event.option === PopupTypes.home) {
-      this.closeHomePopup();
+    if (event.action === ActionType.close) {
+      if (event.option === PopupTypes.home) {
+        this.closePopup();
+      }
+      if (event.option === PopupTypes.search) {
+        this.closePopup();
+      }
+
     }
   }
 
@@ -67,9 +78,18 @@ export class HeaderComponent implements OnInit {
     this.openHome.setTrue();
   }
 
-  closeHomePopup(){
+  closePopup(){
     const _ = new  Result<any, any>();
     this.openHome.setFalse();
+
+  }
+
+  openSearchPopup(event: Result<any, any>){
+    const _ = new  Result<any, any>();
+    this.popupData = new Result<any,any>();
+    this.popupData.option = PopupTypes.search;
+    this.popupData.input = event.input;
+    this.openHome.setTrue();
   }
 
   createButtons(): void {

@@ -14,6 +14,7 @@ import { Text } from 'src/assets/i18n/app.text';
 import { AuthService } from 'src/app/shared/services/REST/auth.service';
 import { Authenticate } from 'src/app/shared/interfaces/auth.interface';
 import { UserService } from 'src/app/shared/services/User/user.service';
+import { Helper } from 'src/app/shared/services/Helper/helper.service';
 
 enum LoginButtons{
   login = 'login',
@@ -66,7 +67,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
     this.states.finishInit.setTrue();
   }
 
-  processDOMEvent(event:  Result<any, any>) {
+  processDOMEvent(event:  Result<any, Authenticate>) {
     if (!event) return;
     if (event.action === ActionType.close) {
       const _ = new  Result<any, any>();
@@ -77,7 +78,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
       this.DOM.processEvent(_);
     }
 
-    if (event.action === ActionType.request && event.option === 'register') {
+    if (event.action === ActionType.request && event.option === LoginButtons.register) {
        this.userService.post(event.input as Authenticate).subscribe(
         data => {
           this.note.success = this.text.successMsg.register
@@ -85,13 +86,14 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
           setTimeout(() => this.close(), 2000);
         },
         error => {
+          console.error(error);
           this.note.error = this.text.errorMsg.register
           setTimeout(() => this.note.error = null, 2000)
         }
       );
     }
 
-    if (event.action === ActionType.request && event.option === 'login') {
+    if (event.action === ActionType.request && event.option === LoginButtons.login) {
       this.authService.auth(event.input as Authenticate).subscribe(
         data => {
           this.userService.setUser(data.result);
@@ -100,6 +102,7 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
 
         },
         error => {
+          console.log(error);
           this.note.error = this.text.errorMsg.login;
           setTimeout(() => this.note.error = null, 2000)
         }
@@ -207,7 +210,6 @@ export class LoginDialogComponent implements OnInit, OnDestroy{
   }
 
   clickRegister(self: LoginDialogComponent ) {
-    console.log(self.states.valid)
     const _ = new  Result<any, any>();
     if(self.checkboxes.isTrue()) {
       _.toId =  OverlayTypes.login;

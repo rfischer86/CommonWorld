@@ -5,6 +5,14 @@ import { SearchSelection, SearchServices } from './search-field.interface';
 import { GroupService } from '../../services/REST/group.service';
 import { UserService } from '../../services/User/user.service';
 import { RoleService } from '../../services/REST/role.service';
+import { Result, ActionType } from '../../classes/result/result';
+import { DOMTypes } from '../../enums/DOMElement.enum';
+import { DOMService } from '../../services/DOM/dom-element.service';
+import { Group } from '../../interfaces/group.interface';
+import { PopupAction } from '../../interfaces/PopupAction.interface';
+import { NavTypes } from '../../enums/navTypes';
+import { Search } from '../../interfaces/search.interface';
+import { PopupTypes } from '../../enums/popupTypes';
 
 
 enum FormFields {
@@ -45,6 +53,7 @@ export class SearchFieldComponent implements OnInit {
     private groupService: GroupService,
     private roleService: RoleService,
     private userService: UserService,
+    private DOM: DOMService,
   ) { }
 
   ngOnInit() {
@@ -71,39 +80,26 @@ export class SearchFieldComponent implements OnInit {
 
   updateElementList(event) {
     this.searchString = this.form.controls[FormFields.searchString].value;
-    this.searchString = this.searchString ? this.searchString : '';
+    const searchData = {} as Search;
+
+    searchData.searchString = this.searchString ? this.searchString : '';
     const nextElementList = [];
-    let subscription;
+    let subscriptionService;
     switch (true) {
       case this.searchServices === SearchServices.user:
-        subscription = this.userService.search(this.searchString);
+        subscriptionService = this.userService.search(searchData);
         break;
       case this.searchServices === SearchServices.group:
-        subscription = this.groupService.search(this.searchString);
+        subscriptionService = this.groupService.search(searchData);
         break;
       case this.searchServices === SearchServices.role:
-        subscription = this.roleService.search(this.searchString);
+        subscriptionService = this.roleService.search(searchData);
         break;
-    }
-    subscription.subscribe(
-      data => {
-      data.map(el => {
-        if (!this.isElementAllreadySelected(el)) {
-          nextElementList.push({id: el.id, name: el.name});
-          this.noResult = false;
-        }
-      });
-      if (nextElementList.length === 0) {
-        nextElementList.push({
-          id: null, name: 'Kein Ergebnis'
-        });
-        this.noResult = true;
       }
-      this.elementList = nextElementList;
-      if (!this.isOpen) {
-        this.isOpen = true;
-      }
-    });
+      subscriptionService.subscribe(
+        data => this.transmitDataToPopup(data.result),
+        error => console.error(error)
+      )
   }
 
   controlSelection() {
@@ -116,14 +112,30 @@ export class SearchFieldComponent implements OnInit {
     }, 500);
   }
 
-  onDeleteClick() {
-    this.deleteElement.emit();
+  transmitDataToPopup(data: Group[]) {
+    data.map(group => {
+      const action = {} as PopupAction<SearchFieldComponent>;
+      action.do = this.clickSearchesElement;
+      action.self = this;
+      action.name = group.name;
+      action.apiId = group.apiId;
+    })
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.header;
+    _.input = data;
+    _.type = DOMTypes.popup;
+    _.option = PopupTypes.search;
+    _.fromType = DOMTypes.searchField;
+    _.action = ActionType.open;
+    this.DOM.processEvent(_);
   }
 
-  @HostListener('document:click', ['$event'])
-  public onClick(targetElement: Event) {
-    targetElement.stopPropagation();
-    targetElement.preventDefault();
-    const clickedInside = this.searchField.nativeElement.contains(targetElement.target);
+  clickSearchesElement(popupAction: PopupAction<SearchFieldComponent>) {
+    const _ = new  Result<any, any>();
+    _.toId = DOMTypes.groupSelector;
+    _.toApiId = popupAction.apiId;
+    _.type = DOMTypes.searchField;
+    _.action = ActionType.load;
+    popupAction.self.DOM.processEvent(_);
   }
 }

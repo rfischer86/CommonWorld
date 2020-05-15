@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RestResponse } from 'src/app/shared/interfaces/rest.interface';
 import { Role } from '../../interfaces/role.interface';
+import { Search } from '../../interfaces/search.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,10 +44,10 @@ export class RoleService {
     const url = this.baseURL + '/' + id;
     return this.http.delete<RestResponse<Role>>(url, header);
   }
-  search(text: string): Observable<RestResponse<Role>> {
+  search(searchData: Search): Observable<RestResponse<Role>> {
     const header = this.restService.getHeaders();
-    const url = this.baseURL + '?text=' + text;
-    return this.http.get<RestResponse<Role>>(url, header);
+    const url = this.baseURL + 'search';
+    return this.http.post<RestResponse<Role>>(url, searchData, header);
   }
 
 }

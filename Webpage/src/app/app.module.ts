@@ -10,6 +10,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { UserSidenavComponent } from './layout/components/userSidenav/user.sidenav.component';
+import { GroupSidenavComponent } from './layout/components/groupSidenav/group.sidenav.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -21,6 +23,8 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     MainComponent,
+    UserSidenavComponent,
+    GroupSidenavComponent
   ],
   imports: [
     SharedModule,

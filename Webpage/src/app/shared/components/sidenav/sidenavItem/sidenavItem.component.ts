@@ -20,6 +20,8 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   @ViewChild('sidenavText') sidenavText: ElementRef<HTMLInputElement>;
 
   @Input() parentId: string;
+  @Input() firstElement: boolean;
+
   @Input() set open(value: boolean) {
     this.states.open.value = value;
   }
@@ -31,6 +33,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
       this.states.finishInit.setFalse();
     }
   };
+
   navData: NavData;
   DOMself: DOMElement;
   logger = new Logger();
@@ -217,7 +220,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
       case (ActionType.add):
         this.states.editMode.setFalse();
         const newNavItem = new NavData();
-        newNavItem.name='Neues Element';
+        newNavItem.name='New Element';
         this.navData.navData.push(newNavItem);
         this.entityService.create(newNavItem).subscribe(
           data => {
@@ -280,8 +283,14 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     _.toId = DOMTypes.body;
     _.fromType = DOMTypes.sidenav;
     _.input = data;
+    _.option = data.type;
     _.action = ActionType.load;
     this.DOM.processEvent(_);
+  }
+
+  clickButtonDiv(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   ngOnDestroy(){

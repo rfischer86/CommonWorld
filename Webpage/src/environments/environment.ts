@@ -8,6 +8,7 @@ export const environment = {
   authURL: 'http://localhost:4000/',
   api: {
     nav: 'nav',
+    groupNav: 'nav/group',
     arcordeon: 'arcordeon'
   },
   auth: {
@@ -15,6 +16,7 @@ export const environment = {
     users: 'users',
     roles: 'roles',
     groups: 'groups',
+    groupsSearch: 'groups/search',
     groupRoleLink: 'groupRoleLink',
     groupUserLink: 'groupUserLink',
   }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { RestResponse } from 'src/app/shared/interfaces/rest.interface';
 import { Group } from '../../interfaces/group.interface';
+import { Search } from '../../interfaces/search.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,10 @@ export class GroupService {
     return this.http.delete<RestResponse<Group>>(url, header);
   }
 
-  search(text: string): Observable<RestResponse<Group>> {
+  search(search: Search): Observable<RestResponse<Group>> {
+    if (!search.searchString) { return; }
     const header = this.restService.getHeaders();
-    const url = this.baseURL + '?text=' + text;
-    return this.http.get<RestResponse<Group>>(url, header);
+    const url = environment.authURL + environment.auth.groupsSearch;
+    return this.http.post<RestResponse<Group>>(url,search, header);
   }
 }

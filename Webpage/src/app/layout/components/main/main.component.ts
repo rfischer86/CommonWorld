@@ -80,7 +80,7 @@ export class MainComponent implements OnInit {
     _.toId = DOMTypes.sidenav + NavTypes.menu;
     _.input = NavTypes.menu;
     _.name = NavTypes.menu;
-    _.toApiId = '1222222222222225';
+    _.toApiId = '6115821728536777';
     _.action = ActionType.load;
     this.DOM.addEventToQueue(_, 1000);
   }

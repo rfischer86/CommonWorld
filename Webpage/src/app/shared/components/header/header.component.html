@@ -5,11 +5,11 @@
     <div fxLayout="row nowrap" fxLayoutAlign="space-between center" fxLayoutGap="0.25em">
       <app-search-field label="Details.Doc" [searchServices]="searchServices.group"
       [isLast]="true" [isEditMode]="true" (selectedElement)="onSelect($event)"
-      [value]="text.entities.group"></app-search-field>
+      [value]=""></app-search-field>
       <app-button [setButtons]="[actiomButtonList[2]]" ></app-button>
       <app-button [setButtons]="[actiomButtonList[1]]" ></app-button>
       <app-button [setButtons]="[actiomButtonList[0]]" ></app-button>
     </div>
-    <app-popup *ngIf="openHome.value" [data]="popupData"></app-popup>
+    <app-popup [parentId]="DOMid" *ngIf="openHome.value" [data]="popupData"></app-popup>
   </div>
 </div>

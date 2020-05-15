@@ -6,11 +6,16 @@ export const enum DOMTypes {
   expansionPanel = 'expansionPanel',
   root = 'root',
   sidenav = 'sidenav',
+  searchField = 'searchField',
   sidenavItem = 'sidenavItem',
   None = 0,
   main = 'main',
   body = 'body',
   overlay = 'overlay',
   dialog = 'dialog',
-  popup = 'popup'
+  popup = 'popup',
+  footer = 'footer',
+  groupSelector = 'groupSelector',
+  groupSidenav = 'groupSidenav',
+  userSidenav = 'userSidenav',
 }

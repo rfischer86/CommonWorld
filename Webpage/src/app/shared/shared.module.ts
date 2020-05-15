@@ -18,14 +18,16 @@ import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { NoteComponent } from './components/note/note.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { LoginDialogComponent } from './components/dialog/login/login';
+import { LoginDialogComponent } from './components/overlay/dialog/login/login';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
-import { RegisterGroupDialogComponent } from './components/dialog/register-group/register-group';
+import { RegisterGroupDialogComponent } from './components/overlay/dialog/register-group/register-group';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { PopupHomeComponent } from './components/popup/popups/home/home.component';
+import { GroupSelectorComponent } from './components/groupSelector/group-selector.component';
+import { PopupSearchFieldComponent } from './components/popup/popups/searchField/searchField.component';
 
 @NgModule({
   declarations:
@@ -44,7 +46,9 @@ import { PopupHomeComponent } from './components/popup/popups/home/home.componen
     RegisterGroupDialogComponent,
     SearchFieldComponent,
     PopupComponent,
-    PopupHomeComponent
+    PopupHomeComponent,
+    GroupSelectorComponent,
+    PopupSearchFieldComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +60,7 @@ import { PopupHomeComponent } from './components/popup/popups/home/home.componen
     MatMenuModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports:[
     FooterComponent,
@@ -72,7 +76,10 @@ import { PopupHomeComponent } from './components/popup/popups/home/home.componen
     SearchFieldComponent,
     RegisterGroupDialogComponent,
     PopupComponent,
-    PopupHomeComponent
+    PopupHomeComponent,
+    GroupSelectorComponent,
+    PopupSearchFieldComponent,
+    SidenavItemComponent
   ],
   providers: [
     DOMService,

@@ -1,3 +1,4 @@
+@import './variable.scss';
 
 @mixin notSelectable() {
   -moz-user-select: -moz-none;
@@ -11,3 +12,68 @@
   -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
   user-drag: none;
 }
+
+
+
+@mixin hoverNav-strong() {
+  &:hover{
+    background-color: $gray;
+  }
+}
+
+
+@mixin hoverButton-strong() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 3px 3px 0px;
+  &:hover{
+    margin: 3px 0px 0px 3px;
+    filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  }
+}
+
+@mixin hoverButton-normal() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 2px 2px 0px;
+  &:hover{
+    margin: 2px 0px 0px 2px;
+    filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  }
+}
+
+@mixin hoverButton-soft() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 1px 1px 0px;
+  &:hover{
+    margin: 1px 0px 0px 1px;
+    filter: drop-shadow(0.25px 0.25px 0.25px $black-lighter);
+  }
+}
+
+
+@mixin hover-up-strong() {
+  margin: 3px 3px 0px 0px;
+  filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+  &:hover{
+    filter: drop-shadow(1.5px -1.5px 1.5px $gray);
+    margin: 0px 0px 3px 3px;
+  }
+}
+
+@mixin hover-up-normal() {
+  margin: 2px  2px 0px 0px;
+  filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+  &:hover{
+    filter: drop-shadow(1px -1px 1px $gray);
+    margin: 0px 0px 2px 2px;
+  }
+}
+
+@mixin hover-up-soft() {
+  margin: 1px 1px 0px 0px;
+  filter: drop-shadow(0.25px -0.25px 0.25px $black-lighter);
+  &:hover{
+    filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+    margin: 0px 0px 1px 1px;
+  }
+}
+

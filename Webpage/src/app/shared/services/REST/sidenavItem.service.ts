@@ -19,31 +19,28 @@ export class SidenavItemService {
     private restService: RestService
   ) { }
 
-  create(data: NavData): Observable<Result<NavData,any>> {
+  create(data: NavData): Observable<RestResponse<NavData>> {
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav
-    console.log('create Nav ', data);
-    return this.http.post<Result<NavData,any>>(url,data, header);
+    return this.http.post<RestResponse<NavData>>(url,data, header);
   }
 
-  update(data: NavData): Observable<Result<NavData,any>> {
-    console.log(data)
+  update(data: NavData): Observable<RestResponse<NavData>> {
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav
-    return this.http.put<Result<NavData,any>>(url, data, header);
+    return this.http.put<RestResponse<NavData>>(url, data, header);
   }
 
-  addItem(parentId: string, childId: string): Observable<Result<NavData,any>> {
+  addItem(parentId: string, childId: string): Observable<RestResponse<NavData>> {
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav + '/' + parentId + '/add/' + childId;
-    return this.http.put<Result<NavData,any>>(url, null, header);
+    return this.http.put<RestResponse<NavData>>(url, null, header);
   }
 
-  removeItem(parentId: string, childId: string): Observable<Result<NavData,any>> {
+  removeItem(parentId: string, childId: string): Observable<RestResponse<NavData>> {
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav + '/' + parentId + '/remove/' + childId;
-    console.log('url', url);
-    return this.http.delete<Result<NavData,any>>(url, header);
+    return this.http.delete<RestResponse<NavData>>(url, header);
 
   }
 
@@ -53,11 +50,11 @@ export class SidenavItemService {
     return this.http.get<RestResponse<NavData>>(url, header);
   }
 
-  delete(id: string): Observable<Result<NavData,any>> {
+  delete(id: string): Observable<RestResponse<NavData>> {
     console.log('delete Nav ' + id);
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav + '/' + id;
-    return this.http.delete<Result<NavData,any>>(url, header);
+    return this.http.delete<RestResponse<NavData>>(url, header);
   }
 
 

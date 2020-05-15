@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { RestService } from '../REST/rest.service';
 import { Result } from '../../classes/result/result';
 import { RestResponse } from '../../interfaces/rest.interface';
+import { Search } from '../../interfaces/search.interface';
+import { Helper } from '../Helper/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,8 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private restService: RestService
+    private restService: RestService,
+    private helper: Helper
   ) {
     this.states.loggedIn.setFalse();
   }
@@ -33,6 +36,7 @@ export class UserService {
   setUser(user: User): void {
     this.user = user;
     this.userObservable.next(this.user);
+    this.helper.setToken(this.user.token)
     if (this.user) {this.states.loggedIn.setTrue();}
     else { this.states.loggedIn.setFalse()}
   }
@@ -84,10 +88,10 @@ export class UserService {
     return this.http.delete<RestResponse<User>>(url, header);
   }
 
-  search(text: string): Observable<RestResponse<User>> {
+  search(searchData: Search): Observable<RestResponse<User>> {
     const header = this.restService.getHeaders();
-    const url = this.baseURL + '?text=' + text;
-    return this.http.get<RestResponse<User>>(url, header);
+    const url = this.baseURL + '/search';
+    return this.http.post<RestResponse<User>>(url, searchData, header);
   }
 
 

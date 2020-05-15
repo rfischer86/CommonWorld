@@ -1,17 +1,19 @@
 import { Result } from '../result/result';
 import { NavTypes } from '../../enums/navTypes';
 import { BlockTypes } from '../../enums/BlockTypes';
+import { Text } from 'dist/commonty/assets/i18n/app.text';
 
 export class ArcordeonData {
   DOMid: string;
   APIid: string;
+  text = new Text();
   name: string;
   arcordeonData = [] as ArcordeonData[];
   blockType: BlockTypes;
 
   constructor(data: ArcordeonData = {} as ArcordeonData) {
     this.name =  data.name;
-    if (!this.name) { this.name = 'Neus Arcordeon Element'; }
+    if (!this.name) { this.name = this.text.general.newElement; }
     this.arcordeonData =  data.arcordeonData;
     if (!this.arcordeonData) { this.arcordeonData = []; }
     this.blockType =  data.blockType;
