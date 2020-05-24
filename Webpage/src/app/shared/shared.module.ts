@@ -14,7 +14,6 @@ import { AppComponent } from '../app.component';
 import { SidenavItemComponent } from './components/sidenav/sidenavItem/sidenavItem.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SidenavItemService } from './services/REST/sidenavItem.service';
-import { ArcordeonComponent } from './components/arcordeon/arcordeon.component';
 import { OverlayComponent } from './components/overlay/overlay.component';
 import { NoteComponent } from './components/note/note.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -28,6 +27,10 @@ import { PopupComponent } from './components/popup/popup.component';
 import { PopupHomeComponent } from './components/popup/popups/home/home.component';
 import { GroupSelectorComponent } from './components/groupSelector/group-selector.component';
 import { PopupSearchFieldComponent } from './components/popup/popups/searchField/searchField.component';
+import { ContentComponent } from './components/content/content.component';
+import { TextNodeComponent } from './components/content/content-nodes/text-node/text-node.component';
+import { EditorComponent } from './components/content/content-nodes/text-node/editor/editor.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations:
@@ -39,7 +42,6 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
     ButtonComponent,
     BodyComponent,
     SidenavItemComponent,
-    ArcordeonComponent,
     OverlayComponent,
     NoteComponent,
     LoginDialogComponent,
@@ -48,9 +50,13 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
     PopupComponent,
     PopupHomeComponent,
     GroupSelectorComponent,
-    PopupSearchFieldComponent
+    PopupSearchFieldComponent,
+    ContentComponent,
+    TextNodeComponent,
+    EditorComponent
   ],
   imports: [
+    QuillModule,
     CommonModule,
     BrowserModule,
     FlexLayoutModule,
@@ -63,6 +69,7 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
     ReactiveFormsModule,
   ],
   exports:[
+    EditorComponent,
     FooterComponent,
     HeaderComponent,
     SidenavComponent,
@@ -70,7 +77,6 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
     ButtonComponent,
     BodyComponent,
     OverlayComponent,
-    ArcordeonComponent,
     NoteComponent,
     LoginDialogComponent,
     SearchFieldComponent,
@@ -79,7 +85,9 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
     PopupHomeComponent,
     GroupSelectorComponent,
     PopupSearchFieldComponent,
-    SidenavItemComponent
+    SidenavItemComponent,
+    ContentComponent,
+    TextNodeComponent
   ],
   providers: [
     DOMService,

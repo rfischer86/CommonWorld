@@ -1,0 +1,10 @@
+@import '~@angular/material/theming';
+
+@mixin custom-osm ($theme) {
+  $primary: map-get($theme, primary);
+
+  .map {
+    border: 1px solid map-get($primary, 800);
+    filter: drop-shadow(10px 9px 9px map-get($primary, 100));
+  }
+}

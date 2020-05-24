@@ -70,7 +70,7 @@ namespace BuildLogger_DB_Context
             //     .HasForeignKey(f => f.parent_API_Id);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=blogging.db");
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite("Data Source=blogging.db");
     }
 }

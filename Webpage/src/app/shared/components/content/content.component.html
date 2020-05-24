@@ -1,0 +1,7 @@
+<div #popup class="content-outer-wrapper"
+  [ngSwitch]="contentType">
+  <div class="content-container">
+    <app-text-node [parentId]="DOMid" *ngSwitchCase="contentTypes.text" [contentData]="contentData" ></app-text-node>
+  </div>
+  rolf
+</div>

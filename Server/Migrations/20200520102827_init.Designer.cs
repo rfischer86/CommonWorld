@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildLogger.Migrations
 {
     [DbContext(typeof(BuildLoggerContext))]
-    [Migration("20200428153029_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200520102827_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,16 +66,19 @@ namespace BuildLogger.Migrations
                     b.Property<string>("NavapiId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("bodyId")
+                    b.Property<string>("contentData")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("count")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("contentType")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("link")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("state")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("type")

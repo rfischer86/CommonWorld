@@ -1,0 +1,23 @@
+::ng-deep .info-popup {
+  .leaflet-popup-content-wrapper {
+    box-sizing: border-box;
+    border-radius: 0px;
+    padding: 3px;
+
+    .leaflet-popup-content {
+      margin: 4px;
+    }
+  }
+}
+
+::ng-deep .info-logo{
+  padding: 0px;
+  width: 75px;
+  height: 75px;
+}
+
+::ng-deep .info-text{
+  display: grid;
+  margin-bottom: auto;
+  padding-left: 20px;
+}

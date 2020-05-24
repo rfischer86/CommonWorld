@@ -12,9 +12,14 @@
       <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
     </div>
   </div>
+  <div>
+  <app-content *ngIf="content" [setContentType]="navData.contentType" ></app-content>
+
+  </div>
   <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>
     <div class="tab" *ngFor="let navItem of navData.navData">
-      <app-sidenav-item  [setNavData]="navItem" [parentId]="DOMself.id"></app-sidenav-item>
+      <app-sidenav-item  [setNavData]="navItem" [content]="content" [parentId]="DOMself.id"></app-sidenav-item>
     </div>
   </div>
+
 </div>

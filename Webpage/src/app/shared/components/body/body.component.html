@@ -9,6 +9,7 @@
     fxLayout="column"
     fxLayoutAlign="start space-around"
     >
-    <app-arcordeon [parentId]="DOMself.id"></app-arcordeon>
+    <app-sidenav-item *ngIf="states.finishInit.value" [setNavData]="navData" [open]="true" [content]="true" [firstElement]="false" [parentId]="DOMself.id"></app-sidenav-item>
+
   </div>
 </div>

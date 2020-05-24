@@ -75,7 +75,14 @@ namespace Error_Factory
         public ServerResult<Error> getById(string id, bool withMsg = true)
         {
             ServerResult<Error> sr = ServerResult<Error>.create();
-            try {sr.result = db.Error.Find(id);}
+            try {
+                sr.result = db.Error.Find(id);
+                if (sr.result == null) {
+                    sr.error.addMessage(HttpError.getNoTableEntryForValue(TabelList.Error, "id", id), withMsg);
+                    sr.fail();
+                } 
+
+            }
             catch {
                 sr.error.addMessage(HttpError.getNoTableEntryForValue("Error", "id", id), withMsg);
                 sr.fail();

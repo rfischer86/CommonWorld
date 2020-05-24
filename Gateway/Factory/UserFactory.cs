@@ -113,6 +113,10 @@ namespace User_Factory
             ServerResult<User> sr = ServerResult<User>.create();
             try{
                 sr.result = db.User.Find(id);
+                if (sr.result == null) {
+                    sr.error.addMessage(HttpError.getNoTableEntryForValue(TabelList.User, "id", id), withMsg);
+                    sr.fail();
+                } 
             } catch {
                 sr.error.addMessage(HttpError.getNoTableEntryForValue(TabelList.User, "id", id), withMsg);
                 sr.fail();

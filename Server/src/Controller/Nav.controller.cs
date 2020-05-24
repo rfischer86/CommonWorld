@@ -44,7 +44,6 @@ namespace BuildLogger_ErrorControler
         [Route("{parentId}/add/{childId}")]
         public ActionResult AddItem(string parentId, string childId)
         {
-            Helper.Helper.print("AddItem");
             ServerResult<Nav> sr = factory.addNavItem(parentId , childId, 0, true);
             if (sr.success)
             {
@@ -60,7 +59,6 @@ namespace BuildLogger_ErrorControler
         [Route("{parentId}/remove/{childId}")]
         public ActionResult RemoveItem(string parentId, string childId)
         {
-            Helper.Helper.print("RemoveItem");
             ServerResult<Nav> sr = factory.removeNavItem(parentId , childId, true);
             if (sr.success)
             {
@@ -74,7 +72,6 @@ namespace BuildLogger_ErrorControler
         [HttpPut]
         public ActionResult Put(Nav entity)
         {
-            Helper.Helper.print("put");
             ServerResult<Nav> sr = factory.update(entity, true);
             if (sr.success) 
             {
@@ -90,7 +87,6 @@ namespace BuildLogger_ErrorControler
         [Route("{id}")]
         public ActionResult Delete(string id)
         {
-            Helper.Helper.print("delete Nav "+ id );
             ServerResult<Nav> sr = factory.deleteById(id, true);
             if (sr.success)
             {

@@ -126,6 +126,11 @@ namespace Helper
             string message = "Update the entity with id '" + id +"' into the table '" + table + "'.";
             return message;
         }
+        public static string getNoElementFound(string table )
+        {
+            string message = "Emoty is the search of the table '" + table + "'.";
+            return message;
+        }
 
     }
     public class ErrorMsg

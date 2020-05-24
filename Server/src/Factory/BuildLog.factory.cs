@@ -108,7 +108,6 @@ namespace BuildLog_Factory
         public ServerResult<BuildLog> deleteById(string id, bool withMsg = true)
         {
             ServerResult<BuildLog> sr = getById(id);
-            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 // sr.result.error = null;

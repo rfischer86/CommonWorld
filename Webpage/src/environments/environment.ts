@@ -9,7 +9,8 @@ export const environment = {
   api: {
     nav: 'nav',
     groupNav: 'nav/group',
-    arcordeon: 'arcordeon'
+    accordion: 'accordion',
+    accordionGetOrCreate: 'accordion/getOrCreate'
   },
   auth: {
     authenticate: 'authenticate',

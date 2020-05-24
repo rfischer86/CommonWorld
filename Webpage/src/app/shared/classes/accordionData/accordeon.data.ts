@@ -1,39 +1,40 @@
 import { Result } from '../result/result';
-import { NavTypes } from '../../enums/navTypes';
 import { BlockTypes } from '../../enums/BlockTypes';
 import { Text } from 'dist/commonty/assets/i18n/app.text';
 
-export class ArcordeonData {
+export class AccordionData<T> {
   DOMid: string;
   APIid: string;
   text = new Text();
   name: string;
-  arcordeonData = [] as ArcordeonData[];
+  accordionData: T;
+  subAccordion = [] as AccordionData<any>[];
   blockType: BlockTypes;
 
-  constructor(data: ArcordeonData = {} as ArcordeonData) {
+  constructor(data: AccordionData<T> = {} as AccordionData<T>) {
     this.name =  data.name;
+    this.accordionData =  data.accordionData;
     if (!this.name) { this.name = this.text.general.newElement; }
-    this.arcordeonData =  data.arcordeonData;
-    if (!this.arcordeonData) { this.arcordeonData = []; }
+    this.subAccordion =  data.subAccordion;
+    if (!this.subAccordion) { this.subAccordion = []; }
     this.blockType =  data.blockType;
     if(!this.APIid) { this.APIid = Math.floor(Math.random() * 10 ** 16).toString();  }
     this.DOMid = (Math.floor(Math.random() * 10 ** 10)).toString();
   }
 
-  addItem(data: ArcordeonData = {} as ArcordeonData, index: number=-1){
-    if(index === -1 || index >= this.arcordeonData.length ){
-      this.arcordeonData.push(data);
+  addItem(data: AccordionData<any> = {} as AccordionData<any>, index: number=-1){
+    if(index === -1 || index >= this.subAccordion.length ){
+      this.subAccordion.push(data);
     } else {
-      this.arcordeonData.splice(index, 0, data);
+      this.subAccordion.splice(index, 0, data);
     }
   }
 
   deleteItem(index: number=-1){
-    if(index === -1 || index >= this.arcordeonData.length ){
-      this.arcordeonData.splice(this.arcordeonData.length -1 , 1);
+    if(index === -1 || index >= this.subAccordion.length ){
+      this.subAccordion.splice(this.subAccordion.length -1 , 1);
     } else {
-      this.arcordeonData.splice(index, 1);
+      this.subAccordion.splice(index, 1);
     }
   }
 

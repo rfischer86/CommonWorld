@@ -2,7 +2,7 @@
 
 namespace BuildLogger.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,12 @@ namespace BuildLogger.Migrations
                 columns: table => new
                 {
                     apiId = table.Column<string>(nullable: false),
-                    bodyId = table.Column<string>(nullable: true),
-                    count = table.Column<int>(nullable: false),
+                    state = table.Column<string>(nullable: true),
                     link = table.Column<string>(nullable: true),
                     name = table.Column<string>(nullable: true),
                     type = table.Column<string>(nullable: true),
+                    contentType = table.Column<string>(nullable: true),
+                    contentData = table.Column<string>(nullable: true),
                     NavapiId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

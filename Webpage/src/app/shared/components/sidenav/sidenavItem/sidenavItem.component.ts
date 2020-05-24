@@ -21,6 +21,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
 
   @Input() parentId: string;
   @Input() firstElement: boolean;
+  @Input() content: boolean;
 
   @Input() set open(value: boolean) {
     this.states.open.value = value;
@@ -49,6 +50,9 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if(!this.navData.domId) { this.navData.domId = Math.floor(Math.random() *10 ** 10).toString()};
+    if (this.content && !this.navData.domId.includes('content')) {
+      this.navData.domId = 'content' + this.navData.domId;
+    }
     const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, this.navData.domId);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);

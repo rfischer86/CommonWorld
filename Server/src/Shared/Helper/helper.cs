@@ -12,11 +12,9 @@ namespace Helper
 {
     public class Helper
     {
-        public static string RandomId() {
-            Random rnd = new Random();
-            int randId = rnd.Next(1, 10 ^ 16 );
-            print(randId.ToString());
-            return randId.ToString();
+        public static string RandomId() { Random rnd = new Random();
+            string randId = Math.Round(rnd.NextDouble() * Math.Pow(10 , 16), 0).ToString();
+            return randId;
         }
 
         public static void print(string line)

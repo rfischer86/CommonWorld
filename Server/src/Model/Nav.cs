@@ -8,7 +8,14 @@ namespace BuildLogger_DB_Context
     static class NavTypes
     {
         public const string profile = "profile";
-        public const string menu = "menue";
+        public const string menu = "menu";
+        public const string roles = "roles";
+        public const string groups = "groups";
+        public const string todo = "todo";
+        public const string dates = "dates";
+        public const string decisions = "decisions";
+        public const string email = "email";
+        public const string feed = "feed";
     }
     public class Nav
     {
@@ -18,17 +25,18 @@ namespace BuildLogger_DB_Context
         // }
         [Key]
         public string  apiId { get; set; }
-        public string  bodyId { get; set; }
-        public int count {get; set;}
+        public string state { get; set; }
         public string link {get; set;}
         public string name { get; set; }
         public string type { get; set; }
+        public string contentType { get; set; }
+        public string contentData { get; set; }
         
         public virtual List<Nav> navData { get; set; }
         // public virtual List<NavNav> navParents { get; set; }
     }   
 
-       public class NavNav
+    public class NavNav
     {
 
         // public NavNav(string child_id, string parent_id){

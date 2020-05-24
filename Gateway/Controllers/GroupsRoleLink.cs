@@ -9,7 +9,7 @@ namespace GroupRoleLinkController
 {
     [Authorize]
     [ApiController]
-    [Route("users")]
+    [Route("group-role-link")]
     public class UsersController : ControllerBase
     {
         private UserFactory factory = new UserFactory();
@@ -19,7 +19,6 @@ namespace GroupRoleLinkController
         public ActionResult get(string id)
         {
             ServerResult<User> sr = factory.getById(id, false);
-            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 return Ok(sr);

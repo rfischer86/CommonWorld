@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <!-- <quill-editor
+    *ngIf="isEditMode"
+    #editor
+    formControlName="editor"
+    [styles]="{  }"
+    [modules]="quillConfig1">
+  </quill-editor>
+  <quill-editor
+    *ngIf="!isEditMode"
+    #editor
+    formControlName="editor"
+    [styles]="{  }"
+    [readOnly]="true"
+    [modules]="quillConfig2">
+  </quill-editor><br> -->
+  <button mat-raised-button *ngIf="isEVUAdmin" class="button-default button_icon" color="primary">
+    <ng-container *ngIf="!isEditMode">
+        <mat-icon>edit</mat-icon> action.edit
+    </ng-container>
+    <ng-container *ngIf="isEditMode">
+      <mat-icon>save</mat-icon> action.save
+    </ng-container>
+  </button>
+</form>
+
+

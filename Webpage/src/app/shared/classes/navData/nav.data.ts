@@ -1,11 +1,15 @@
 import { Result } from '../result/result';
 import { NavTypes } from '../../enums/navTypes';
+import { ContentTypes } from '../../enums/ContentType';
 
 export class NavData {
   domId: string;
   apiId: string;
   name: string;
   type: NavTypes;
+  contentType: ContentTypes;
+  contentData: string;
+
   link: string;
   navData = [] as NavData[];
 

@@ -19,7 +19,6 @@ namespace UserController
         public ActionResult get(string id)
         {
             ServerResult<User> sr = factory.getById(id, false);
-            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 return Ok(sr);
@@ -71,18 +70,19 @@ namespace UserController
             }
         }
         
-        [HttpPost]
-        [Route("search")]
-        public IActionResult search(User entity)
-        {
+        // [HttpPost]
+        // [Route("search")]
+        // public IActionResult search(User entity)
+        // {
 
-            ServerResult<User> sr = factory.search(entity, false);
-            if (sr.success)
-            {
-                return Ok(sr);
-            } else 
-            {
-                return BadRequest(sr);
-            }        }
+        //     ServerResult<User> sr = factory.search(entity, false);
+        //     if (sr.success)
+        //     {
+        //         return Ok(sr);
+        //     } else 
+        //     {
+        //         return BadRequest(sr);
+        //     }        
+        // }
     }
 }

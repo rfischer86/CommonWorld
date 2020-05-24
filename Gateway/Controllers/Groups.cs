@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Auth_DB_Context;
 using Group_Factory;
+using WebApi.Models;
+using System.Collections.Generic;
 
 namespace GroupController
 {
@@ -17,7 +19,6 @@ namespace GroupController
         public ActionResult get(string id)
         {
             ServerResult<Group> sr = factory.getById(id, false);
-            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 return Ok(sr);
@@ -69,17 +70,18 @@ namespace GroupController
         }
         
         [HttpPost]
+        [AllowAnonymous]
         [Route("search")]
-        public IActionResult search(Group entity)
+        public IActionResult search(SearchModel searchData)
         {
-
-            ServerResult<Group> sr = factory.search(entity, false);
+            ServerResult<List<Group>> sr = factory.search(searchData, false);
             if (sr.success)
             {
                 return Ok(sr);
             } else 
             {
                 return BadRequest(sr);
-            }        }
+            }        
+        }
     }
 }

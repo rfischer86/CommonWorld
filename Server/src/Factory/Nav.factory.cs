@@ -41,8 +41,10 @@ namespace Nav_Factory
                 if (sr.result.apiId == null ) {
                     sr.result.apiId = Helper.Helper.RandomId();
                 }
-                sr.result.count = 0;
                 sr.result.link = entity.link;
+                sr.result.type = entity.type;
+                sr.result.contentType = entity.contentType;
+                sr.result.contentData = entity.contentData;
                 sr.result.name = entity.name;
                 sr.result.apiId = entity.apiId;
                 // sr.result.navParents = new List<NavNav>();
@@ -50,10 +52,10 @@ namespace Nav_Factory
                 db.Add(sr.result);
                 db.SaveChanges();
                 if( entity.type == NavTypes.profile ) {
-                    createProfileNav(sr);
+                    sr = createProfileNav(sr);
                 }
                 if( entity.type == NavTypes.menu ) {
-                    createProfileNav(sr);
+                    sr = createGroupNav(sr);
                 }
             }
             return sr;
@@ -168,13 +170,14 @@ namespace Nav_Factory
             }
             return sr; 
         }
-        public ServerResult<Nav> getById(string id, bool withMsg = true)
+        public ServerResult<Nav> getById(string id, bool withMsg = true, int deeps = 5)
         {
             ServerResult<Nav> sr = ServerResult<Nav>.create();
             sr.result = db.Nav.Find(id);
             if (sr.result == null ) {
                 sr.error.addMessage(HttpError.getNoTableEntryForValue("NavNav", "id", id), withMsg);
                 sr.fail();
+                return sr;
             };
             try {                
                 sr.result.navData = db.NavNav
@@ -182,8 +185,16 @@ namespace Nav_Factory
                     .Select(el => el.child)
                     .ToList();
 
+                int index = 0;
+                foreach (Nav navEl in sr.result.navData) {
+                    ServerResult<Nav> sr_sub = ServerResult<Nav>.create();
+                    sr_sub = getById(navEl.apiId, true, deeps -1);
+                    sr.result.navData[index].navData = sr_sub.result.navData;
+                    sr = sr.contatenate<Nav, Nav>(sr, sr_sub);
+                    index += 1;
+                }
             } catch {
-                Helper.Helper.print("fail navnav");
+                sr.result.navData = new List<Nav>();
             }
             return sr;
         }
@@ -193,60 +204,61 @@ namespace Nav_Factory
             ServerResult<Nav> sr  = getById(id, withMsg);
             if (sr.success)
             {   
-                if ( sr.result.count == 1) {
+                int count;
+                try {
+                   count = db.NavNav.Count(el => el.child_API_Id == id);
+                } catch { count = 2; }
+                if ( count == 1) {
                     sr.result = db.Nav.Find(id);
                     Helper.Helper.print("TO DO: implemnt delete cascade");
                     db.Remove(sr.result);
                     db.SaveChanges();
                     sr.error.addInfo(HttpError.getDeleteIdFromTable(TabelList.Nav, id));
                 } else {
-                    // db.Remove(
-                    // );  
-                    sr.result.count -= 1;
-                    db.SaveChanges();
                     sr.error.addInfo(HttpError.getDeleteReduceReferencCount(TabelList.Nav, id));
                 }
             }
             return sr;
         }
          public  ServerResult<Nav> createProfileNav(ServerResult<Nav> sr) {
-                List<string> profileNavElements = new List<string>();
-                sr.result.navData = new List<Nav>();
-                profileNavElements.Add("Roles");
-                profileNavElements.Add("Groups");
-                profileNavElements.Add("ToDo");
-                profileNavElements.Add("Feed");
-                int index = 0;
-                foreach (string name in profileNavElements) {
-                    Nav nav = new Nav();
-                    nav.apiId = Helper.Helper.RandomId();
-                    nav.name = name;
-                    Helper.Helper.printObject(nav);
-                    Helper.Helper.printObject(sr);
-                    sr.contatenate(addNavItem(sr.result.apiId,nav.apiId, index, true), sr);
-                    sr.result.navData.Append(nav);
-                    db.Add(nav);
-                    db.SaveChanges();
-                    index += 1;
-                }
-             return sr;
+            List<string> profileNavElements = new List<string>();
+            sr.result.navData = new List<Nav>();
+            profileNavElements.Add("Groups");
+            profileNavElements.Add("Roles");
+            profileNavElements.Add("Dates");
+            profileNavElements.Add("ToDo");
+            profileNavElements.Add("Feed");
+            int index = 0;
+            foreach (string name in profileNavElements) {
+                Nav nav = new Nav();
+                nav.apiId = Helper.Helper.RandomId();
+                nav.name = name;
+                sr.contatenate(addNavItem(sr.result.apiId,nav.apiId, index, true), sr);
+                sr.result.navData.Append(nav);
+                db.Add(nav);
+                db.SaveChanges();
+                index += 1;
+            }
+            return sr;
         }
 
-         public  ServerResult<Nav> createMenuNav(ServerResult<Nav> sr){
+         public  ServerResult<Nav> createGroupNav(ServerResult<Nav> sr){
                 List<string> profileNavElements = new List<string>();
                 sr.result.navData = new List<Nav>();
-                profileNavElements.Add("Roles");
-                profileNavElements.Add("Internal Groups");
-                profileNavElements.Add("External Groups");
-                profileNavElements.Add("Calender");
+                profileNavElements.Add(NavTypes.roles);
+                profileNavElements.Add(NavTypes.groups);
+                profileNavElements.Add(NavTypes.todo);
+                profileNavElements.Add(NavTypes.feed);
+                profileNavElements.Add(NavTypes.dates);
                 int index = 0;
                 foreach (string name in profileNavElements) {
                     sr.result.navData.Add(new Nav());
                     Nav nav = sr.result.navData.Last();
                     nav.apiId = Helper.Helper.RandomId();
                     nav.name = name;
+                    nav.type = name;
                     db.SaveChanges();
-                    addNavItem(sr.result.apiId,nav.apiId, index, true);
+                    addNavItem(sr.result.apiId, nav.apiId, index, true);
                     index += 1;
                 }
              return sr;

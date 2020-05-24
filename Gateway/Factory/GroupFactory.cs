@@ -1,12 +1,8 @@
-using System;
 using Helper;
 using Auth_DB_Context;
-using System.IdentityModel.Tokens.Jwt;
+using WebApi.Models;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using WebApi.Helpers;
+using System.Collections.Generic;
 
 namespace Group_Factory
 {   
@@ -74,21 +70,18 @@ namespace Group_Factory
             return sr;
         }
 
-        public ServerResult<Group> search(Group entity, bool withMsg = true) 
+        public ServerResult<List<Group>> search(SearchModel search, bool withMsg = true) 
         {
-            ServerResult<Group> sr = passCreateGurd(entity);
-            if ( !sr.success ) {
-                return sr;
-            }
-            Group result;
-            Helper.Helper.print("TODO: implement search");
-            result = db.Group.Find(entity.apiId);
-            if (result == null ) {
-                sr.error.addMessage(HttpError.getNoTableEntryForValue("Group", "id", entity.apiId), withMsg);
+            ServerResult<List<Group>> sr = ServerResult<List<Group>>.create();
+            sr.result = new List<Group>();
+            try {
+                foreach (Group group in db.Group.Where(el => el.name.Contains(search.searchString ) ).ToList() ) {
+                    sr.result.Add(group);
+                };
+            } catch {
                 sr.fail();
-                return sr;
+                sr.error.addMessage(Helper.HttpError.getNoElementFound(TabelList.Group));
             }
-            sr.result = result;
             return sr;
         }
 
@@ -107,6 +100,10 @@ namespace Group_Factory
             ServerResult<Group> sr = ServerResult<Group>.create();
             try{
                 sr.result = db.Group.Find(id);
+                if (sr.result == null) {
+                    sr.error.addMessage(HttpError.getNoTableEntryForValue(TabelList.Group, "id", id), withMsg);
+                    sr.fail();
+                } 
             } catch {
                 sr.error.addMessage(HttpError.getNoTableEntryForValue(TabelList.Group, "id", id), withMsg);
                 sr.fail();

@@ -1,27 +1,29 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DOMService, DOMElement } from '../../services/DOM/dom-element.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
-import { Result } from '../../classes/result/result';
+import { Result, ActionType } from '../../classes/result/result';
 import { Logger } from '../../classes/Logger/logger';
 import { NavData } from '../../classes/navData/nav.data';
+import { States } from '../../classes/states/states';
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent implements OnInit {
+export class BodyComponent implements OnInit, OnDestroy {
   @Input() parentId: string;
   @Input() navType: string;
   DOMself: DOMElement;
   logger = new Logger();
   navData: NavData;
+  states = new States();
   constructor(
     private DOM: DOMService,
   ) { }
 
   ngOnInit() {
-    const _ = this.DOM.create(DOMTypes.sidenav, this.parentId, DOMTypes.body);
+    const _ = this.DOM.create(DOMTypes.body, this.parentId, DOMTypes.body);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
     } else {
@@ -38,9 +40,22 @@ export class BodyComponent implements OnInit {
   }
 
   loadBody(navData: NavData) {
+    this.navData = null;
     this.navData = navData;
+    if( this.navData ) {
+      this.states.finishInit.setTrue();
+    } else {
+      this.states.finishInit.setFalse();
+    }
     console.log('this.navData', this.navData);
     console.log('TODO: Implement load body');
+  }
+
+  ngOnDestroy(){
+    const _ = new  Result<any, any>();
+    _.toId = this.DOMself.id;
+    _.action = ActionType.destroy;
+    this.DOM.processEvent(_);
   }
 
 }
