@@ -46,12 +46,14 @@ namespace BuildLogger_DB_Context
         public static string Error = "Error";
         public static string BuildLog = "BuildLog";
         public static string Nav = "Nav";
+        public static string Text = "Text";
     }
     
     public class BuildLoggerContext : DbContext
     {
         public DbSet<Error> Error { get; set; }
         public DbSet<BuildLogRef> BuildLog { get; set; }
+        public DbSet<Text> Text { get; set; }
         public DbSet<Nav> Nav { get; set; }
         public DbSet<NavNav> NavNav { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

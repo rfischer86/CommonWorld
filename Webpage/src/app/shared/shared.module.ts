@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { TitleComponent } from './components/title/title.component';
 import { ButtonComponent } from './components/button/button.component';
 import { BodyComponent } from './components/body/body.component';
 import { DOMService } from './services/DOM/dom-element.service';
@@ -30,7 +29,8 @@ import { PopupSearchFieldComponent } from './components/popup/popups/searchField
 import { ContentComponent } from './components/content/content.component';
 import { TextNodeComponent } from './components/content/content-nodes/text-node/text-node.component';
 import { EditorComponent } from './components/content/content-nodes/text-node/editor/editor.component';
-import { QuillModule } from 'ngx-quill';
+import { QuillModule, QUILL_CONFIG_TOKEN } from 'ngx-quill';
+import { EditorService } from './components/content/content-nodes/text-node/editor/editor.service';
 
 @NgModule({
   declarations:
@@ -38,7 +38,6 @@ import { QuillModule } from 'ngx-quill';
     FooterComponent,
     HeaderComponent,
     SidenavComponent,
-    TitleComponent,
     ButtonComponent,
     BodyComponent,
     SidenavItemComponent,
@@ -73,7 +72,6 @@ import { QuillModule } from 'ngx-quill';
     FooterComponent,
     HeaderComponent,
     SidenavComponent,
-    TitleComponent,
     ButtonComponent,
     BodyComponent,
     OverlayComponent,
@@ -90,6 +88,7 @@ import { QuillModule } from 'ngx-quill';
     TextNodeComponent
   ],
   providers: [
+    EditorService,
     DOMService,
     HttpClient,
     SidenavItemService,

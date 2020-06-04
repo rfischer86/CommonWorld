@@ -3,13 +3,13 @@ import { DOMService, DOMElement } from '../../../services/DOM/dom-element.servic
 import { DOMTypes } from '../../../enums/DOMElement.enum';
 import { Logger } from '../../../classes/Logger/logger';
 import { Result, ActionType } from '../../../classes/result/result';
-import { States } from '../../../classes/states/states';
+import { States, State } from '../../../classes/states/states';
 import { NavData } from '../../../classes/navData/nav.data';
 import { ButtonTypes } from 'src/app/shared/enums/button.enum';
 import { Button } from 'src/app/shared/interfaces/button';
 import { HtmlState } from 'src/app/shared/enums/htmlStates';
 import { SidenavItemService } from '../../../services/REST/sidenavItem.service';
-
+import { KEY } from '../../../../shared/enums/keyCodes.ts'
 
 @Component({
   selector: 'app-sidenav-item',
@@ -39,6 +39,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   DOMself: DOMElement;
   logger = new Logger();
   states = new States();
+  clickTimeout = new State(false);
   buttonList = [] as  Button[][];
   domId: string;
 
@@ -67,7 +68,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   createButtons() {
     this.buttonList.push(this.createToggleButton());
     this.buttonList.push(this.createAddButton());
-    this.buttonList.push(this.createEditButton());
     this.buttonList.push(this.createDeleteButton());
   };
 
@@ -173,22 +173,22 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     self.DOM.processEvent(_);
   }
 
-  clickEdit(self: SidenavItemComponent, data: any): void {
+  clickEdit(): void {
     const _ = new  Result<any, any>();
-    _.toId = self.domId;
-    _.input = self.domId;
+    _.toId = this.domId;
+    _.input = this.domId;
     _.type = DOMTypes.sidenavItem;
     _.action = ActionType.edit;
-    self.DOM.processEvent(_);
+    this.DOM.processEvent(_);
   }
 
-  clickSave(self: SidenavItemComponent, data: any): void {
+  clickSave(): void {
     const _ = new  Result<any, any>();
-    _.toId = self.domId;
-    _.input = self.navData.name;
+    _.toId = this.domId;
+    _.input = this.navData.name;
     _.type = DOMTypes.sidenavItem;
     _.action = ActionType.save;
-    self.DOM.processEvent(_);
+    this.DOM.processEvent(_);
   }
 
   clickDelete(self: SidenavItemComponent, data: any): void {
@@ -204,7 +204,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
 
   }
 
-  processDOMEvent(event:  Result<string, any>) {
+  processDOMEvent(event:  Result<any, any>) {
     if (!event) return;
     switch(event.action) {
       case (ActionType.delete):
@@ -244,14 +244,22 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         this.states.open.setTrue()
         break;
       case (ActionType.load):
-        this.loadData(event);
+        this.navData = new NavData().getByDomId(event.toApiId).output;
+        console.log('this.navData', this.navData);
         break;
-
+      case (ActionType.transmit):
+        this.navData = new NavData(event.input as NavData);
+        break;
+  
       }
   }
 
   updateName(event: KeyboardEvent) {
     this.navData.name = (this.sidenavText as ElementRef).nativeElement.value;
+    if (event.key === KEY.ENTER) {
+      this.states.editMode.setFalse();
+      this.clickSave();
+    }
   }
 
   deleteNavItem(navItem: NavData, event: Result<string, any>): boolean {
@@ -271,25 +279,34 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   toggleOpenState(event:  Result<any, any>) {
   }
 
-  loadData(event:  Result<any, any>) {
-    switch(event.action) {
-      case (ActionType.load):
-        this.navData = new NavData().getByDomId(event.toApiId).output;
-        break;
-      case (ActionType.transmit):
-        this.navData = new NavData(event.input as NavData);
-        break;
-    }
+  editSidenavText() {
+    this.clickTimeout.setFalse();
+    if (this.states.editMode) {
+      this.clickEdit();
+      this.states.editMode.setTrue();
+    } 
   }
 
   clickNavElement(data: NavData) {
-    const _ = new  Result<any, any>();
-    _.toId = DOMTypes.body;
-    _.fromType = DOMTypes.sidenav;
-    _.input = data;
-    _.option = data.type;
-    _.action = ActionType.load;
-    this.DOM.processEvent(_);
+    this.clickTimeout.toggleState();
+    setTimeout(() => this.clickTimeout.setFalse(), 300);
+    if (this.clickTimeout.isFalse()) {
+      this.editSidenavText()
+    } 
+    if (this.clickTimeout.isTrue()) {
+      setTimeout(() => {
+        const _ = new  Result<any, any>();
+        _.toId = DOMTypes.body;
+        _.fromType = DOMTypes.sidenav;
+        _.input = data;
+        _.option = data.type;
+        _.action = ActionType.load;
+        if (this.clickTimeout.isTrue()) {
+          this.DOM.processEvent(_);
+        } 
+      }, 290 );
+    }
+    
   }
 
   clickButtonDiv(event: Event) {

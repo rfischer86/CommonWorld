@@ -47,8 +47,6 @@ export class BodyComponent implements OnInit, OnDestroy {
     } else {
       this.states.finishInit.setFalse();
     }
-    console.log('this.navData', this.navData);
-    console.log('TODO: Implement load body');
   }
 
   ngOnDestroy(){

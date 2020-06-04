@@ -179,6 +179,11 @@ namespace Nav_Factory
                 sr.fail();
                 return sr;
             };
+            if(sr.result.contentType != null){
+                sr.result.contentType = ContentTypes.text;
+            }
+            sr = sr.contatenate(sr, getContent(sr));
+            Helper.Helper.printObject(sr);
             try {                
                 sr.result.navData = db.NavNav
                     .Where(el => el.parent_API_Id == id)
@@ -197,6 +202,30 @@ namespace Nav_Factory
                 sr.result.navData = new List<Nav>();
             }
             return sr;
+        }
+
+        public ServerResult<Nav>  getContent(ServerResult<Nav> navData ){
+            if (navData.result.contentType == null ) {
+                navData.result.contentType = ContentTypes.text; 
+            }
+            Helper.Helper.printObject(navData);
+            Helper.Helper.printObject(ContentTypes.text == navData.result.contentType);
+            switch (navData.result.contentType)
+            {
+                case ContentTypes.text:
+                    try {
+                        navData.result.contentData = db.Text.Find(navData.result.apiId).contentData;
+                    } 
+                    catch
+                    {
+                        Text newContent = new Text();
+                        newContent.apiId = navData.result.apiId;
+                        newContent.contentData = "";
+                        navData.result.contentData = newContent.contentData;
+                    }
+                    break;
+            }
+            return navData;
         }
 
         public ServerResult<Nav> deleteById(string id, bool withMsg = true)

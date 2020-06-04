@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Text } from 'dist/commonty/assets/i18n/app.text';
+import { Text } from '../../../../../../assets/i18n/app.text';
 import { DOMService } from 'src/app/shared/services/DOM/dom-element.service';
 import { PopupAction } from 'src/app/shared/interfaces/PopupAction.interface';
 import { Group } from 'src/app/shared/interfaces/group.interface';

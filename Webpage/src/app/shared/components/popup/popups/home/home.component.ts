@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PopupAction } from '../../../../interfaces/PopupAction.interface';
-import { Text } from 'dist/commonty/assets/i18n/app.text';
+import { Text } from '../../../../../../assets/i18n/app.text';
 import { Result, ActionType } from 'src/app/shared/classes/result/result';
 import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';

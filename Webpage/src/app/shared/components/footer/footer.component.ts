@@ -4,7 +4,7 @@ import { Result, ActionType } from '../../classes/result/result';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 import { LinkClass, Link, LinkType } from '../../interfaces/link.interface';
-import { Text } from 'dist/commonty/assets/i18n/app.text';
+import { Text } from '../../../../assets/i18n/app.text';
 
 @Component({
   selector: 'app-footer',

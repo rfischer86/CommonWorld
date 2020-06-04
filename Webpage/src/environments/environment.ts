@@ -10,7 +10,11 @@ export const environment = {
     nav: 'nav',
     groupNav: 'nav/group',
     accordion: 'accordion',
-    accordionGetOrCreate: 'accordion/getOrCreate'
+    accordionGetOrCreate: 'accordion/getOrCreate',
+    content: {
+      text: 'content/text'
+    },
+    search: '/search'
   },
   auth: {
     authenticate: 'authenticate',

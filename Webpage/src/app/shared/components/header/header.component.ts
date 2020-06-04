@@ -10,7 +10,7 @@ import { NavTypes } from '../../enums/navTypes';
 import { UserService } from '../../services/User/user.service';
 import { OverlayTypes } from '../../enums/overlayTypes';
 import { SearchServices } from '../search-field/search-field.interface';
-import { Text } from 'dist/commonty/assets/i18n/app.text';
+import { Text } from '../../../../assets/i18n/app.text';
 import { PopupTypes } from '../../enums/popupTypes';
 import { State } from '../../classes/states/states';
 

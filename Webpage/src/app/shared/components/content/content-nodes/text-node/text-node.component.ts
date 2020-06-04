@@ -14,16 +14,22 @@ import { Result, ActionType } from 'src/app/shared/classes/result/result';
 export class TextNodeComponent implements OnInit, OnDestroy {
 
   @Input() parentId;
-  @Input() contentData: string;
-
+  @Input() parentApiId;
+  @Input() set setContentData(data : string ){
+    console.log(data);
+    this.contentData = data;
+  }
+  contentData: string;
   contentTypes = ContentTypes;
+  contentType = ContentTypes.text;
   states = new States();
   DOMself: DOMElement;
   DOMid: string;
   logger = new Logger();
   constructor (
     private DOM: DOMService,
-  ){  }
+  ){  
+  }
 
   ngOnInit() {
     const _ = this.DOM.create(DOMTypes.content, this.parentId);
@@ -40,9 +46,20 @@ export class TextNodeComponent implements OnInit, OnDestroy {
     if(!event) {return}
   }
 
+  onChange(event){
+    console.log('onChange', event);
+    const _ = new  Result<any, any>();
+    _.toId = this.parentId;
+    _.toApiId = this.parentApiId
+    _.fromType = DOMTypes.content;
+    _.input = event;
+    _.option = this.contentType;
+    _.action = ActionType.save;
+    this.DOM.processEvent(_);  }
+
   ngOnDestroy(){
     const _ = new  Result<any, any>();
-    _.toId = this.DOMself.id;
+    _.toId = this.DOMid;
     _.action = ActionType.destroy;
     this.DOM.processEvent(_);
   }

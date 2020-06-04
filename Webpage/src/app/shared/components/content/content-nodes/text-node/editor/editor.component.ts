@@ -1,7 +1,8 @@
-import { Component, ViewChild, Input, OnInit, Output } from '@angular/core';
+import { Component, ViewChild, Input, OnInit, Output, HostListener, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { QuillEditorComponent } from 'ngx-quill';
-import { EventEmitter } from 'events';
+import { States, State } from 'src/app/shared/classes/states/states';
+import { EditorService } from './editor.service';
 
 @Component({
   selector: 'app-editor',
@@ -10,8 +11,13 @@ import { EventEmitter } from 'events';
 })
 export class EditorComponent implements OnInit {
   @ViewChild('editor', { read: true }) editor: QuillEditorComponent;
-  @Input() contentData: string;
-  @Output() outputData: EventEmitter = new EventEmitter();
+  @ViewChild('editorWrapper', { static: false }) editorWrapper;
+  @Input() set setContentData(data: string) {
+    this.contentData = data;
+    this.form.get('editor').setValue(this.contentData);
+  };
+  contentData: string;
+  @Output() outputData = new EventEmitter();
 
   text: string;
   hide = false;
@@ -23,6 +29,7 @@ export class EditorComponent implements OnInit {
   success: string = null;
   error: string = null;
   loading = false;
+  clickTimeout = new State(false);
   quillConfig1 = {
     toolbar: [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -69,7 +76,9 @@ export class EditorComponent implements OnInit {
       }
     }
   };
+  states = new States()
   constructor(
+    private editorService: EditorService,
     private formBuilder: FormBuilder,
   ) {
     this.form = this.formBuilder.group({
@@ -79,12 +88,12 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     this.form.get('editor').setValue(this.contentData);
+    this.states.finishInit.setTrue();
   }
 
   onSubmit() {
-    if (this.isEditMode) {
+    if (this.isEditMode && this.outputData) {
       this.contentData = this.form.get('editor').value;
-      this.isEditMode = this.isEditMode ? false : true;
       this.outputData.emit(this.contentData);
     }
   }
@@ -95,6 +104,25 @@ export class EditorComponent implements OnInit {
 
   patchValue() {
     this.form.get('editor').patchValue(`${this.form.get('editor').value} patched!`);
+  }
+  
+  @HostListener('document:click', ['$event'])
+  public onClickOutside(targetElement: Event) {
+    if (!this.editorWrapper) {return};
+    this.clickTimeout.toggleState();
+    setTimeout(() => this.clickTimeout.setFalse(), 300);
+    if (this.clickTimeout.isFalse()) {
+      this.isEditMode = true;
+    } 
+    if (this.clickTimeout.isTrue()) {
+      setTimeout(() => { }, 290 );
+    }
+
+    const clickedInside = this.editorWrapper.nativeElement.contains(targetElement.target);
+    if (!clickedInside && this.isEditMode ) {
+      this.onSubmit();
+      this.isEditMode = false;
+    }
   }
 
 }

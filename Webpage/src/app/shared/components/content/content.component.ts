@@ -5,6 +5,7 @@ import { DOMElement, DOMService } from '../../services/DOM/dom-element.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 import { ContentTypes } from '../../enums/ContentType';
+import { TextNodeService } from './content-nodes/text-node/text-node.service';
 
 @Component({
   selector: 'app-content',
@@ -22,15 +23,18 @@ export class ContentComponent implements OnInit, OnDestroy {
   logger = new Logger();
 
   @Input() parentId;
+  @Input() parentApiId;
+
   @Input() set setContentType(type: ContentTypes) {
     this.contentType = type ? type : ContentTypes.text;
   };
-  @Input() setContentData(data: string) {
+  @Input() set setContentData(data: string) {
     this.contentData = data;
   };
 
   constructor (
     private DOM: DOMService,
+    private textNodeService: TextNodeService
   ){  }
 
   ngOnInit() {
@@ -43,9 +47,23 @@ export class ContentComponent implements OnInit, OnDestroy {
       this.DOMid = this.DOMself.id;
     }
   }
+  saveContent(event: Result<string, any>) {
+    console.log('save', event);
+    if (event.option === ContentTypes.text) {
+      event.toApiId = this.parentApiId;
+      this.textNodeService.update(event).subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      )
+    }
+  }
 
   processDOMEvent(event: Result<any, any>) {
     if(!event) {return}
+    console.log(event);
+    if (event.action === ActionType.save) {
+      this.saveContent(event);
+    }
   }
 
   ngOnDestroy(){

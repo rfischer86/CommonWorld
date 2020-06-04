@@ -11,6 +11,8 @@ export class Text {
     name: 'Gruppen Name'
   };
   general = {
+    dataPolicy: 'Datenverarbeitungs Vereinbarung',
+    AGB: 'AGB',
     ok : 'OK',
     back: 'zurück',
     cancel: 'abrechen',
@@ -32,7 +34,11 @@ export class Text {
   tooltip = {
   };
   note = {
-
+  };
+  entities = {
+    group_ : {
+      create: 'Gruppe erstellen'
+    }
   };
 
 }

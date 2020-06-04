@@ -1,4 +1,6 @@
 @import './assets/styles/variable.scss';
+@import '~quill/dist/quill.bubble.css'; 
+@import '~quill/dist/quill.snow.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -16,4 +18,8 @@ div{
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Opera and Firefox */
+}
+
+.ql-container.ql-snow{
+  border: 0px solid white !important;
 }

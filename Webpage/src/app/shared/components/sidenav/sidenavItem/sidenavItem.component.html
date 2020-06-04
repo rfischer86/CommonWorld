@@ -3,9 +3,9 @@
   <div class.hidden="firstElement" (click)="clickNavElement(navData)" class="content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
     <input #sidenavText
       [disabled]="!states.editMode.value"
-      (keyup)="updateName($event)"
       [class.active]="states.editMode.value" type="text"
       class="name"
+      (keyup)="updateName($event)"
       (click)="clickNavElement(navData)"
       [value]="navData.name">
     <div class="buttons" fxLayout="row nowrap"(click)="clickButtonDiv($event)">
@@ -13,7 +13,12 @@
     </div>
   </div>
   <div>
-  <app-content *ngIf="content" [setContentType]="navData.contentType" ></app-content>
+  <app-content 
+    *ngIf="content && DOMself" 
+    [setContentType]="navData.contentType"
+    [setContentData]="navData.contentData"
+    [parentApiId]="navData.apiId"
+    [parentId]="DOMself.id" ></app-content>
 
   </div>
   <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>

@@ -13,7 +13,7 @@ namespace BuildLogger.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "3.1.4");
 
             modelBuilder.Entity("BuildLogger_DB_Context.BuildLogRef", b =>
                 {
@@ -110,6 +110,19 @@ namespace BuildLogger.Migrations
                     b.HasIndex("parentapiId");
 
                     b.ToTable("NavNav");
+                });
+
+            modelBuilder.Entity("BuildLogger_DB_Context.Text", b =>
+                {
+                    b.Property<string>("apiId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("contentData")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("apiId");
+
+                    b.ToTable("Text");
                 });
 
             modelBuilder.Entity("BuildLogger_DB_Context.Nav", b =>
