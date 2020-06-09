@@ -8,18 +8,16 @@
 }
 
 .sidenav-item{
-  z-index: 13;
   background-color: $white;
   overflow: hidden;
   .hidden{
     display: none !important;
   }
+  .hover{
+    @include hoverNav();
+  }
   .content {
     @include notSelectable();
-    @include hoverNav-strong();
-    &:hover{
-      background-color: $gray;
-    }
     width: 100%;
     .name{
       background-color:  rgba(0,0,0,0);
@@ -27,6 +25,11 @@
       color: $black;
       &.active{
         font-style: oblique;
+      }
+    }
+    .content-wrapper{
+      .buttons{
+        z-index: 0;
       }
     }
   }

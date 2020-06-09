@@ -101,6 +101,10 @@ $mat-accent: (
     )
 );
 
+.mat-icon {
+  z-index: 0;
+  position: relative;
+}
 
 $my-app-primary: mat-palette($mat-primary);
 $my-app-accent:  mat-palette($mat-accent, 500, 900, A100);

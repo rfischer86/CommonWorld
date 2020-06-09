@@ -1,6 +1,6 @@
 @import '../../../../assets/styles/variable.scss';
 @import '../../../../assets/styles/mixin.scss';
-
+@import '~@angular/material/theming';
 .mat-icon{
   height: auto;
   width: auto;
@@ -12,6 +12,8 @@
   width: fit-content;
   padding: 0 2px 2px 0;
   transition: 0.15s;
+  z-index: 0;
+  position: relative;
   filter: drop-shadow(3px 3px 2px $gray);
   &:hover{
     padding: 2px 0 0 2px;
@@ -24,10 +26,11 @@
   @include notDragable();
   box-sizing: border-box;
   cursor: pointer;
+  z-index: 0;
+  position: relative;
   &.icon {
     transition: 0.5s;
-    z-index: 10;
-
+    @include mat-elevation(0);
     &.warn{
       color: $warn;
     }

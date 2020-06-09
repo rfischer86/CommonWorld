@@ -66,16 +66,27 @@ export class PopupComponent implements OnInit, OnDestroy {
   }
 
   closeOverlay() {
+    switch (this.popupType) {
+      case(PopupTypes.home):
+        const _ = new  Result<any, any>();
+        _.toId = DOMTypes.header;
+        _.option = PopupTypes.home;
+        _.type = DOMTypes.popup;
+        _.action = ActionType.close;
+        this.DOM.processEvent(_);
+        break;
+      case(PopupTypes.contentType):
+        const _2 = new  Result<any, any>();
+        _2.toId = this.parentId;
+        _2.fromType = DOMTypes.contentTypePopup;
+        _2.action = ActionType.close;
+        this.DOM.processEvent(_2);
+        break;
+        
+    }
     this.popupData = null;
     this.popupType = null;
     this.states.open.setFalse();
-
-    const _ = new  Result<any, any>();
-    _.toId = DOMTypes.header;
-    _.option = PopupTypes.home;
-    _.type = DOMTypes.popup;
-    _.action = ActionType.close;
-    this.DOM.processEvent(_);
   }
 
   @HostListener('document:click', ['$event'])

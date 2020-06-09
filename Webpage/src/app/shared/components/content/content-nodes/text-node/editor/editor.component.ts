@@ -25,7 +25,6 @@ export class EditorComponent implements OnInit {
   backgroundColor = '';
   hasFocus = false;
   isEditMode = false;
-  isEVUAdmin = false;
   success: string = null;
   error: string = null;
   loading = false;
@@ -95,6 +94,7 @@ export class EditorComponent implements OnInit {
     if (this.isEditMode && this.outputData) {
       this.contentData = this.form.get('editor').value;
       this.outputData.emit(this.contentData);
+      this.isEditMode = false;
     }
   }
 
@@ -108,20 +108,20 @@ export class EditorComponent implements OnInit {
   
   @HostListener('document:click', ['$event'])
   public onClickOutside(targetElement: Event) {
+    const clickedInside = this.editorWrapper.nativeElement.contains(targetElement.target);
     if (!this.editorWrapper) {return};
+    
     this.clickTimeout.toggleState();
     setTimeout(() => this.clickTimeout.setFalse(), 300);
-    if (this.clickTimeout.isFalse()) {
+    if (clickedInside && this.clickTimeout.isFalse()) {
       this.isEditMode = true;
     } 
-    if (this.clickTimeout.isTrue()) {
+    if (clickedInside && this.clickTimeout.isTrue()) {
       setTimeout(() => { }, 290 );
     }
 
-    const clickedInside = this.editorWrapper.nativeElement.contains(targetElement.target);
-    if (!clickedInside && this.isEditMode ) {
+    if (!clickedInside && this.isEditMode) {
       this.onSubmit();
-      this.isEditMode = false;
     }
   }
 

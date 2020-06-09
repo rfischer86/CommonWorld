@@ -119,45 +119,46 @@ namespace Nav_Factory
         } 
 
         public ServerResult<Nav> removeNavItem (string parentId, string childId,  bool withMsg = true) {
-            ServerResult<Nav> sr = ServerResult<Nav>.create();
-            Nav parent_entity = db.Nav.Find(parentId); 
-            Nav child_entity = db.Nav.Find(childId);
-            if (parent_entity == null) {
-                sr.fail();
+            using (BuildLoggerContext db = new BuildLoggerContext()) {
+                ServerResult<Nav> sr = ServerResult<Nav>.create();
+                Nav parent_entity = db.Nav.Find(parentId); 
+                Nav child_entity = db.Nav.Find(childId);
+                if (parent_entity == null) {
+                    sr.fail();
+                    sr.result = parent_entity;
+                    sr.error.addMessage(HttpError.idNotExist);
+                } 
+                if (child_entity == null) {
+                    sr.fail();
+                    sr.error.addMessage(HttpError.idNotExist);
+                } 
+                if (!sr.success) {
+                    return sr;
+                }
+                try{
+                    NavNav navLink = db.NavNav
+                        .Where(el => el.child_API_Id == childId && el.parent_API_Id == parentId)
+                        .First();
+                    db.Remove(navLink);
+                    db.SaveChanges();
+                    sr.error.addMessage("Remove Link from Table NavNav.");
+                } catch {
+                    sr.error.addMessage("Can not remove Link from Table NavNav.");
+                }
+                try{
+                    int childLinks = db.NavNav
+                        .Count(el => el.parent_API_Id == childId);
+                    if (childLinks == 0) {
+                        db.Remove(child_entity);
+                        sr.error.addMessage("Remove entity from Table Nav.");
+                    }
+                    // db.SaveChanges();
+                } catch {}
+                Helper.Helper.printObject(sr);
                 sr.result = parent_entity;
-                sr.error.addMessage(HttpError.idNotExist);
-            } 
-            if (child_entity == null) {
-                sr.fail();
-                sr.error.addMessage(HttpError.idNotExist);
-            } 
-            if (!sr.success) {
+                db.SaveChanges();
                 return sr;
             }
-            try{
-                NavNav navLink = db.NavNav
-                    .Where(el => el.child_API_Id == childId)
-                    .Where(el =>   el.parent_API_Id == parentId)
-                    .First();
-                db.Remove(navLink);
-                db.SaveChanges();
-                sr.error.addMessage("Remove Link from Table NavNav.");
-            } catch {
-                sr.error.addMessage("Can not remove Link from Table NavNav.");
-            }
-            try{
-                int childLinks = db.NavNav
-                    .Count(el => el.parent_API_Id == childId);
-                if (childLinks == 0) {
-                    db.Remove(child_entity);
-                    sr.error.addMessage("Remove entity from Table Nav.");
-                }
-                db.SaveChanges();
-            } catch {}
-
-            sr.result = parent_entity;
-            db.SaveChanges();
-            return sr;
         } 
 
         public ServerResult<Nav> getOrCreate(Nav entity, bool withMsg = false )

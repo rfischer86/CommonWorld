@@ -35,6 +35,10 @@ export class Text {
   };
   note = {
   };
+  contentTypes = {
+    text: 'Text Block',
+    calendar: 'Kalender Block'
+  };
   entities = {
     group_ : {
       create: 'Gruppe erstellen'

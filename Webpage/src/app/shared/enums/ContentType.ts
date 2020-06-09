@@ -6,7 +6,7 @@ export enum ContentTypes {
   code = 'code',
   math = 'math',
   picture = 'picture',
-  date = 'date',
+  calender = 'calender',
   feed = 'feed',
   canban = 'canban',
   map = 'map'

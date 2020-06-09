@@ -81,7 +81,6 @@ export class HeaderComponent implements OnInit {
   closePopup(){
     const _ = new  Result<any, any>();
     this.openHome.setFalse();
-
   }
 
   openSearchPopup(event: Result<any, any>){

@@ -5,11 +5,12 @@ import { Logger } from '../../../classes/Logger/logger';
 import { Result, ActionType } from '../../../classes/result/result';
 import { States, State } from '../../../classes/states/states';
 import { NavData } from '../../../classes/navData/nav.data';
-import { ButtonTypes } from 'src/app/shared/enums/button.enum';
+import { ButtonTypes, ButtonState } from 'src/app/shared/enums/button.enum';
 import { Button } from 'src/app/shared/interfaces/button';
 import { HtmlState } from 'src/app/shared/enums/htmlStates';
 import { SidenavItemService } from '../../../services/REST/sidenavItem.service';
 import { KEY } from '../../../../shared/enums/keyCodes.ts'
+import { PopupTypes } from 'src/app/shared/enums/popupTypes';
 
 @Component({
   selector: 'app-sidenav-item',
@@ -39,9 +40,11 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   DOMself: DOMElement;
   logger = new Logger();
   states = new States();
+  openContentType = new State(false);
   clickTimeout = new State(false);
   buttonList = [] as  Button[][];
   domId: string;
+  popupData: Result<any,any>;
 
   constructor(
     private DOM: DOMService,
@@ -68,6 +71,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   createButtons() {
     this.buttonList.push(this.createToggleButton());
     this.buttonList.push(this.createAddButton());
+    this.content ? this.buttonList.push(this.createContentTypeButton()) : null;
     this.buttonList.push(this.createDeleteButton());
   };
 
@@ -107,6 +111,20 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     button.type = ButtonTypes.icon;
     return [button];
   }
+
+  createContentTypeButton() {
+    const button = {} as Button;
+    button.action = this.clickContentType;
+    button.icon = 'list';
+    button.index = 0;
+    button.self = this;
+    button.htmlState = HtmlState.primary;
+    button.size = '1em';
+    button.nextButton = 0;
+    button.type = ButtonTypes.icon;
+    return [button];
+  }
+
 
   createEditButton(): Button[] {
     const editButton = {} as Button;
@@ -191,6 +209,17 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     this.DOM.processEvent(_);
   }
 
+  clickContentType(self: SidenavItemComponent, data: any): void {
+    self.popupData = new Result<any,any>();
+    self.popupData.option = PopupTypes.contentType;
+    self.openContentType.setTrue()
+  }
+
+  closePopup(){
+    const _ = new  Result<any, any>();
+    this.openContentType.setFalse();
+  }
+
   clickDelete(self: SidenavItemComponent, data: any): void {
     const _ = new  Result<any, any>();
     _.toId = self.parentId;
@@ -238,7 +267,14 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         this.states.open.setTrue();
         break;
       case (ActionType.close):
-        this.states.open.setFalse()
+        
+        switch(event.fromType) {
+          case (DOMTypes.sidenav):
+            this.states.open.setFalse();
+          case (DOMTypes.contentTypePopup):
+            this.openContentType.setFalse();
+        }
+
         break;
       case (ActionType.open):
         this.states.open.setTrue()

@@ -51,6 +51,7 @@ namespace BuildLogger_DB_Context
     
     public class BuildLoggerContext : DbContext
     {
+        public BuildLoggerContext() {}
         public DbSet<Error> Error { get; set; }
         public DbSet<BuildLogRef> BuildLog { get; set; }
         public DbSet<Text> Text { get; set; }

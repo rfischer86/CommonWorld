@@ -10,6 +10,8 @@
       <app-button [setButtons]="[actiomButtonList[1]]" ></app-button>
       <app-button [setButtons]="[actiomButtonList[0]]" ></app-button>
     </div>
-    <app-popup [parentId]="DOMid" *ngIf="openHome.value" [data]="popupData"></app-popup>
+    <div>
+      <app-popup [parentId]="DOMid" *ngIf="openHome.value" [data]="popupData"></app-popup>
+    </div>
   </div>
 </div>

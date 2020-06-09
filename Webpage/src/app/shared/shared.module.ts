@@ -31,6 +31,7 @@ import { TextNodeComponent } from './components/content/content-nodes/text-node/
 import { EditorComponent } from './components/content/content-nodes/text-node/editor/editor.component';
 import { QuillModule, QUILL_CONFIG_TOKEN } from 'ngx-quill';
 import { EditorService } from './components/content/content-nodes/text-node/editor/editor.service';
+import { ContentTypeComponent } from './components/popup/popups/contentType/contentType.component';
 
 @NgModule({
   declarations:
@@ -52,7 +53,8 @@ import { EditorService } from './components/content/content-nodes/text-node/edit
     PopupSearchFieldComponent,
     ContentComponent,
     TextNodeComponent,
-    EditorComponent
+    EditorComponent,
+    ContentTypeComponent
   ],
   imports: [
     QuillModule,
@@ -85,7 +87,8 @@ import { EditorService } from './components/content/content-nodes/text-node/edit
     PopupSearchFieldComponent,
     SidenavItemComponent,
     ContentComponent,
-    TextNodeComponent
+    TextNodeComponent,
+    ContentTypeComponent
   ],
   providers: [
     EditorService,

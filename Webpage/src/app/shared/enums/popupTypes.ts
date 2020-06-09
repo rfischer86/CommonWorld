@@ -1,5 +1,6 @@
 export enum PopupTypes {
   home = 'home',
-  search = 'search'
+  search = 'search',
+  contentType = 'contentType' 
 }
 

@@ -1,15 +1,17 @@
 
 <div
   class="body"
+  >
+  <div class="body-wrapper"
   fxLayout="row"
   fxLayoutAlign="center"
-  >
-  <div
+    >
+    <div
     class="column"
     fxLayout="column"
     fxLayoutAlign="start space-around"
     >
-    <app-sidenav-item *ngIf="states.finishInit.value" [setNavData]="navData" [open]="true" [content]="true" [firstElement]="false" [parentId]="DOMself.id"></app-sidenav-item>
-
+      <app-sidenav-item *ngIf="states.finishInit.value" [setNavData]="navData" [open]="true" [content]="true" [firstElement]="false" [parentId]="DOMself.id"></app-sidenav-item>  
+    </div>
   </div>
 </div>

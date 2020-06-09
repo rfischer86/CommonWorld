@@ -43,8 +43,6 @@ namespace BuildLogger_ErrorControler
         [HttpPut]
         public ActionResult Put(Text entity)
         {
-            Helper.Helper.printObject(entity);
-            Helper.Helper.print("entity");
             ServerResult<Text> sr = factory.update(entity, true);
             if (sr.success) 
             {

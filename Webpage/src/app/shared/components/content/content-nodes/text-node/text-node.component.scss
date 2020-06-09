@@ -2,6 +2,8 @@
 
 // @import '../../../../../../assets/styles/mixin.scss';
 :host {
+  z-index: 1;
+  position: relative;
   height: 0;
   width: 100%;
   transition: 0.5s;

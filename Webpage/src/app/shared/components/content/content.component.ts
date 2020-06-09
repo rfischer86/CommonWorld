@@ -48,7 +48,6 @@ export class ContentComponent implements OnInit, OnDestroy {
     }
   }
   saveContent(event: Result<string, any>) {
-    console.log('save', event);
     if (event.option === ContentTypes.text) {
       event.toApiId = this.parentApiId;
       this.textNodeService.update(event).subscribe(

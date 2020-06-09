@@ -5,6 +5,7 @@ import { Result, ActionType } from 'src/app/shared/classes/result/result';
 import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';
 import { DOMService } from 'src/app/shared/services/DOM/dom-element.service';
+import { PopupTypes } from 'src/app/shared/enums/popupTypes';
 
 @Component({
   selector: 'app-home-popup',
@@ -36,12 +37,6 @@ export class PopupHomeComponent {
     _.option = OverlayTypes.registerGroup;
     _.action = ActionType.open;
     action.self.DOM.processEvent(_);
-
-    const _2 = new  Result<any, any>();
-    _2.toId = action.self.parentId;
-    _2.option = OverlayTypes.registerGroup;
-    _2.action = ActionType.close;
-    action.self.DOM.processEvent(_2);
   }
 
 }

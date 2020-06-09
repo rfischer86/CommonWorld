@@ -68,7 +68,6 @@ export class SidenavComponent implements OnInit {
             this.navData = data.result;
             if(!this.navData.navData) {this.navData.navData = []};
             this.states.finishInit.setTrue();
-            console.log('this.navData', this.navData);
     
 
           },

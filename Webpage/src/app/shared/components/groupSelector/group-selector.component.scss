@@ -3,11 +3,11 @@
 
 :host{
   z-index: 11;
-  background-color: $white ;
 }
 
 .group-selector{
   width: 100%;
+  background-color: rgba( green, 0);
   margin-bottom: -3px;
   @include notSelectable();
   .link{

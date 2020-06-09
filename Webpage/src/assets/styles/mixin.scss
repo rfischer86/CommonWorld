@@ -15,9 +15,9 @@
 
 
 
-@mixin hoverNav-strong() {
+@mixin hoverNav() {
   &:hover{
-    background-color: $gray;
+    background-color: $gray-lighter;
   }
 }
 

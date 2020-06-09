@@ -16,7 +16,6 @@ export class TextNodeComponent implements OnInit, OnDestroy {
   @Input() parentId;
   @Input() parentApiId;
   @Input() set setContentData(data : string ){
-    console.log(data);
     this.contentData = data;
   }
   contentData: string;
@@ -32,7 +31,7 @@ export class TextNodeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const _ = this.DOM.create(DOMTypes.content, this.parentId);
+    const _ = this.DOM.create(DOMTypes.textNode, this.parentId);
     if (_.success.isFalse()) {
       this.logger.appEndLogBook(_.log);
     } else {
@@ -51,11 +50,12 @@ export class TextNodeComponent implements OnInit, OnDestroy {
     const _ = new  Result<any, any>();
     _.toId = this.parentId;
     _.toApiId = this.parentApiId
-    _.fromType = DOMTypes.content;
+    _.fromType = DOMTypes.textNode;
     _.input = event;
     _.option = this.contentType;
     _.action = ActionType.save;
-    this.DOM.processEvent(_);  }
+    this.DOM.processEvent(_); 
+  }
 
   ngOnDestroy(){
     const _ = new  Result<any, any>();
