@@ -1,0 +1,7 @@
+<div *ngIf="states.finishInit.value" class="login-wrapper" fxLayout="column" fxLayoutGap="1em">
+  <app-title [title]="text.contentNodes.formular.title" [type]="titleTypes.standard"></app-title>
+  <app-form-node [parentId]="DOMself.id" [setContentData]="formularData" [notEditable]="true"></app-form-node>
+  <div class="buttons" fxLayout="row nowrap">
+    <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+  </div>
+</div>

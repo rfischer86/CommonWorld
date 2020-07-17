@@ -7,6 +7,7 @@ import { LinkClass, Link, LinkType } from '../../interfaces/link.interface';
 import { Text } from '../../../../assets/i18n/app.text';
 import { GroupSelector } from '../../interfaces/group.interface';
 import { NavTypes } from '../../enums/navTypes';
+import { CashService } from '../../services/REST/cash.service';
 
 @Component({
   selector: 'app-group-selector',
@@ -23,10 +24,15 @@ export class GroupSelectorComponent implements OnInit, OnDestroy {
   DOMself: DOMElement;
   selectedApiId: string;
   constructor(
+    private cashService: CashService,
     private DOM: DOMService,
 
   ) {
-    this.createGroupLinks();
+    // this.createGroupLinks();
+    this.groupLinks = this.cashService.getActualGroupRider();
+    const _ = new Result<any, any>();
+    _.toApiId = this.cashService.getActualGroup();
+    this.loadSidenav(_);
    }
 
   ngOnInit() {
@@ -46,7 +52,6 @@ export class GroupSelectorComponent implements OnInit, OnDestroy {
       this.loadSidenav(event);
     }
     if (event.action === ActionType.add) {
-
       const group = {} as GroupSelector;
       group.name = event.name;
       group.apiId = event.toApiId;
@@ -59,6 +64,8 @@ export class GroupSelectorComponent implements OnInit, OnDestroy {
   }
 
   loadSidenav(event: Result<any, any>) {
+    this.cashService.setActualGroup(event.toApiId);
+    this.cashService.setActualGroupRider(this.groupLinks);
     this.selectedApiId = event.toApiId;
     const _ = new Result<any, any>();
     _.fromType = DOMTypes.groupSelector;
@@ -68,7 +75,7 @@ export class GroupSelectorComponent implements OnInit, OnDestroy {
     _.option = NavTypes.menu;
     _.toApiId = event.toApiId;
     this.DOM.processEvent(_);
-
+    
     const _2 = new Result<any, any>();
     _2.fromType = DOMTypes.groupSelector;
     _2.fromId = this.DOMid;
@@ -110,6 +117,7 @@ export class GroupSelectorComponent implements OnInit, OnDestroy {
       }
       return true;
     })
+    this.cashService.setActualGroupRider(this.groupLinks);
   }
 
   createGroupLinks() {

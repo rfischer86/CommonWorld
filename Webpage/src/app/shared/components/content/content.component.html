@@ -2,5 +2,6 @@
   [ngSwitch]="contentType">
   <div class="content-container">
     <app-text-node [parentId]="DOMid" *ngSwitchCase="contentTypes.text" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-text-node>
+    <app-form-node [parentId]="DOMid" *ngSwitchCase="contentTypes.form" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-form-node>
   </div>
 </div>

@@ -1,0 +1,31 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+
+:host{
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+}
+.enum-field{
+  @include removeInputCSS();
+  border-bottom: 2px solid $primary;
+  opacity: 1;
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  .mat-icon{
+    opacity: 1;
+    z-index: 1;
+    width: 0em;
+    height: 0em;
+    bottom: 1em;
+    right: 1em;
+  }
+  .input{
+    opacity: 1; 
+    z-index: 1;
+    width: calc(100% - 1em);
+  }
+}

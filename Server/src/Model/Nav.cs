@@ -30,10 +30,10 @@ namespace BuildLogger_DB_Context
         public string name { get; set; }
         public string type { get; set; }
         public string contentType { get; set; }
-        public string contentData { get; set; }
+        [NotMapped]
+        public object contentData { get; set; }
         
         public virtual List<Nav> navData { get; set; }
-        // public virtual List<NavNav> navParents { get; set; }
     }   
 
     public class NavNav

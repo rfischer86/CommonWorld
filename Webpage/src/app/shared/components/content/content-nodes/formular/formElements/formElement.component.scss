@@ -1,0 +1,34 @@
+@import '../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../assets/styles/mixin.scss';
+
+:host{
+  z-index: 30;
+  position: relative;
+}
+
+.formular{
+  @include notSelectable();
+  @include notDragable();
+  z-index: 31;
+  position: relative;
+  height: 2.5em;
+  .label{  
+    position: relative;
+    z-index: 32;
+    font-size: 0.9em;
+    padding: unset;
+    margin: 0;
+    font-weight: bold;
+    color: $primary;
+  }
+  .content{
+    width: 100%;
+    z-index: 33;
+    position: relative;
+
+  }
+  .error{
+    color: $warn;
+
+  }
+}

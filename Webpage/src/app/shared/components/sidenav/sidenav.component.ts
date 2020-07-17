@@ -9,6 +9,7 @@ import { SidenavItemService } from '../../services/REST/sidenavItem.service';
 import { RestResponse } from '../../interfaces/rest.interface';
 import { User } from '../../interfaces/user.interface';
 import { NavTypes } from '../../enums/navTypes';
+import { CashService } from '../../services/REST/cash.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -27,7 +28,7 @@ export class SidenavComponent implements OnInit {
   user = {} as User;
   constructor(
     private DOM: DOMService,
-    private navItemService: SidenavItemService,
+    private navItemService: SidenavItemService
   ) {   }
 
   ngOnInit() {
@@ -68,8 +69,6 @@ export class SidenavComponent implements OnInit {
             this.navData = data.result;
             if(!this.navData.navData) {this.navData.navData = []};
             this.states.finishInit.setTrue();
-    
-
           },
           error => {
             this.navData = new NavData();
@@ -88,15 +87,4 @@ export class SidenavComponent implements OnInit {
         break;
     }
   }
-
-  clickNavElement(data: NavData) {
-    const _ = new  Result<any, any>();
-    _.toId = DOMTypes.body;
-    _.fromType = DOMTypes.sidenav;
-    _.input = data;
-    _.option = data.type;
-    _.action = ActionType.load;
-    this.DOM.processEvent(_);
-  }
-
 }

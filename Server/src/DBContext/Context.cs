@@ -47,6 +47,10 @@ namespace BuildLogger_DB_Context
         public static string BuildLog = "BuildLog";
         public static string Nav = "Nav";
         public static string Text = "Text";
+        public static string Form = "Form";
+        public static string FormElement = "FormElement";
+        public static string FormForm = "FormForm";
+        public static string FormFormElement = "FormFormElement";
     }
     
     public class BuildLoggerContext : DbContext
@@ -55,12 +59,22 @@ namespace BuildLogger_DB_Context
         public DbSet<Error> Error { get; set; }
         public DbSet<BuildLogRef> BuildLog { get; set; }
         public DbSet<Text> Text { get; set; }
+        public DbSet<Form> Form { get; set; }
+        public DbSet<FormForm> FormForm { get; set; }
+        public DbSet<FormElement> FormElement { get; set; }
+        public DbSet<FormFormElement> FormFormElement { get; set; }
         public DbSet<Nav> Nav { get; set; }
         public DbSet<NavNav> NavNav { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<NavNav>()
                 .HasKey(u => new { u.child_API_Id, u.parent_API_Id });
+
+            modelBuilder.Entity<FormForm>()
+                .HasKey(u => new { u.child_API_Id, u.parent_API_Id });
+
+            modelBuilder.Entity<FormFormElement>()
+                .HasIndex(u => new { u.child_API_Id, u.parent_API_Id });
 
             // modelBuilder.Entity<Nav>()
             //     .HasMany(u => u.navData)

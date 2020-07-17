@@ -12,7 +12,8 @@ export const environment = {
     accordion: 'accordion',
     accordionGetOrCreate: 'accordion/getOrCreate',
     content: {
-      text: 'content/text'
+      text: 'content/text',
+      form: 'content/form'
     },
     search: '/search'
   },

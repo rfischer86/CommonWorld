@@ -1,0 +1,19 @@
+@import '../../../../../../assets/styles/variable.scss';
+
+
+:host{
+  z-index: 10;
+  position: relative;
+}
+
+.login-wrapper {
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  position: relative;
+  z-index: 10;
+  background-color: $white;
+  width: 25em;
+  height: auto;
+  transition: height 5s linear;
+}

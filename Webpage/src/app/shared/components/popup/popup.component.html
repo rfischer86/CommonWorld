@@ -5,6 +5,7 @@
     <app-home-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.home"></app-home-popup>
     <app-search-field-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.search" [popupAction]="popupData"></app-search-field-popup>
     <app-content-type-popup [parentParentId]="parentId" [parentId]="DOMid" *ngSwitchCase="popupTypes.contentType"></app-content-type-popup>
+    <app-formular-type-popup [parentParentId]="parentId" [parentId]="DOMid" *ngSwitchCase="popupTypes.formularType"></app-formular-type-popup>
   </div>
 
 </div>

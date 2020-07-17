@@ -11,7 +11,9 @@ import { HtmlState } from 'src/app/shared/enums/htmlStates';
 import { SidenavItemService } from '../../../services/REST/sidenavItem.service';
 import { KEY } from '../../../../shared/enums/keyCodes.ts'
 import { PopupTypes } from 'src/app/shared/enums/popupTypes';
-
+import { ContentTypes } from 'src/app/shared/enums/ContentType';
+import { CashService } from 'src/app/shared/services/REST/cash.service';
+import { Text} from '../../../../../assets/i18n/app.text';
 @Component({
   selector: 'app-sidenav-item',
   templateUrl: './sidenavItem.component.html',
@@ -36,6 +38,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     }
   };
 
+  text = new Text();
   navData: NavData;
   DOMself: DOMElement;
   logger = new Logger();
@@ -48,7 +51,8 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private DOM: DOMService,
-    private entityService: SidenavItemService
+    private entityService: SidenavItemService,
+    private cashService: CashService
   ) {
   }
 
@@ -253,7 +257,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
       case (ActionType.add):
         this.states.editMode.setFalse();
         const newNavItem = new NavData();
-        newNavItem.name='New Element';
+        newNavItem.name = this.text.sidenav.newElement;
         this.navData.navData.push(newNavItem);
         this.entityService.create(newNavItem).subscribe(
           data => {
@@ -274,19 +278,26 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
           case (DOMTypes.contentTypePopup):
             this.openContentType.setFalse();
         }
-
         break;
       case (ActionType.open):
         this.states.open.setTrue()
         break;
       case (ActionType.load):
         this.navData = new NavData().getByDomId(event.toApiId).output;
-        console.log('this.navData', this.navData);
         break;
       case (ActionType.transmit):
         this.navData = new NavData(event.input as NavData);
         break;
-  
+      case (ActionType.update):
+        this.navData.contentType = event.option as ContentTypes;
+        this.navData.contentData = null;
+        this.entityService.update(this.navData).subscribe(
+          data2 => console.log(data2),
+          error => console.log(error)
+        );
+        console.log('TODO: load content Data');
+        break;
+    
       }
   }
 
@@ -323,7 +334,9 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     } 
   }
 
-  clickNavElement(data: NavData) {
+  clickNavElement(event: Event, data: NavData) {
+    event.stopPropagation();
+    if(this.content) {return};
     this.clickTimeout.toggleState();
     setTimeout(() => this.clickTimeout.setFalse(), 300);
     if (this.clickTimeout.isFalse()) {
@@ -331,13 +344,16 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     } 
     if (this.clickTimeout.isTrue()) {
       setTimeout(() => {
-        const _ = new  Result<any, any>();
-        _.toId = DOMTypes.body;
-        _.fromType = DOMTypes.sidenav;
-        _.input = data;
-        _.option = data.type;
-        _.action = ActionType.load;
         if (this.clickTimeout.isTrue()) {
+          this.cashService.setEntityNavLink(data.apiId);
+          const _ = new  Result<any, any>();
+          _.log = new Logger();
+          _.log.addLog('process click nav element ' + data.name + ' to body');
+          _.toId = DOMTypes.body;
+          _.fromType = DOMTypes.sidenav;
+          _.input = data;
+          _.option = data.type;
+          _.action = ActionType.load;
           this.DOM.processEvent(_);
         } 
       }, 290 );

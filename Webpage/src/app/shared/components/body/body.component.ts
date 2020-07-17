@@ -34,7 +34,7 @@ export class BodyComponent implements OnInit, OnDestroy {
 
   processDOMEvent(event:Result<any,any>) {
     if(!event) return;
-    if (event.fromType === DOMTypes.sidenav) {
+    if (event.action === ActionType.load) {
       this.loadBody(event.input)
     }
   }

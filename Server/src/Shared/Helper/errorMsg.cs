@@ -126,6 +126,11 @@ namespace Helper
             string message = "Update the entity with id '" + id +"' into the table '" + table + "'.";
             return message;
         }
+        public static string getUpdateEntityOfId(string table, string id )
+        {
+            string message = "Update the entity with id '" + id +"' into the table '" + table + "'.";
+            return message;
+        }
 
     }
     public class ErrorMsg
@@ -147,6 +152,14 @@ namespace Helper
             return;
         } 
 
+        public void conncatenate( List<string> infoList)
+        {
+            foreach (string info in infoList) {
+                messageList.Add(info);
+            }
+            return;
+        } 
+        
         public void setStatusCode(HttpStatusCode code)
         {
             statusCode = code; 

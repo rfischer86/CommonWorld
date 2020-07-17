@@ -1,12 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Button } from '../../interfaces/button';
-import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { States } from '../../classes/states/states';
-import { HtmlState } from '../../enums/htmlStates';
 import { Result, ActionType } from '../../classes/result/result';
 import { OverlayTypes } from '../../enums/overlayTypes';
 import { DOMElement, DOMService } from '../../services/DOM/dom-element.service';
-import { UserService } from '../../services/User/user.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 
@@ -20,8 +16,13 @@ export class OverlayComponent implements OnInit {
   overlayType: OverlayTypes;
   states = new States();
   @Input() set overlayEvent(overlayEvent: Result<any,any> ) {
+    if(!overlayEvent) {return}
     this.overlayData = overlayEvent;
+    this.data = overlayEvent.input;
+    this.option = overlayEvent.option2;
   }
+  option; 
+  data;
   overlayData: Result<any, any>;
   DOMself: DOMElement;
   logger = new Logger();
@@ -42,12 +43,22 @@ export class OverlayComponent implements OnInit {
 
   processDOMEvent(event: Result<any, any>) {
     if(!event) {return}
-    this.overlayData = event;
-    this.overlayType = event.option as OverlayTypes;
-    if (event.action===ActionType.close) {
+    if (event.action === ActionType.open) {
+      this.overlayData = event;
+      this.data = event.input;
+      this.overlayType = event.option as OverlayTypes;
+      this.option = event.option2;
+    };
+    if (event.action === ActionType.close) {
       this.closeOverlay();
     };
-
+    if (event.action === ActionType.transmit) {
+      event.toId = this.overlayData.fromId;
+      event.action = event.nextActionType;
+      event.fromType = DOMTypes.overlay;
+      this.DOM.processEvent(event);
+      setTimeout(() => this.closeOverlay(), 200);
+    };
   }
 
   closeOverlay() {

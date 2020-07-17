@@ -6,6 +6,7 @@ import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 import { ContentTypes } from '../../enums/ContentType';
 import { TextNodeService } from './content-nodes/text-node/text-node.service';
+import { FormNodeService } from './content-nodes/formular/form-node.service';
 
 @Component({
   selector: 'app-content',
@@ -34,7 +35,8 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   constructor (
     private DOM: DOMService,
-    private textNodeService: TextNodeService
+    private textNodeService: TextNodeService,
+    private formNodeService: FormNodeService
   ){  }
 
   ngOnInit() {
@@ -47,10 +49,19 @@ export class ContentComponent implements OnInit, OnDestroy {
       this.DOMid = this.DOMself.id;
     }
   }
-  saveContent(event: Result<string, any>) {
+
+  saveContent(event: Result<any, any>) {
     if (event.option === ContentTypes.text) {
       event.toApiId = this.parentApiId;
       this.textNodeService.update(event).subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      )
+    }
+    if (event.option === ContentTypes.form) {
+      event.input.apiId = event.toApiId;
+      console.log(event);
+      this.formNodeService.update(event).subscribe(
         data => console.log(data),
         error => console.error(error)
       )
@@ -59,7 +70,6 @@ export class ContentComponent implements OnInit, OnDestroy {
 
   processDOMEvent(event: Result<any, any>) {
     if(!event) {return}
-    console.log(event);
     if (event.action === ActionType.save) {
       this.saveContent(event);
     }
@@ -68,6 +78,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     const _ = new  Result<any, any>();
     _.toId = this.DOMself.id;
+    _.log = new Logger();
+    _.log.addLog('destroy ContentComponent');
     _.action = ActionType.destroy;
     this.DOM.processEvent(_);
   }

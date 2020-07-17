@@ -1,6 +1,7 @@
 export class Text {
   sidenav =
   {
+    newElement: 'Neuese Element',
     emptyElement: 'Neues Item'
   };
   login = {
@@ -14,6 +15,7 @@ export class Text {
     dataPolicy: 'Datenverarbeitungs Vereinbarung',
     AGB: 'AGB',
     ok : 'OK',
+    delete: 'entfernen',
     back: 'zurück',
     cancel: 'abrechen',
     login: 'anmelden',
@@ -22,6 +24,7 @@ export class Text {
     email: 'E-Mail',
     password: 'Password',
     name: 'Name',
+    save: 'speichern'
   };
   errorMsg = {
     register: 'Es müssen alle Feder ausgefüllt sein, damit Sie sich registrieren können.',
@@ -36,13 +39,39 @@ export class Text {
   note = {
   };
   contentTypes = {
-    text: 'Text Block',
-    calendar: 'Kalender Block'
+    text: 'Text',
+    calendar: 'Kalender',
+    formular: 'Formular'
+  };
+  formularTypes = {
+    textField: 'TextFeld',
+    textLine: 'Textzeile',
+    textarea: 'Text',
+    date: 'Datum',
+    number: 'Zahl',
+    checkbox: 'Checkbox',
+    select: 'Selektion',
+    range: 'Bereich',
+    document: 'Document',
+    image: 'Bild',
+    color: 'Farbe'
+  };
+  contentNodes = {
+    formular: {
+      default: 'Neues Formular Element',
+      title: 'Formular Element bearbeiten'
+    }
   };
   entities = {
     group_ : {
       create: 'Gruppe erstellen'
     }
   };
+  addFormElement = {
+    label: 'label',
+    formType: 'formType',
+    description: 'description',
+    version: 'version'
+  }
 
 }

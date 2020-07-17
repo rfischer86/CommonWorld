@@ -1,13 +1,15 @@
 <div class="sidenav-item" fxLayout="column">
 
-  <div class.hidden="firstElement" (click)="clickNavElement(navData)" class="content" [class.hover]="!content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
-    <input #sidenavText
-    [disabled]="!states.editMode.value"
-    [class.active]="states.editMode.value" type="text"
-    class="name"
-    (keyup)="updateName($event)"
-    (click)="clickNavElement(navData)"
-    [value]="navData.name">
+  <div class.hidden="firstElement" (click)="clickNavElement($event, navData)" class="content" [class.hover]="!content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
+    <div class="input-wrapper">
+      <input #sidenavText
+      [disabled]="!states.editMode.value"
+      [class.active]="states.editMode.value" type="text"
+      class="name"
+      (keyup)="updateName($event)"
+      [value]="navData.name">
+      <div *ngIf="!states.editMode.value" class="input-overlay" (click)="clickNavElement($event, navData)" ></div>
+    </div>
     <div class="content-wrapper" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="0.25em">
       <div class="buttons" fxLayout="row nowrap"(click)="clickButtonDiv($event)">
         <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
@@ -15,13 +17,12 @@
       <app-popup [parentId]="DOMself.id" *ngIf="openContentType.value" [data]="popupData"></app-popup>
       </div>
     </div>
-    <div>
+    <div *ngIf="content && DOMself">
       <app-content 
-      *ngIf="content && DOMself" 
-      [setContentType]="navData.contentType"
-      [setContentData]="navData.contentData"
-      [parentApiId]="navData.apiId"
-      [parentId]="DOMself.id" ></app-content>
+        [setContentType]="navData.contentType"
+        [setContentData]="navData.contentData"
+        [parentApiId]="navData.apiId"
+        [parentId]="DOMself.id" ></app-content>
       
     </div>
     <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>

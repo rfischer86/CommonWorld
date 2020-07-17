@@ -17,7 +17,7 @@ export class NavData {
     this.name =  data.name;
     this.type =  data.type;
     this.link =  data.link;
-    if (!this.name) { this.name = 'Neu Element'; }
+    if (!this.name) { this.name = 'Neues Element'; }
     if (!data.navData) { data.navData = []};
     this.navData =  data.navData;
     this.apiId =  data.apiId;

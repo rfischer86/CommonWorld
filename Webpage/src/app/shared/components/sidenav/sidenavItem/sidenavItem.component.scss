@@ -19,12 +19,30 @@
   .content {
     @include notSelectable();
     width: 100%;
-    .name{
-      background-color:  rgba(0,0,0,0);
-      border: none;
-      color: $black;
-      &.active{
-        font-style: oblique;
+    .input-wrapper {
+      display: inline-block;
+      position: relative;
+      .name{
+        z-index: 10;
+        display: block;
+        position: relative;
+        background-color:  rgba(0,0,0,0);
+        border: none;
+        color: $black;
+        &.active{
+          font-style: oblique;
+        }
+      }
+      .input-overlay{
+        display: inline-block;
+        position: absolute;
+        z-index: 20;
+        height: 100%;
+        width: 100%;
+        left:0;
+        right:0;
+        top:0;
+        bottom:0;
       }
     }
     .content-wrapper{

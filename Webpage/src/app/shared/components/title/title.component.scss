@@ -1,0 +1,14 @@
+@import '../../../../assets/styles/variable.scss';
+@import '../../../../assets/styles/mixin.scss';
+
+.standard {
+  color: $primary;
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+
+div {
+  @include notDragable();
+  @include notSelectable();
+  margin-bottom: 0.5em;
+}

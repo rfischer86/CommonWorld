@@ -32,6 +32,15 @@ import { EditorComponent } from './components/content/content-nodes/text-node/ed
 import { QuillModule, QUILL_CONFIG_TOKEN } from 'ngx-quill';
 import { EditorService } from './components/content/content-nodes/text-node/editor/editor.service';
 import { ContentTypeComponent } from './components/popup/popups/contentType/contentType.component';
+import { FormularNodeComponent } from './components/content/content-nodes/formular/formular.component';
+import { FormularTextElementComponent } from './components/content/content-nodes/formular/formElements/text/text.component';
+import { FormularElementComponent } from './components/content/content-nodes/formular/formElements/formElement.component';
+import { AddFormElementComponent } from './components/overlay/dialog/addFormElement/addFormElement.component';
+import { CashService } from './services/REST/cash.service';
+import { TitleComponent } from './components/title/title.component';
+import { FormularEnumElementComponent } from './components/content/content-nodes/formular/formElements/enum/enum.component';
+import { FormularTypeComponent } from './components/popup/popups/formularType/formularType.component';
+// import { FormularCheckboxElementComponent } from './components/content/content-nodes/formular/formElements/checkbox/checkbox.component';
 
 @NgModule({
   declarations:
@@ -51,10 +60,17 @@ import { ContentTypeComponent } from './components/popup/popups/contentType/cont
     PopupHomeComponent,
     GroupSelectorComponent,
     PopupSearchFieldComponent,
+    FormularTypeComponent,
     ContentComponent,
     TextNodeComponent,
     EditorComponent,
-    ContentTypeComponent
+    ContentTypeComponent,
+    FormularNodeComponent,
+    FormularTextElementComponent,
+    FormularElementComponent,
+    AddFormElementComponent,
+    TitleComponent,
+    FormularEnumElementComponent
   ],
   imports: [
     QuillModule,
@@ -67,7 +83,7 @@ import { ContentTypeComponent } from './components/popup/popups/contentType/cont
     MatMenuModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     EditorComponent,
@@ -88,13 +104,19 @@ import { ContentTypeComponent } from './components/popup/popups/contentType/cont
     SidenavItemComponent,
     ContentComponent,
     TextNodeComponent,
-    ContentTypeComponent
+    ContentTypeComponent,
+    FormularNodeComponent,
+    FormularTextElementComponent,
+    FormularElementComponent,
+    AddFormElementComponent,
+    TitleComponent
   ],
   providers: [
     EditorService,
     DOMService,
     HttpClient,
     SidenavItemService,
+    CashService
   ],
   bootstrap: [AppComponent]
 })

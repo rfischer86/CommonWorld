@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0Jl0FwI6vZzSxXl9JkSKGBAcWk5GKVgzs38RynOW97N0U3/ZCxUqqxjrN5y3LmprZ2MWW0pqhr7K1dEeKEGOyA==",
+  "dgSpecHash": "n02Bgp+3J1ufPsJvsgvu6zObqSGw1mNjkBES7YgLGgF9ASTg50zrc+G7b0Prsbfeu2SJiKLeSjxDd9yjpGJUUQ==",
   "success": true,
   "projectFilePath": "/home/system/Code/CommonWorld/Gateway/WebApi.csproj",
   "expectedPackageFiles": [
@@ -151,8 +151,7 @@
     "/home/system/.nuget/packages/system.xml.readerwriter/4.3.0/system.xml.readerwriter.4.3.0.nupkg.sha512",
     "/home/system/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512",
     "/home/system/.nuget/packages/system.xml.xmldocument/4.3.0/system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "/home/system/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "/home/system/.nuget/packages/microsoft.aspnetcore.app.ref/3.1.2/microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+    "/home/system/.nuget/packages/system.xml.xmlserializer/4.3.0/system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

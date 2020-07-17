@@ -14,7 +14,7 @@
     [class.hidden]="button.buttonState===buttonStates.hidden"
     [class.active]="button.buttonState===buttonStates.active"
     (click)="doClick($event, i)">
-      <mat-icon [style.font-size]="button.size">{{button.icon}}</mat-icon>
+      <mat-icon [style.font-size]="button.size" >{{button.icon}}</mat-icon>
       <span *ngIf="button.type===buttonTypes.normal">{{button.text}}</span>
     </div>
   </ng-container>

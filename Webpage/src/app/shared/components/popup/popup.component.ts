@@ -82,7 +82,14 @@ export class PopupComponent implements OnInit, OnDestroy {
         _2.action = ActionType.close;
         this.DOM.processEvent(_2);
         break;
-        
+      
+      case(PopupTypes.formularType):
+        const _3 = new  Result<any, any>();
+        _3.toId = this.parentId;
+        _3.fromType = DOMTypes.formularTypePopup;
+        _3.action = ActionType.close;
+        this.DOM.processEvent(_3);
+        break;  
     }
     this.popupData = null;
     this.popupType = null;

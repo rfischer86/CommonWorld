@@ -1,0 +1,11 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+:host{
+}
+.input-field{
+  input{
+  }
+  @include removeInputCSS();
+  border-bottom: 2px solid $primary;
+}

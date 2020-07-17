@@ -46,8 +46,9 @@ export class TextNodeComponent implements OnInit, OnDestroy {
   }
 
   onChange(event){
-    console.log('onChange', event);
     const _ = new  Result<any, any>();
+    _.log = new Logger();
+    _.log.addLog(ActionType.save + DOMTypes.textNode);
     _.toId = this.parentId;
     _.toApiId = this.parentApiId
     _.fromType = DOMTypes.textNode;

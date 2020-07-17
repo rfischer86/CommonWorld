@@ -3,6 +3,7 @@ using Helper;
 // using BuildLogger_DB_Context;
 using BuildLogger_DB_Context;
 using System.Collections.Generic;
+using Form_Factory;
 
 namespace Nav_Factory
 {   
@@ -10,7 +11,7 @@ namespace Nav_Factory
     public class NavFactory
     {
         private BuildLoggerContext db = new BuildLoggerContext();
-        
+        private FormFactory formFactory = new FormFactory();      
         public ServerResult<Nav> getByUniqueParams(Nav entity, bool withMsg = false)
         {   
             ServerResult<Nav> sr = ServerResult<Nav>.create();
@@ -77,7 +78,10 @@ namespace Nav_Factory
             }
             result.name = entity.name;
             result.link = entity.link;
-            sr.error.addInfo(HttpError.getAddIdIntoTable(TabelList.Nav, sr.result.apiId));
+            result.contentType = entity.contentType;
+            result.contentData = entity.contentData;
+            Helper.Helper.printObject(result);
+            sr.error.addInfo(HttpError.getUpdateDataOfId(TabelList.Nav, sr.result.apiId));
             db.Update(result);
             db.SaveChanges();
             sr.result = result;
@@ -180,11 +184,10 @@ namespace Nav_Factory
                 sr.fail();
                 return sr;
             };
-            if(sr.result.contentType != null){
+            if(sr.result.contentType == null){
                 sr.result.contentType = ContentTypes.text;
             }
             sr = sr.contatenate(sr, getContent(sr));
-            Helper.Helper.printObject(sr);
             try {                
                 sr.result.navData = db.NavNav
                     .Where(el => el.parent_API_Id == id)
@@ -200,7 +203,7 @@ namespace Nav_Factory
                     index += 1;
                 }
             } catch {
-                sr.result.navData = new List<Nav>();
+            sr.result.navData = new List<Nav>();
             }
             return sr;
         }
@@ -209,8 +212,6 @@ namespace Nav_Factory
             if (navData.result.contentType == null ) {
                 navData.result.contentType = ContentTypes.text; 
             }
-            Helper.Helper.printObject(navData);
-            Helper.Helper.printObject(ContentTypes.text == navData.result.contentType);
             switch (navData.result.contentType)
             {
                 case ContentTypes.text:
@@ -224,6 +225,12 @@ namespace Nav_Factory
                         newContent.contentData = "";
                         navData.result.contentData = newContent.contentData;
                     }
+                    break;
+                case ContentTypes.form:
+
+                    navData.result.contentData = formFactory.getById(navData.result.apiId).result;
+                    Helper.Helper.printObject("navData.result");
+                    Helper.Helper.printObject(navData.result);
                     break;
             }
             return navData;

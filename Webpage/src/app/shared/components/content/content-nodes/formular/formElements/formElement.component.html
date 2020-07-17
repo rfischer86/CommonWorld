@@ -1,0 +1,15 @@
+<div *ngIf="formElementData" class="formular" fxLayout="column" fxLayoutAlign="start">
+    <div class="label"  fxLayout="row" fxLayoutAlign="start"  fxLayoutGap="0.5em">
+        <span>
+            {{formElementData.label}}
+        </span>
+        <span *ngIf="formElementData.required">*</span>
+    </div>
+    <div  fxLayout="row"  fxLayoutAlign="start" fxLayoutGap="0.5em" class="content" [ngSwitch]="formElementData.formType">
+        <app-form-text-element [parentId]="DOMid" *ngSwitchCase="formTypes.textField" [setContentData]="formElementData"></app-form-text-element>
+        <app-form-enum-element [parentId]="DOMid" *ngSwitchCase="formTypes.select" [setContentData]="formElementData"></app-form-enum-element>
+        <!-- <app-form-checkbox-element [parentId]="DOMid" *ngSwitchCase="formTypes.checkbox" [setContentData]="formElementData"></app-form-checkbox-element> -->
+    </div>
+    <div class="error"></div>
+</div>
+

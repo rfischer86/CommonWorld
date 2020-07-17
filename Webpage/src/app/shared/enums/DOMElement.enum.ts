@@ -19,5 +19,7 @@ export const enum DOMTypes {
   sidenavItem = 'sidenavItem',
   title = 'title',
   textNode = 'textNode',
-  contentTypePopup = 'contentTypePopup'  
+  formularNode = 'formular',
+  contentTypePopup = 'contentTypePopup', 
+  formularTypePopup = 'formularTypePopup'  
 }

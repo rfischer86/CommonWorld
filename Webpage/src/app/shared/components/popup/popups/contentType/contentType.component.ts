@@ -7,6 +7,7 @@ import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';
 import { DOMService } from 'src/app/shared/services/DOM/dom-element.service';
 import { ContentTypes } from 'src/app/shared/enums/ContentType';
 import { PopupTypes } from 'src/app/shared/enums/popupTypes';
+import { Logger } from 'src/app/shared/classes/Logger/logger';
 
 @Component({
   selector: 'app-content-type-popup',
@@ -26,17 +27,30 @@ export class ContentTypeComponent implements OnInit{
   ngOnInit() {
     this.actions.push(this.createTextNodeButton())
     this.actions.push(this.createCalenderNodeButton())
+    this.actions.push(this.createFormularNodeButton())
   }
 
   createTextNodeButton(): PopupAction<ContentTypeComponent>{
     const action = {} as PopupAction<ContentTypeComponent>;
     action.name = this.text.contentTypes.text;
     action.do = this.changeContentType;
+    action.parentParentId = this.parentParentId;
+    action.apiId = this.parentId;
     action.data = ContentTypes.text;
     action.self = this;
     return action;
   }
 
+  createFormularNodeButton(): PopupAction<ContentTypeComponent>{
+    const action = {} as PopupAction<ContentTypeComponent>;
+    action.name = this.text.contentTypes.formular;
+    action.do = this.changeContentType;
+    action.parentParentId = this.parentParentId;
+    action.apiId = this.parentId;
+    action.data = ContentTypes.form;
+    action.self = this;
+    return action;
+  }
   createCalenderNodeButton(): PopupAction<ContentTypeComponent>{
     const action = {} as PopupAction<ContentTypeComponent>;
     action.name = this.text.contentTypes.calendar
@@ -50,6 +64,8 @@ export class ContentTypeComponent implements OnInit{
 
   changeContentType(action: PopupAction<ContentTypeComponent>) {
     const _ = new  Result<any, any>();
+    _.log = new Logger();
+    _.log.addLog(ActionType.update + ' id  ' + action.parentParentId + DOMTypes.contentTypePopup );
     _.toId = action.parentParentId;
     _.option = action.data;
     _.fromApiId = DOMTypes.contentTypePopup;
@@ -57,6 +73,8 @@ export class ContentTypeComponent implements OnInit{
     action.self.DOM.processEvent(_);
 
     const _2 = new  Result<any, any>();
+    _2.log = new Logger();
+    _2.log.addLog(ActionType.close + ' popup ' + PopupTypes.contentType +' with id  ' + action.self.parentId  );
     _2.toId = action.self.parentId;
     _2.option = PopupTypes.contentType;
     _2.action = ActionType.close;

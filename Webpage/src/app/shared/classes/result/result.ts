@@ -18,19 +18,23 @@ export enum ActionType {
   open = 'open',
   load = 'load',
   getOrLoad = 'getOrLoad',
-  transmit = 'transmit'
+  transmit = 'transmit',
+  submit = 'submit'
 }
 
 export class Result <T, D> {
   type: DOMTypes;
   index: number;
-  fromType: DOMTypes;
+  nextActionType: ActionType;
   action: ActionType;
+  fromType: DOMTypes;
   fromId: string;
   toId: string;
   fromApiId: string;
   toApiId: string;
   option: string;
+  option2: string;
+  valid: boolean;
   input: T;
   output: D;
   name: string;

@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { FormElement, ConditionType, Formular } from '../../interfaces/form.interface';
+import { FormTypes } from '../../enums/FormElement.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +55,74 @@ export class Helper {
         padding: CryptoJS.pad.Pkcs7
       }).toString(CryptoJS.enc.Utf8);
     return decrypted;
+  }
+
+  isValid(formElement: FormElement): boolean {
+    let output: boolean;
+    if (!formElement || !formElement.condition ) { return true}
+    if (formElement.condition.conditionType === ConditionType.any) {
+      output = false;
+      formElement.condition.conditions.map(condition => {
+        if (condition.do(formElement.value)) {
+          output = true;
+        }
+      })
+      
+    } else {
+      output = true;
+      formElement.condition.conditions.map(condition => {
+        if (!condition.do(formElement.value)) {
+          output = false;
+        }
+      })
+    }
+    if (formElement.required && !formElement.value) {
+      output = false;
+    }
+    return output;
+  }
+
+  getFormElementByLabel(label: string, formular: Formular): FormElement {
+    let output: FormElement;
+    formular.formElements.map(el => {
+      if (el.label === label) {
+        output = el;
+      }
+    })
+    return output
+  }
+
+  getFormElementByApiId(id: string, formular: Formular): FormElement {
+    let output: FormElement;
+    formular.formElements.map(el => {
+      if (el.apiId === id) {
+        output = el;
+      }
+    })
+    return output
+  }
+
+  numberToFormType(value: number): FormTypes{
+    switch (value) {
+      case 1:
+        return FormTypes.textField
+      case 2:
+        return FormTypes.textLine
+      case 3:
+        return FormTypes.textArea
+      case 4:
+        return FormTypes.date
+      case 5:
+        return FormTypes.number
+      case 6:
+        return FormTypes.checkbox
+      case 7:
+        return FormTypes.select
+      case 8:
+        return FormTypes.range
+      case 9:
+        return FormTypes.document      
+    }
+    return FormTypes.textField
   }
 }

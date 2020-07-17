@@ -51,7 +51,6 @@ export class SidenavItemService {
   }
 
   delete(id: string): Observable<RestResponse<NavData>> {
-    console.log('delete Nav ' + id);
     const header = this.restService.getHeaders();
     const url = environment.apiURL + environment.api.nav + '/' + id;
     return this.http.delete<RestResponse<NavData>>(url, header);
