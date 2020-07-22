@@ -1,3 +1,16 @@
+
+
+export class MetaDataFields{
+  select = {
+    options: 'options'
+  };
+  checknox = {
+    trueLabel: 'trueLabel',
+    falseLabel: 'falseLabel', 
+  }
+}
+
+
 export class Text {
   sidenav =
   {
@@ -56,10 +69,17 @@ export class Text {
     image: 'Bild',
     color: 'Farbe'
   };
+  addFormularPopup = {
+    selectOptions: "Auswahlmöglichkeiten",
+    selectOptionsDescription: " Format: [ Option 1 ;  Option 2 ;  Option 3 ; ... ]   ",
+    checkboxTrue: "Bezeichnung Ja",
+    checkboxFalse: "Bezeichnung Nein",
+    metaDataTitle: 'Einstellungen',
+  };
   contentNodes = {
     formular: {
       default: 'Neues Formular Element',
-      title: 'Formular Element bearbeiten'
+      title: 'Formular Element bearbeiten',
     }
   };
   entities = {
@@ -71,7 +91,9 @@ export class Text {
     label: 'label',
     formType: 'formType',
     description: 'description',
-    version: 'version'
+    version: 'version',
+    required: 'required',
+    dafault: 'dafault',
   }
 
 }

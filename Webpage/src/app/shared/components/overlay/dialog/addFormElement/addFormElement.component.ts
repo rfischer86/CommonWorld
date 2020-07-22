@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
 import { Result, ActionType } from 'src/app/shared/classes/result/result';
 import { DOMService, DOMElement } from 'src/app/shared/services/DOM/dom-element.service';
 import { Logger } from 'src/app/shared/classes/Logger/logger';
@@ -9,38 +9,41 @@ import { ButtonTypes, ButtonState } from 'src/app/shared/enums/button.enum';
 import { HtmlState } from 'src/app/shared/enums/htmlStates';
 import { Note } from 'src/app/shared/components/note/note.interface';
 import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';
-import { Text } from 'src/assets/i18n/app.text';
+import { Text, MetaDataFields } from 'src/assets/i18n/app.text';
 import { Authenticate } from 'src/app/shared/interfaces/auth.interface';
-import { UserService } from 'src/app/shared/services/User/user.service';
 import { Helper } from 'src/app/shared/services/Helper/helper.service';
-import { FormElementCondition, FormElement, Condition, Formular } from 'src/app/shared/interfaces/form.interface';
+import { FormElement, Formular } from 'src/app/shared/interfaces/form.interface';
 import { FormTypes } from 'src/app/shared/enums/FormElement.enum';
 import { TitleTypes } from 'src/app/shared/enums/TitleTypes';
+import { PopupTypes } from 'src/app/shared/enums/popupTypes';
 
 enum Buttons{
   submit = 'submit',
   delete = 'delete'
 }
 
+
 @Component({
   selector: 'app-add-form-element',
   templateUrl: './addFormElement.component.html',
   styleUrls: ['./addFormElement.component.scss']
 })
-export class AddFormElementComponent implements OnInit, OnDestroy{
+export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy{
   @Input() parentId: string ;
   @Input() option: ActionType;
   @Input() set setFormElement(data: FormElement){ 
-    console.log(data);
     if (! data ) {
       this.formElement = {} as FormElement;    
     } else {
       this.formElement = data;
-    } 
+    }     
   }
   titleTypes = TitleTypes;
   formElement: FormElement;
+  metaDataFormular = {} as Formular;
+  changeMetaDataFormular = new State(false);
   formTypes = FormTypes;
+  formType: FormTypes;
   formularData: Formular;
   text = new Text();
   result = new Result();
@@ -73,33 +76,46 @@ export class AddFormElementComponent implements OnInit, OnDestroy{
     this.states.finishInit.setTrue();
   }
 
+  ngAfterViewInit(){
+    this.formType = this.helper.getFormElementByLabel(this.text.addFormElement.formType, this.formularData).value;
+    this.createMetaDataFormular();
+  }
+
   processDOMEvent(event:  Result<any, any>) {
     if (!event) return;
-    if(event.action === ActionType.update) {
-      this.formularData = event.output;
-      this.states.valid.value = this.formularData.isValid; 
-      this.changeButtonState();
-    }
-    if (event.action === ActionType.close) {
-      const _ = new  Result<any, any>();
-      _.toId = this.parentId;
-      _.fromType = DOMTypes.dialog;
-      _.output = this.data;
-      _.action = ActionType.close;
-      this.DOM.processEvent(_);
-    }
-
-    if (event.action === ActionType.submit) {
-      const _ = new  Result<any, any>();
-      _.toId = DOMTypes.overlay;
-      _.fromType = DOMTypes.dialog;
-      _.output = this.createFormElement();
-      _.log = new Logger();
-      _.log.addLog('from AddFormElementComponent transmit data to overlay' + this.createFormElement())
-      _.action = ActionType.transmit;
-      _.nextActionType = this.option;
-      this.DOM.processEvent(_);
-    }
+    const _ = new  Result<any, any>();
+    switch(event.action) {
+      case ActionType.update:
+        switch(event.output.name) {
+          case 'addFormElement':
+            this.formularData = event.output;
+            this.states.valid.value = this.formularData.isValid; 
+            const formTypetester: FormTypes = this.helper.getFormElementByLabel('formType', event.output).value as FormTypes;
+              if (!!formTypetester && formTypetester !== this.formType) {
+                this.formType = formTypetester;
+                this.createMetaDataFormular();
+              }
+              this.changeButtonState();
+        } 
+        break;
+      case ActionType.close:
+        _.toId = this.parentId;
+        _.fromType = DOMTypes.dialog;
+        _.output = this.data;
+        _.action = ActionType.close;
+        this.DOM.processEvent(_);
+        break;
+      case ActionType.submit:
+        _.toId = DOMTypes.overlay;
+        _.fromType = DOMTypes.dialog;
+        _.output = this.createFormElement();
+        _.log = new Logger();
+        _.log.addLog('from AddFormElementComponent transmit data to overlay' + this.createFormElement())
+        _.action = ActionType.transmit;
+        _.nextActionType = this.option;
+        this.DOM.processEvent(_);
+        break;
+    }  
   }
 
   createFormElement(): FormElement {
@@ -115,8 +131,54 @@ export class AddFormElementComponent implements OnInit, OnDestroy{
     }
     if (!formElement.formType) {
       formElement.formType = FormTypes.textField;
-    }    
+    }
+    formElement.metaData = this.getMetaData();
     return formElement;
+  }
+
+  getMetaData(): string {
+    const metaData = {};
+    this.metaDataFormular.formElements.map(el => {
+      metaData[el.apiId] = el.value
+    })
+    return JSON.stringify(metaData)
+  }
+
+  beforeCreateMetaDataFormular(): void {
+    this.changeMetaDataFormular.setTrue();
+    this.metaDataFormular.name = 'metaDataFormular'; 
+    this.metaDataFormular = {} as Formular;
+    this.metaDataFormular.parentFormularId = this.DOMself.id;
+    this.metaDataFormular.formElements = [];
+  }
+
+  createMetaDataFormular(){
+    const mdf = new MetaDataFields();
+    switch (this.formType) {
+      case FormTypes.select:
+        this.beforeCreateMetaDataFormular();
+        this.metaDataFormular.formElements.push(this.helper.createFormElement(
+          "", this.text.addFormularPopup.selectOptions, false, FormTypes.textArea, true, mdf.select.options, this.text.addFormularPopup.selectOptionsDescription 
+        ));
+        this.changeMetaDataFormular.setFalse()
+        break;
+      case FormTypes.textField:
+        this.beforeCreateMetaDataFormular();
+        break;
+      case FormTypes.textArea:
+        this.beforeCreateMetaDataFormular();
+        break;
+      case FormTypes.checkbox:
+        this.beforeCreateMetaDataFormular();
+        this.metaDataFormular.formElements.push(this.helper.createFormElement(
+          "", this.text.addFormularPopup.checkboxTrue, false, FormTypes.textField,true, mdf.checknox.trueLabel
+        ));
+        this.metaDataFormular.formElements.push(this.helper.createFormElement(
+          "", this.text.addFormularPopup.checkboxFalse, false, FormTypes.textField, true, mdf.checknox.falseLabel
+        ));
+        this.changeMetaDataFormular.setFalse()
+        break;
+    }
   }
 
   changeButtonState() {
@@ -135,35 +197,27 @@ export class AddFormElementComponent implements OnInit, OnDestroy{
     this.formularData = {} as Formular;
     this.formularData.formElements =  [];
     this.addFormElement(this.text.addFormElement.label, true, FormTypes.textField, false);
-    this.addFormElement(this.text.addFormElement.formType, true, FormTypes.select, false);
-    this.addFormElement(this.text.addFormElement.description, false, FormTypes.textField, false);
+    this.addFormElement(this.text.addFormElement.formType, true, FormTypes.select, false, '"PopupTypes.formularType"');
+    this.addFormElement(this.text.addFormElement.description, false, FormTypes.textArea, false);
     this.addFormElement(this.text.addFormElement.version, false, FormTypes.textField, false);
+    this.addFormElement(this.text.addFormElement.required, false, FormTypes.checkbox, false);
     this.formularData.version = '1.0';
     this.formularData.name = 'addFormElement';
     this.formularData.apiId = this.helper.getRrandomId();
     this.formularData.parentFormularId = 'addFormElement';
   }
 
-  addFormElement(label: string, required: boolean, formType: FormTypes, valid: boolean) {
+  addFormElement(label: string, required: boolean, formType: FormTypes, valid: boolean, metaData: string = "{}") {
     const formElement = {} as FormElement;
     formElement.value = this.formElement[label];
     formElement.apiId = this.helper.getRrandomId();
     formElement.valid = valid;
+    formElement.metaData = metaData;
     formElement.label = label;
     formElement.required = required;
     formElement.formType = formType;
-    formElement.condition = this.defaultFormCondition();
+    formElement.condition = this.helper.defaultFormCondition();
     this.formularData.formElements.push(formElement);
-  }
-
-
-  defaultFormCondition(): FormElementCondition {
-    const condition = {} as Condition;
-    condition.do = () => true;
-    const defaultCondition = {} as FormElementCondition;
-    defaultCondition.conditions = [condition];
-    defaultCondition.state = new State(true);
-    return defaultCondition;
   }
 
   createButtons() {

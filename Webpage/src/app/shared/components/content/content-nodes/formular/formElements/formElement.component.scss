@@ -11,20 +11,28 @@
   @include notDragable();
   z-index: 31;
   position: relative;
-  height: 2.5em;
+  padding: 1em 0.5em 0.5em 0.5em;
+  width: 100%;
+  min-width: 12em;
+  box-sizing: border-box;
   .label{  
     position: relative;
     z-index: 32;
-    font-size: 0.9em;
+    font-size: 0.7em;
+    white-space: nowrap;
     padding: unset;
     margin: 0;
     font-weight: bold;
     color: $primary;
+    width: 100% !important;
   }
   .content{
     width: 100%;
     z-index: 33;
     position: relative;
+    padding-bottom: 2px;
+    box-sizing: border-box;
+    border-bottom: 2px solid $primary;
 
   }
   .error{

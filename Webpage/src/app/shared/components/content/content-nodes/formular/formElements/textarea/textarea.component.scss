@@ -8,9 +8,11 @@
   width: 100%;
 }
 
-.input-field{
-  min-width: 10em;
-  input{
-  }
+.textarea-field{
   @include removeInputCSS();
+  textarea{
+    width: 100%;
+
+  }
+  width: 100%;
 }

@@ -21,5 +21,8 @@ export const enum DOMTypes {
   textNode = 'textNode',
   formularNode = 'formular',
   contentTypePopup = 'contentTypePopup', 
-  formularTypePopup = 'formularTypePopup'  
+  formularTypePopup = 'formularTypePopup',
+  selectPopup = 'selectPopup',
+  dateElement = 'dateElement',
+  
 }

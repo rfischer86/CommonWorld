@@ -1,19 +1,21 @@
-import { Component, OnInit, Input, HostListener, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, HostListener, ViewChild, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { States, State } from '../../classes/states/states';
 import { Result, ActionType } from '../../classes/result/result';
 import { DOMElement, DOMService } from '../../services/DOM/dom-element.service';
 import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 import { PopupTypes } from '../../enums/popupTypes';
+import { MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-popup',
   templateUrl: './popup.component.html',
   styleUrls: ['./popup.component.scss']
 })
-export class PopupComponent implements OnInit, OnDestroy {
+export class PopupComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('popup', {static: false}) popup;
+  @ViewChild('menuTrigger') matMenuTriger: MatMenuTrigger; 
+
   @Input() parentId;
   popupTypes = PopupTypes;
   popupType: PopupTypes;
@@ -38,6 +40,7 @@ export class PopupComponent implements OnInit, OnDestroy {
   DOMid: string;
   logger = new Logger();
   constructor (
+    private cdr: ChangeDetectorRef,
     private DOM: DOMService,
   ){
     this.latencTime.setTrue();
@@ -54,6 +57,12 @@ export class PopupComponent implements OnInit, OnDestroy {
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event))
       this.DOMid = this.DOMself.id;
     }
+  }
+
+  ngAfterViewInit() {
+    this.matMenuTriger.openMenu();
+    this.matMenuTriger.onMenuClose.subscribe(()=> this.closeOverlay());
+    this.cdr.detectChanges();
   }
 
   processDOMEvent(event: Result<any, any>) {
@@ -90,26 +99,34 @@ export class PopupComponent implements OnInit, OnDestroy {
         _3.action = ActionType.close;
         this.DOM.processEvent(_3);
         break;  
-    }
+    
+        case(PopupTypes.select):
+        const _4 = new  Result<any, any>();
+        _4.toId = this.parentId;
+        _4.fromType = DOMTypes.selectPopup;
+        _4.action = ActionType.close;
+        this.DOM.processEvent(_4);
+        break;  
+      }
+
     this.popupData = null;
     this.popupType = null;
     this.states.open.setFalse();
   }
 
-  @HostListener('document:click', ['$event'])
-  public onClick(targetElement: Event) {
-    if (!this.states.open.value || this.latencTime.isTrue()) {return}
-    const clickedInside = this.popup.nativeElement.contains(targetElement.target);
-    if (!clickedInside) {
-      targetElement.stopPropagation();
-      targetElement.preventDefault();
-      this.closeOverlay();
-    }
-  }
-
+  // @HostListener('document:click', ['$event'])
+  // public onClick(targetElement: Event) {
+  //   if (!this.states.open.value || this.latencTime.isTrue()) {return}
+  //   const clickedInside = this.popup.nativeElement.contains(targetElement.target);
+  //   if (!clickedInside) {
+  //     targetElement.stopPropagation();
+  //     targetElement.preventDefault();
+  //   }
+  // }
+  
   ngOnDestroy(){
     const _ = new  Result<any, any>();
-    _.toId = this.DOMself.id;
+    _.toId = this.DOMid;
     _.action = ActionType.destroy;
     this.DOM.processEvent(_);
   }

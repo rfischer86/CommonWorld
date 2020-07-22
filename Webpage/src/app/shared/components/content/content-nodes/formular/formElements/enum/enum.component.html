@@ -1,6 +1,5 @@
 <div (click)="clickSelect()" class="enum-field" fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="0em">
-    <input class="input" #input type="text" (focusout)="onFocusout()" >
+    <input readonly class="input" #input type="text" (focusout)="onFocusout()" >
     <mat-icon>arrow_drop_down</mat-icon>
 </div>
-<app-popup [parentId]="DOMself.id" *ngIf="openFormularType.value" [data]="popupData"></app-popup>
-
+<app-popup  [ngStyle]="{'z-index': 100}" [parentId]="DOMself.id" *ngIf="openFormularType.value" [data]="popupData"></app-popup>

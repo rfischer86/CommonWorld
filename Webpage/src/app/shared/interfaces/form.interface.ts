@@ -1,6 +1,7 @@
 import { FormTypes } from '../enums/FormElement.enum';
 import { State } from '../classes/states/states';
 import { Logger } from '../classes/Logger/logger';
+import { WidthClass } from '../enums/WidthClass';
 
 export interface FormElement{
   label: string;
@@ -14,7 +15,8 @@ export interface FormElement{
   condition: FormElementCondition;
   apiId: string;
   version: string;
-
+  metaData: string;
+  widthClass: WidthClass;
 }
 
 export interface FormElementCondition{

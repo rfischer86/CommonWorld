@@ -21,7 +21,6 @@ export class FormularElementComponent implements OnInit, OnDestroy {
   @Input() notEditable: boolean;
   @Input() set setFormElementData(data: FormElement ) {
     this.formElementData = data;
-    console.log('this.formElementData', this.formElementData);
     if (typeof this.formElementData?.formType == "number" ) {
       this.formElementData.formType = this.helper.numberToFormType(this.formElementData.formType);
     };

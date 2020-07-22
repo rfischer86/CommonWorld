@@ -21,19 +21,22 @@ import { ContentTypes } from 'src/app/shared/enums/ContentType';
   styleUrls: ['./formular.component.scss']
 })
 export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
-
+  @Input() zIndexStart = 1000;
+  @Input() defaultElement = true;
+  @Input() propagateChange = false;
   @Input() parentId;
   @Input() parentApiId;
   @Input() notEditable: boolean;
   @Input() set setContentData(formular : Formular ){
     this.formular = formular;
-    console.log('this.formular', this.formular);
     if (!this.formular) {
       this.formular = {} as Formular;
     }
     if(!this.formular.formElements) {
       this.formular.formElements = [] as FormElement[];
-      this.formular.formElements.push(this.defaultFormElement());
+      if( this.defaultElement ){
+        this.formular.formElements.push(this.defaultFormElement());
+      }
     }
     if(!this.formular.log ) {
       this.formular.log = new Logger();
@@ -112,10 +115,12 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event.fromType === DOMTypes.overlay) {
       if (event.action === ActionType.add) {
         this.formular.formElements.push(event.output);
+        this.saveFormular();
       }
       if (event.action === ActionType.delete) {
         event.output = event.output as FormElement;
         this.formular.formElements = this.formular.formElements.filter(el => el.apiId !== event.output.apiId);
+        this.saveFormular();
       }
       if (event.action === ActionType.update) {
         event.output = event.output as FormElement;
@@ -124,8 +129,8 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.formular.formElements[index] = event.output 
           }
         });
+        this.saveFormular();
       }
-      this.saveFormular();
     }
   }
 
@@ -140,7 +145,6 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     _.option = ContentTypes.form;
     _.action = ActionType.save;
     this.DOM.processEvent(_); 
-    console.log('this.formular', this.formular);
   }
 
   updateFormular(event: Result<any, Formular>) {
@@ -156,10 +160,13 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.formular.formElements.map( (el, index) => {
       if (el && el.apiId === event.output.apiId) {
         this.formular.formElements[index] = event.output;
+        this.cdr.detectChanges();
         this.formular.log.addLog('update ' +event.output.label + ' by value ' + event.output.value);
+        setTimeout(() =>  {
+          this.isFormValid();
+        }, 200)
       }
     })
-    this.isFormValid();
   };
 
   isFormValid() {
@@ -170,11 +177,9 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.formular.log.addLog(' form element ' + el.label + ' is not valid');
       }
     })
-    if ( isValid !== this.formular.isValid) {
-      this.formular.isValid = isValid;
-      this.formular.log.addLog('toggle valid state of formular ' + this.formular.apiId);
-      this.propagateValidState();
-    }
+    this.formular.isValid = isValid;
+    this.formular.log.addLog('toggle valid state of formular ' + this.formular.apiId);
+    this.propagateValidState();
   }
   
   propagateValidState() {

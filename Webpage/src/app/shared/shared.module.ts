@@ -20,6 +20,7 @@ import { LoginDialogComponent } from './components/overlay/dialog/login/login';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegisterGroupDialogComponent } from './components/overlay/dialog/register-group/register-group';
 import { SearchFieldComponent } from './components/search-field/search-field.component';
 import { PopupComponent } from './components/popup/popup.component';
@@ -40,7 +41,12 @@ import { CashService } from './services/REST/cash.service';
 import { TitleComponent } from './components/title/title.component';
 import { FormularEnumElementComponent } from './components/content/content-nodes/formular/formElements/enum/enum.component';
 import { FormularTypeComponent } from './components/popup/popups/formularType/formularType.component';
-// import { FormularCheckboxElementComponent } from './components/content/content-nodes/formular/formElements/checkbox/checkbox.component';
+import { FormularCheckboxElementComponent } from './components/content/content-nodes/formular/formElements/checkbox/checkbox.component';
+import { FormularTextAreaElementComponent } from './components/content/content-nodes/formular/formElements/textarea/textarea.component';
+import { SelectComponent } from './components/popup/popups/select/select.component';
+import { FormularDateElementComponent } from './components/content/content-nodes/formular/formElements/date/date.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations:
@@ -70,7 +76,11 @@ import { FormularTypeComponent } from './components/popup/popups/formularType/fo
     FormularElementComponent,
     AddFormElementComponent,
     TitleComponent,
-    FormularEnumElementComponent
+    FormularEnumElementComponent,
+    FormularCheckboxElementComponent,
+    FormularTextAreaElementComponent,
+    SelectComponent,
+    FormularDateElementComponent
   ],
   imports: [
     QuillModule,
@@ -80,10 +90,13 @@ import { FormularTypeComponent } from './components/popup/popups/formularType/fo
     MatIconModule,
     MatProgressBarModule,
     MatCheckboxModule,
+    MatDatepickerModule,
     MatMenuModule,
+    MatTooltipModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   exports:[
     EditorComponent,

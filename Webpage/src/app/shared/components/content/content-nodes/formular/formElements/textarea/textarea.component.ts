@@ -6,52 +6,40 @@ import { Result, ActionType } from 'src/app/shared/classes/result/result';
 import { FormElement } from 'src/app/shared/interfaces/form.interface';
 import { Text } from '../../../../../../../../assets/i18n/app.text';
 import { Helper } from 'src/app/shared/services/Helper/helper.service';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { CheckedMetaData } from 'src/app/shared/interfaces/checktedMetaData.interface';
-
-enum labelPosition{
-    before = 'before',
-    after = 'after'
-}
-
+import { WidthClass } from 'src/app/shared/enums/WidthClass';
 
 @Component({
-  selector: 'app-form-checkbox-element',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss']
+  selector: 'app-form-textarea-element',
+  templateUrl: './textarea.component.html',
+  styleUrls: ['./textarea.component.scss']
 })
 
-export class FormularCheckboxElementComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("checkbox") checkbox: MatCheckbox;
+export class FormularTextAreaElementComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild("input") input: ElementRef<HTMLTextAreaElement>;
 
   @Input() parentId;
   @Input() parentApiId;
   @Input() set setContentData(data : FormElement ){
     if ( data ) { 
       this.contentData = data;
-      this.integrateMetaData();
     } else {
       this.contentData =  {} as FormElement;
-      this.checkedMetaData = {} as CheckedMetaData; 
-
     };
+    this.contentData.widthClass = WidthClass.w100;
     this.cdr.detectChanges();
+
   }
-  disabled = false;
-  checked = true;
-  indeterminate = false;
   contentData: FormElement;
   text = new Text();
   DOMid: string;
   logger = new Logger();
   DOMself: DOMElement;
-  checkedMetaData = {trueLabel:' ', falseLabel:'  '} as CheckedMetaData; 
   constructor(
+    private cdr: ChangeDetectorRef, 
     private DOM: DOMService,
-    private helper: Helper,
-    private cdr: ChangeDetectorRef ) {
-      
-  }
+    private helper: Helper
+  ) { }
+
   ngOnInit() {
     const _ = this.DOM.create(DOMTypes.formularNode, this.parentId);
     if (_.success.isFalse()) {
@@ -64,28 +52,20 @@ export class FormularCheckboxElementComponent implements OnInit, AfterViewInit, 
   }
   
   ngAfterViewInit () {
-    this.checkbox.checked = this.contentData.value ? this.contentData.value : null;
+    this.contentData.value
+    this.input.nativeElement.value = this.contentData.value ? this.contentData.value : null;
     if (this.parentId) {
       this.onFocusout();
-    }
-
-    this.cdr.detectChanges();
+    } 
   }
 
-  integrateMetaData() {
-    try {
-      this.checkedMetaData = JSON.parse(this.contentData.metaData) as CheckedMetaData;
-    } catch {
-      this.checkedMetaData = {} as CheckedMetaData; 
-    }
-  }
   processDOMEvent(event: Result<any, any>) {
     if (!event) {return}
   }
 
   onFocusout() {
     if (!this.contentData || !this.parentId) {return} 
-    this.contentData.value = this.checkbox.checked; 
+    this.contentData.value = this.input.nativeElement.value; 
     const _ = new  Result<any, FormElement>();
     _.toId = this.parentId;
     _.output = this.contentData;

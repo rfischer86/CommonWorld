@@ -17,7 +17,7 @@
       <app-popup [parentId]="DOMself.id" *ngIf="openContentType.value" [data]="popupData"></app-popup>
       </div>
     </div>
-    <div *ngIf="content && DOMself">
+    <div class="content" *ngIf="content && DOMself">
       <app-content 
         [setContentType]="navData.contentType"
         [setContentData]="navData.contentData"
@@ -26,7 +26,7 @@
       
     </div>
     <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>
-      <div class="tab" *ngFor="let navItem of navData.navData">
+      <div class="tab" *ngFor="let navItem of navData.navData; let i = index" [ngStyle]="{'z-index': 100-i}">
         <app-sidenav-item  [setNavData]="navItem" [content]="content" [parentId]="DOMself.id"></app-sidenav-item>
       </div>
     </div>

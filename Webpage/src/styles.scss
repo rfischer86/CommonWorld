@@ -19,3 +19,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .ql-container.ql-snow{
   border: 0px solid white !important;
 }
+
+
+
+.mat-checkbox{
+  font-size: 1em;
+  width: 0.8em;
+  height: 0.8em;
+  display: contents;
+  .mat-checkbox-layout{
+    height: 1em;
+    line-height: 0 !important;
+    .mat-checkbox-inner-container{
+      width: 0.8em;
+      margin-top: auto;
+      margin-bottom: 0;
+      height: 0.8em;
+    };
+    .mat-checkbox-label{
+      height: 1em;
+      line-height: normal;
+      font-size: 0.8em;
+      margin-top: auto;
+      font: normal;
+    }
+  }
+}
+
+.mat-elevation-z4 {
+  box-shadow:  none;
+  background: rgba(0, 0, 0, 0);
+}
+
+.mat-datepicker-toggle{
+  height: 0em;
+  right: 0;
+  position: absolute;
+  bottom: 2em;
+}

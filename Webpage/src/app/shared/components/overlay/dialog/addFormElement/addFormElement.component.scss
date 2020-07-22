@@ -16,4 +16,8 @@
   width: 25em;
   height: auto;
   transition: height 5s linear;
+  .fotm-type-options{
+    position: relative;
+    z-index: 9;      
+  }
 }

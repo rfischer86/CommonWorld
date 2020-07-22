@@ -19,7 +19,8 @@ export enum ActionType {
   load = 'load',
   getOrLoad = 'getOrLoad',
   transmit = 'transmit',
-  submit = 'submit'
+  submit = 'submit',
+  change = 'change'
 }
 
 export class Result <T, D> {

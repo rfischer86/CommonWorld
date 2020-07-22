@@ -1,7 +1,8 @@
 import { Injectable, Output } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
-import { FormElement, ConditionType, Formular } from '../../interfaces/form.interface';
+import { FormElement, ConditionType, Formular, FormElementCondition, Condition } from '../../interfaces/form.interface';
 import { FormTypes } from '../../enums/FormElement.enum';
+import { State } from '../../classes/states/states';
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,7 @@ export class Helper {
     formular.formElements.map(el => {
       if (el.label === label) {
         output = el;
+        return output
       }
     })
     return output
@@ -125,4 +127,33 @@ export class Helper {
     }
     return FormTypes.textField
   }
+
+
+  createFormElement(value: string, label: string, required: boolean, formType: FormTypes, valid: boolean, id: string = null, description: string = null ): FormElement {
+    const formElement = {} as FormElement;
+    formElement.value = value;
+    if (!!id) {
+      formElement.apiId = id;
+    } else {
+      formElement.apiId = this.getRrandomId();
+    }
+    formElement.valid = valid;
+    formElement.label = label;
+    formElement.required = required;
+    formElement.formType = formType;
+    formElement.description = description;
+    formElement.condition = this.defaultFormCondition();
+    return formElement;
+  }
+
+  defaultFormCondition(): FormElementCondition {
+    const condition = {} as Condition;
+    condition.do = () => true;
+    const defaultCondition = {} as FormElementCondition;
+    defaultCondition.conditions = [condition];
+    defaultCondition.state = new State(true);
+    return defaultCondition;
+  }
+
+
 }

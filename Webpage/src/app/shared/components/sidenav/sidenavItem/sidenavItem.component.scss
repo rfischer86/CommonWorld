@@ -50,12 +50,19 @@
         z-index: 0;
       }
     }
+    .content{
+      position: relative;
+      z-index: 100;
+    }
+
   }
   &.open{
     width: 100%;
   }
   .sub-nav-items{
+    z-index: 99;
     .tab{
+      z-index: 10;
       display: block;
       padding-left: 1em;
     }

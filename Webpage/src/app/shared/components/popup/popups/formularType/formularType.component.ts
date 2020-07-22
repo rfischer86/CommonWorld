@@ -53,6 +53,7 @@ export class FormularTypeComponent implements OnInit{
     _.toId = action.parentParentId;
     _.output = action.data;
     _.fromApiId = DOMTypes.formularTypePopup;
+    _.fromType = DOMTypes.formularTypePopup;
     _.action = ActionType.update;
     action.self.DOM.processEvent(_);
 
@@ -62,6 +63,7 @@ export class FormularTypeComponent implements OnInit{
     _2.log.addLog(ActionType.close + ' popup ' + PopupTypes.formularType +' with id  ' + action.self.parentId  );
     _2.toId = action.self.parentId;
     _2.output = action.data;
+    _2.fromType = DOMTypes.formularTypePopup;
     _2.option = PopupTypes.formularType;
     _2.action = ActionType.close;
     action.self.DOM.processEvent(_2);

@@ -1,4 +1,11 @@
-<div class="formular" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="-0.5em">
-<pre>lol</pre>
+<div class="checkbox" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="-0.5em">
+    <mat-checkbox
+        #checkbox
+        [(ngModel)]="checked"
+        [(indeterminate)]="indeterminate"
+        [labelPosition]="'after'"
+        [disabled]="disabled">
+        {{checked ? checkedMetaData.trueLabel: checkedMetaData.falseLabel}}
+    </mat-checkbox>
 </div>
 

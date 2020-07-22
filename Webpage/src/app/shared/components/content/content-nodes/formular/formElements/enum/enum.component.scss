@@ -6,15 +6,16 @@
   position: relative;
   z-index: 100;
   opacity: 1;
+  width: 100%;
 }
 .enum-field{
   @include removeInputCSS();
-  border-bottom: 2px solid $primary;
   opacity: 1;
   display: block;
   position: relative;
   z-index: 1;
   width: 100%;
+  min-width: 10em;
   .mat-icon{
     opacity: 1;
     z-index: 1;

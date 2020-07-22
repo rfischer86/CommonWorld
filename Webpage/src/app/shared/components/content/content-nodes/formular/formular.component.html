@@ -1,11 +1,11 @@
-<div class="formular" fxLayout="row wrap" fxLayoutGap="1em" fxLayoutAlign="start center">
+<div class="formular" fxLayout="row wrap" fxLayoutAlign="space-between space-between">
   <ng-container *ngFor="let formElementData of formular.formElements; let l = last;let i=index;">
-    <div [ngStyle]="{'z-index': 300-i}" >
-      <app-form-element [parentId]="DOMid" [setFormElementData]="formElementData" [parentApiId]="formular.apiId" (click)="updateElement(formElementData)" [notEditable]="notEditable"></app-form-element>
+    <div [class]="formElementData.widthClass" [ngStyle]="{'z-index': zIndexStart-i}" >
+      <app-form-element  [parentId]="DOMid" [setFormElementData]="formElementData" [parentApiId]="formular.apiId" (click)="updateElement(formElementData)" [notEditable]="notEditable"></app-form-element>
     </div>
   </ng-container>
-  <div class="button" *ngIf="!notEditable">
-    <app-button [setButtons]="addElementButton" ></app-button>
-  </div>
+</div>
+<div class="button" *ngIf="!notEditable">
+  <app-button [setButtons]="addElementButton" ></app-button>
 </div>
 
