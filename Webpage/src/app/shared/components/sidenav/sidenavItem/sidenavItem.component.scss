@@ -2,13 +2,13 @@
 @import '../../../../../assets/styles/variable.scss';
 @import '../../../../../assets/styles/mixin.scss';
 
+
 :host{
   width: 100% !important;
-  height: 100% !important;
+  height: 100% !important
 }
 
 .sidenav-item{
-  background-color: $white;
   overflow: hidden;
   .hidden{
     display: none !important;
@@ -16,12 +16,22 @@
   .hover{
     @include hoverNav();
   }
-  .content {
+  .hover-content-title{
+    &:hover{
+      background-color: white;
+      filter: drop-shadow(0px 2px 3px $gray-lighter);
+    };
+  }
+  .title-wrapper {
     @include notSelectable();
-    width: 100%;
+    width: 100%;   
     .input-wrapper {
       display: inline-block;
       position: relative;
+      .title{
+        font-size: 1.5em;
+        font-weight: bold;
+      }
       .name{
         z-index: 10;
         display: block;
@@ -54,7 +64,7 @@
       position: relative;
       z-index: 100;
     }
-
+    
   }
   &.open{
     width: 100%;

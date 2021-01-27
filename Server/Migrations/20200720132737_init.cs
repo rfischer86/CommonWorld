@@ -99,6 +99,8 @@ namespace BuildLogger.Migrations
                     label = table.Column<string>(nullable: true),
                     value = table.Column<string>(nullable: true),
                     description = table.Column<string>(nullable: true),
+                    widthClass = table.Column<string>(nullable: true),
+                    metaData = table.Column<string>(nullable: true),
                     defaultValue = table.Column<string>(nullable: true),
                     unit = table.Column<string>(nullable: true),
                     version = table.Column<string>(nullable: true),

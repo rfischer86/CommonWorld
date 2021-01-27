@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { SearchSelection, SearchServices } from './search-field.interface';
@@ -10,10 +10,11 @@ import { DOMTypes } from '../../enums/DOMElement.enum';
 import { DOMService } from '../../services/DOM/dom-element.service';
 import { Group } from '../../interfaces/group.interface';
 import { PopupAction } from '../../interfaces/PopupAction.interface';
-import { NavTypes } from '../../enums/navTypes';
 import { Search } from '../../interfaces/search.interface';
 import { PopupTypes } from '../../enums/popupTypes';
-
+import { SearchOption } from '../../interfaces/SearchOption';
+import { FormularService } from '../../services/REST/formular.service';
+import { Formular } from '../../interfaces/form.interface';
 
 enum FormFields {
   searchString = 'searchString'
@@ -27,6 +28,7 @@ enum FormFields {
 export class SearchFieldComponent implements OnInit {
 
   @ViewChild('searchField', {static: false}) searchField;
+  @Input() parentId: string;
   @Input() label: string;
   @Input() isLast: boolean;
   @Input() isEditMode: boolean;
@@ -34,10 +36,14 @@ export class SearchFieldComponent implements OnInit {
   @Input() searchServices: SearchServices;
   @Input() value = '';
   @Input() selectedList: SearchSelection[];
+  @Input() set setSearchOption(para: SearchOption) {
+    this.searchOption = para;
+  }
 
   @ViewChild(MatMenuTrigger, {static: true}) trigger: MatMenuTrigger;
   @Output() selectedElement = new EventEmitter<SearchSelection>();
   @Output() deleteElement = new EventEmitter();
+  @Output() updateSearchString = new EventEmitter<Search>();
 
   elementList: {id: string, name: string}[] = [];
   isLoading = false;
@@ -47,12 +53,17 @@ export class SearchFieldComponent implements OnInit {
   isSelected = false;
   noResult = false;
   searchString = '';
+  searchOption:SearchOption = {
+    fullWidth: false,
+    displayPopup: true
+  }
 
   constructor(
     private formBuilder: FormBuilder,
     private groupService: GroupService,
     private roleService: RoleService,
     private userService: UserService,
+    private formularService: FormularService,
     private DOM: DOMService,
   ) { }
 
@@ -91,15 +102,27 @@ export class SearchFieldComponent implements OnInit {
         break;
       case this.searchServices === SearchServices.group:
         subscriptionService = this.groupService.search(searchData);
+        subscriptionService.subscribe(
+          data => this.transmitGroupData(data.result),
+          error => console.error(error)
+        )
         break;
       case this.searchServices === SearchServices.role:
         subscriptionService = this.roleService.search(searchData);
         break;
+      case this.searchServices === SearchServices.formular:
+        if(searchData.searchString!=='') {
+          subscriptionService = this.formularService.search(searchData);
+          subscriptionService.subscribe(
+            data => this.transmitFormularData(data.result),
+            error => console.error(error)
+          )
+        } else {
+          this.transmitFormularData([]);
+        }
+        this.updateSearchString.emit(searchData)
+        break;
       }
-      subscriptionService.subscribe(
-        data => this.transmitDataToPopup(data.result),
-        error => console.error(error)
-      )
   }
 
   controlSelection() {
@@ -112,22 +135,46 @@ export class SearchFieldComponent implements OnInit {
     }, 500);
   }
 
-  transmitDataToPopup(data: Group[]) {
-    data.map(group => {
-      const action = {} as PopupAction<SearchFieldComponent>;
-      action.do = this.clickSearchesElement;
-      action.self = this;
-      action.name = group.name;
-      action.apiId = group.apiId;
-    })
-    const _ = new  Result<any, any>();
-    _.toId = DOMTypes.header;
-    _.input = data;
-    _.type = DOMTypes.popup;
-    _.option = PopupTypes.search;
-    _.fromType = DOMTypes.searchField;
-    _.action = ActionType.open;
-    this.DOM.processEvent(_);
+  transmitGroupData(data: Group[]) {
+    if (this.searchOption.displayPopup) {
+      data.map(group => {
+        const action = {} as PopupAction<SearchFieldComponent>;
+        action.do = this.clickSearchesElement;
+        action.self = this;
+        action.name = group.name;
+        action.apiId = group.apiId;
+      })
+      const _ = new  Result<any, any>();
+      _.toId = DOMTypes.header;
+      _.input = data;
+      _.type = DOMTypes.popup;
+      _.option = PopupTypes.search;
+      _.fromType = DOMTypes.searchField;
+      _.action = ActionType.open;
+      this.DOM.processEvent(_);
+    } else {
+      // console.log(data)
+    }
+  }
+
+  transmitFormularData(data: Formular[]) {
+    if (this.searchOption.displayPopup) {}
+    else {
+      data.map(formular => {
+        const action = {} as PopupAction<SearchFieldComponent>;
+        // action.do = this.clickSearchesElement;
+        action.self = this;
+        action.name = formular.name;
+        action.apiId = formular.apiId;
+      })
+      const _ = new  Result<any, any>();
+      _.toId = this.parentId;
+      _.input = data;
+      _.type = DOMTypes.overlay;
+      _.fromType = DOMTypes.searchField;
+      _.action = ActionType.update;
+      this.DOM.processEvent(_);
+    }
   }
 
   clickSearchesElement(popupAction: PopupAction<SearchFieldComponent>) {

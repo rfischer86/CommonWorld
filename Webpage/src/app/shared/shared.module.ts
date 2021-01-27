@@ -47,6 +47,16 @@ import { SelectComponent } from './components/popup/popups/select/select.compone
 import { FormularDateElementComponent } from './components/content/content-nodes/formular/formElements/date/date.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FormularNumberElementComponent } from './components/content/content-nodes/formular/formElements/number/number.component';
+import { FormularFileElementComponent } from './components/content/content-nodes/formular/formElements/file/file.component';
+import { FormularTimeElementComponent } from './components/content/content-nodes/formular/formElements/time/time.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AgGridModule } from 'ag-grid-angular';
+import { TableNodeComponent } from './components/content/content-nodes/table/table-node.component';
+import { PopupSearchFormularComponent } from './components/popup/popups/searchFormular/searchFormular.component';
+import { AgGridHeaderComponent } from './components/bridges/agGridHeader/agGridHeader.component';
+import { SelectFormularComponent } from './components/overlay/dialog/selectFormular/selectFormular.component';
+import { ChangeFormularComponent } from './components/overlay/dialog/changeFormular/changeFormular.component';
 
 @NgModule({
   declarations:
@@ -80,7 +90,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     FormularCheckboxElementComponent,
     FormularTextAreaElementComponent,
     SelectComponent,
-    FormularDateElementComponent
+    FormularDateElementComponent,
+    FormularNumberElementComponent,
+    FormularFileElementComponent,
+    FormularTimeElementComponent,
+    TableNodeComponent,
+    PopupSearchFormularComponent,
+    AgGridHeaderComponent,
+    SelectFormularComponent,
+    ChangeFormularComponent
   ],
   imports: [
     QuillModule,
@@ -96,7 +114,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgxMaterialTimepickerModule.setLocale('de-DE'),
+    AgGridModule.withComponents([AgGridHeaderComponent])
   ],
   exports:[
     EditorComponent,
@@ -122,7 +142,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     FormularTextElementComponent,
     FormularElementComponent,
     AddFormElementComponent,
-    TitleComponent
+    TitleComponent,
+    PopupSearchFormularComponent,
+    AgGridHeaderComponent,
+    SelectFormularComponent,
+    ChangeFormularComponent
   ],
   providers: [
     EditorService,

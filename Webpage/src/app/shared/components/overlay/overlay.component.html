@@ -7,6 +7,8 @@
       <app-login-dialog [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.login" ></app-login-dialog>
       <app-register-group-dialog [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.registerGroup" ></app-register-group-dialog>
       <app-add-form-element [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.addFormElement" [setFormElement]="data" [option]="option"></app-add-form-element>
+      <app-select-formular [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.selectFormular" [option]="option" [tableId]="option2"></app-select-formular>
+      <app-change-formular [parentId]="DOMself.id" *ngSwitchCase="overlayTypes.changeFormular" [option]="option"  [setFormElement]="data" [tableId]="option2"></app-change-formular>
     </div>
   </div>
 </div>

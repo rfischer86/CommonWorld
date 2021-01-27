@@ -4,5 +4,6 @@ export enum PopupTypes {
   select = 'select',
   contentType = 'contentType',
   formularType = 'formularType',
+  selctFormular = 'selctFormular'
 }
 

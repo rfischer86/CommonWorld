@@ -42,7 +42,7 @@ export class Logger {
 
   private raiseInfo(): string {
     try {
-      let lol: string[];
+      const lol: string[] = [];
       lol.push('');
     } catch (error) {
       const errorObj = error as Error;

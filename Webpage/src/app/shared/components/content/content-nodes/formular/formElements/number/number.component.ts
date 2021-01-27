@@ -8,12 +8,12 @@ import { Text } from '../../../../../../../../assets/i18n/app.text';
 import { Helper } from 'src/app/shared/services/Helper/helper.service';
 
 @Component({
-  selector: 'app-form-text-element',
-  templateUrl: './text.component.html',
-  styleUrls: ['./text.component.scss']
+  selector: 'app-form-number-element',
+  templateUrl: './number.component.html',
+  styleUrls: ['./number.component.scss']
 })
 
-export class FormularTextElementComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FormularNumberElementComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("input") input: ElementRef<HTMLInputElement>;
 
   @Input() parentId;

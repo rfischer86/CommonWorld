@@ -11,6 +11,9 @@ export const environment = {
     groupNav: 'nav/group',
     accordion: 'accordion',
     accordionGetOrCreate: 'accordion/getOrCreate',
+    formulars: 'content/formulars',
+    formularSearch: 'content/formulars/search',
+    table:'content/table',
     content: {
       text: 'content/text',
       form: 'content/form'

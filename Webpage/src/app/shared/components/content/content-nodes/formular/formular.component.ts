@@ -56,7 +56,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private DOM: DOMService,
     private helper: Helper,
-    private cdr: ChangeDetectorRef 
+    private cdr: ChangeDetectorRef
     ) {
 
    }
@@ -69,7 +69,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.parentApiId ) {
       this.formular.apiId = this.parentApiId;
     } else {
-      this.formular.apiId = this.helper.getRrandomId(); 
+      this.formular.apiId = this.helper.getRrandomId();
     }
     const _ = this.DOM.create(DOMTypes.formularNode, this.parentId);
     if (_.success.isFalse()) {
@@ -79,7 +79,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.DOMid = this.DOMself.id;
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event));
     }
-    this.cdr.detectChanges();    
+    this.cdr.detectChanges();
   }
 
   defaultFormElement(): FormElement {
@@ -93,8 +93,8 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   defaultFormCondition(): FormElementCondition {
-    let condition = {} as Condition;
-    condition.do = () => true; 
+    const condition = {} as Condition;
+    condition.do = () => true;
     const defaultCondition = {} as FormElementCondition;
     defaultCondition.conditions = [condition];
     defaultCondition.state = new State(true);
@@ -111,7 +111,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.updateFormular(event);
       }
     }
-    
+
     if (event.fromType === DOMTypes.overlay) {
       if (event.action === ActionType.add) {
         this.formular.formElements.push(event.output);
@@ -126,7 +126,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
         event.output = event.output as FormElement;
         this.formular.formElements.map((el, index) => {
           if (el.apiId === event.output.apiId) {
-            this.formular.formElements[index] = event.output 
+            this.formular.formElements[index] = event.output
           }
         });
         this.saveFormular();
@@ -144,7 +144,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     _.input = this.formular;
     _.option = ContentTypes.form;
     _.action = ActionType.save;
-    this.DOM.processEvent(_); 
+    this.DOM.processEvent(_);
   }
 
   updateFormular(event: Result<any, Formular>) {
@@ -181,7 +181,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.formular.log.addLog('toggle valid state of formular ' + this.formular.apiId);
     this.propagateValidState();
   }
-  
+
   propagateValidState() {
     if (this.formular.parentFormularId) {
       const _ = new  Result<any, any>();
@@ -221,7 +221,7 @@ export class FormularNodeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateElement(data: any): void{
-    if (this.notEditable) {return} 
+    if (this.notEditable) {return}
     if (this.dbClickElement.isFalse()) {
       this.dbClickElement.setTrue();
       setTimeout(() => this.dbClickElement.setFalse(), 300);

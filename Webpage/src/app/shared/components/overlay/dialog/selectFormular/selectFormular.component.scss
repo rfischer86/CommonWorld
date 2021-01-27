@@ -1,0 +1,29 @@
+@import '../../../../../../assets/styles/variable.scss';
+@import '../../../../../../assets/styles/mixin.scss';
+
+
+:host{
+  z-index: 10;
+  position: relative;
+}
+
+.selct-formular-wrapper {
+  width: fit-content;
+  height: fit-content;
+  display: block;
+  position: relative;
+  z-index: 10;
+  background-color: $white;
+  width: 25em;
+  height: auto;
+  transition: height 5s linear;
+  .formular-content{
+    .hover{
+      padding-left: 0.25em;
+      @include hoverNav();
+    }
+    
+    @include notSelectable();
+    @include notDragable();
+  }
+}

@@ -68,7 +68,10 @@ namespace FormElement_Factory
                 sr.result.version = entity.version;
                 sr.result.value = entity.value;
                 sr.result.description = entity.description;
+                sr.result.metaData = entity.metaData;
+                sr.result.required = entity.required;
                 sr.result.formType = entity.formType;
+                sr.result.widthClass = entity.widthClass;
                 sr.error.addInfo(sr.result.apiId);
                 sr.error.addInfo(HttpError.getUpdateEntityOfId(TabelList.FormElement, sr.result.apiId));
                 db.Update(sr.result);

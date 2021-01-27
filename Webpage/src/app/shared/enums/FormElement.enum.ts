@@ -8,7 +8,9 @@ export enum FormTypes {
   select = 'select',
   range = 'range',
   document = 'document',
+  file = 'file',
   image = 'image',
-  color = 'color'
+  color = 'color',
+  time = 'time'
 }
 

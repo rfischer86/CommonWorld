@@ -1,0 +1,27 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+:host{
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+  width: 100%;
+}
+
+.file-field{
+  min-width: 10em;
+  input{
+  }
+  @include removeInputCSS();
+  .file-upload{
+    visibility: hidden;
+    width: 0;
+    height: 0px;
+  }
+  .mat-icon{
+    font-size: 1.25em;
+    position: absolute;
+    bottom: -0.15em;
+    right: -0.1em;
+  }
+}

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BuildLogger.Migrations
 {
     [DbContext(typeof(BuildLoggerContext))]
-    [Migration("20200710085027_init")]
+    [Migration("20200720132737_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,9 @@ namespace BuildLogger.Migrations
                     b.Property<string>("label")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("metaData")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("required")
                         .HasColumnType("INTEGER");
 
@@ -115,6 +118,9 @@ namespace BuildLogger.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("version")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("widthClass")
                         .HasColumnType("TEXT");
 
                     b.HasKey("apiId");

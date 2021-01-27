@@ -64,6 +64,15 @@ namespace BuildLogger.Migrations
                     b.Property<string>("FormapiId")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("activ")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("isValid")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("local")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("name")
                         .HasColumnType("TEXT");
 
@@ -100,6 +109,9 @@ namespace BuildLogger.Migrations
                     b.Property<string>("label")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("metaData")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("required")
                         .HasColumnType("INTEGER");
 
@@ -113,6 +125,9 @@ namespace BuildLogger.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("version")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("widthClass")
                         .HasColumnType("TEXT");
 
                     b.HasKey("apiId");

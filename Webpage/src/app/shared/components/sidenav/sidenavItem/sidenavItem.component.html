@@ -1,12 +1,22 @@
-<div class="sidenav-item" fxLayout="column">
+<div class="sidenav-item" fxLayout="column" >
 
-  <div class.hidden="firstElement" (click)="clickNavElement($event, navData)" class="content" [class.hover]="!content" fxLayout="row nowrap" fxLayoutAlign="space-between center" fxFlexFill>
-    <div class="input-wrapper">
+  <div class.hidden="firstElement" 
+    (click)="clickNavElement($event, navData)"
+    class="title-wrapper" 
+    [class.hover]="!content"
+    [class.hover-content-title]="!!content"
+    fxLayout="row nowrap"
+    fxLayoutAlign="space-between center"
+    fxFlexFill>
+    <div class="input-wrapper" >
       <input #sidenavText
       [disabled]="!states.editMode.value"
-      [class.active]="states.editMode.value" type="text"
+      type="text"
       class="name"
+      [class.active]="states.editMode.value"
+      [class.title]="content"
       (keyup)="updateName($event)"
+      (blur)="saveName()"
       [value]="navData.name">
       <div *ngIf="!states.editMode.value" class="input-overlay" (click)="clickNavElement($event, navData)" ></div>
     </div>
@@ -15,20 +25,22 @@
         <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
       </div>
       <app-popup [parentId]="DOMself.id" *ngIf="openContentType.value" [data]="popupData"></app-popup>
-      </div>
     </div>
-    <div class="content" *ngIf="content && DOMself">
-      <app-content 
-        [setContentType]="navData.contentType"
-        [setContentData]="navData.contentData"
-        [parentApiId]="navData.apiId"
-        [parentId]="DOMself.id" ></app-content>
-      
-    </div>
-    <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>
-      <div class="tab" *ngFor="let navItem of navData.navData; let i = index" [ngStyle]="{'z-index': 100-i}">
-        <app-sidenav-item  [setNavData]="navItem" [content]="content" [parentId]="DOMself.id"></app-sidenav-item>
-      </div>
-    </div>
+  </div>
+  <div *ngIf="content" class="vertical-space-1em" ></div>
+  <div class="content" *ngIf="content && DOMself">
+    <app-content 
+      [setContentType]="navData.contentType"
+      [setContentData]="navData.contentData"
+      [parentApiId]="navData.apiId"
+      [parentId]="DOMself.id" ></app-content>
     
   </div>
+  <div *ngIf="content" class="vertical-space-1em" ></div>
+  <div fxLayout="column" fxFlexFill class="sub-nav-items"  [class.hidden]="!states.open.value"  fxFlexFill>
+    <div class="tab" *ngFor="let navItem of navData.navData; let i = index" [ngStyle]="{'z-index': 100-i}">
+      <app-sidenav-item  [setNavData]="navItem" [content]="content" [parentId]="DOMself.id"></app-sidenav-item>
+    </div>
+  </div>
+  
+</div>

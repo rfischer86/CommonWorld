@@ -7,5 +7,6 @@ export interface SearchSelection {
 export enum SearchServices {
   user = 'user',
   role = 'role',
-  group = 'group'
+  group = 'group',
+  formular = 'formular'
 }

@@ -14,7 +14,7 @@ import { MatMenuTrigger} from '@angular/material/menu';
 })
 export class PopupComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('menuTrigger') matMenuTriger: MatMenuTrigger; 
+  @ViewChild('menuTrigger') matMenuTriger: MatMenuTrigger;
 
   @Input() parentId;
   popupTypes = PopupTypes;
@@ -91,22 +91,22 @@ export class PopupComponent implements OnInit, OnDestroy, AfterViewInit {
         _2.action = ActionType.close;
         this.DOM.processEvent(_2);
         break;
-      
+
       case(PopupTypes.formularType):
         const _3 = new  Result<any, any>();
         _3.toId = this.parentId;
         _3.fromType = DOMTypes.formularTypePopup;
         _3.action = ActionType.close;
         this.DOM.processEvent(_3);
-        break;  
-    
+        break;
+
         case(PopupTypes.select):
         const _4 = new  Result<any, any>();
         _4.toId = this.parentId;
         _4.fromType = DOMTypes.selectPopup;
         _4.action = ActionType.close;
         this.DOM.processEvent(_4);
-        break;  
+        break;
       }
 
     this.popupData = null;
@@ -123,7 +123,7 @@ export class PopupComponent implements OnInit, OnDestroy, AfterViewInit {
   //     targetElement.preventDefault();
   //   }
   // }
-  
+
   ngOnDestroy(){
     const _ = new  Result<any, any>();
     _.toId = this.DOMid;

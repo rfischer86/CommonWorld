@@ -1,0 +1,24 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+:host{
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+  width: 100%;
+}
+.time-element{
+  @include removeInputCSS();
+  .time-picker{
+    width: 0;
+    @include removeInputCSS();
+  }
+  .time-value{
+  }
+  .mat-icon{
+    font-size: 1.25em;
+    position: absolute;
+    bottom: -0.15em;
+    right: -0.1em;
+  }
+}

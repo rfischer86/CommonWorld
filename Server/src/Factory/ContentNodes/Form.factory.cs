@@ -3,6 +3,7 @@ using Helper;
 using BuildLogger_DB_Context;
 using System.Collections.Generic;
 using FormElement_Factory; 
+using WebApi.Models;
 
 namespace Form_Factory
 {   
@@ -37,10 +38,19 @@ namespace Form_Factory
             } else {
                 sr.succeed();
                 sr.result = new Form();
+                sr.result.apiId = entity.apiId;
+                sr.result.name = entity.name;
+                sr.result.version = entity.version;
+                sr.result.parentFormularId = entity.parentFormularId;
+                sr.result.subFormulars = new List<Form>();
+                sr.result.formElements = new List<FormElement>();
+                sr.result.activ = sr.result.apiId == null;
+                sr.result.local = entity.local;
                 if (sr.result.apiId == null ) {
                     sr.result.apiId = Helper.Helper.RandomId();
                 }
-                sr.result.apiId = entity.apiId;
+                Helper.Helper.print("sr");
+                Helper.Helper.printObject(sr);
                 sr.error.addInfo(HttpError.getAddIdIntoTable(TabelList.Form, sr.result.apiId));
                 db.Add(sr.result);
                 db.SaveChanges();
@@ -250,6 +260,23 @@ namespace Form_Factory
             if (!sr.success) {
                 sr.error.addMessage(HttpError.getNoEntryForParameter(TabelList.Form, parameter), withMsg);
             }
+            return sr;
+        }
+
+
+        public ServerResult<List<Form>> search(SearchModel search, bool withMsg = true)
+        {
+            ServerResult<List<Form>> sr = ServerResult<List<Form>>.create();
+            List<Form> formElements = db.Form
+                .Where(el => el.name.Contains(search.searchString) )
+                .ToList();
+            sr.result = formElements;
+            // if (formElementIds != null) {
+            //     foreach(string formElementId in formElementIds ) {
+            //         FormElement formElement = db.FormElement.Find(formElementId);
+            //         sr.result.formElements.Add(formElement);
+            //     }
+            // }
             return sr;
         }
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Button } from '../../interfaces/button';
 import { ButtonTypes, ButtonState } from '../../enums/button.enum';
 import { States } from '../../classes/states/states';

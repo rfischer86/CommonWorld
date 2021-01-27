@@ -24,15 +24,16 @@ export class FormularTypeComponent implements OnInit{
   ) { }
 
   ngOnInit() {
+    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.checkbox,FormTypes.checkbox))
+    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.number,FormTypes.number))
     this.actions.push(this.createSelectOptionButton(this.text.formularTypes.textField,FormTypes.textField))
-    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.textLine,FormTypes.textLine))
     this.actions.push(this.createSelectOptionButton(this.text.formularTypes.textarea,FormTypes.textArea))
     this.actions.push(this.createSelectOptionButton(this.text.formularTypes.select,FormTypes.select))
-    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.checkbox,FormTypes.checkbox))
-    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.range,FormTypes.range))
+    // this.actions.push(this.createSelectOptionButton(this.text.formularTypes.range,FormTypes.range))
     this.actions.push(this.createSelectOptionButton(this.text.formularTypes.date,FormTypes.date))
-    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.document,FormTypes.document))
-    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.number,FormTypes.number))
+    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.time,FormTypes.time))
+    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.file,FormTypes.file))
+    this.actions.push(this.createSelectOptionButton(this.text.formularTypes.image,FormTypes.image))
   }
 
   createSelectOptionButton(optionText: string, value: FormTypes): PopupAction<FormularTypeComponent>{

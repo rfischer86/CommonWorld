@@ -14,12 +14,12 @@ import { Helper } from 'src/app/shared/services/Helper/helper.service';
 })
 
 export class FormularTextElementComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("input") input: ElementRef<HTMLInputElement>;
+  @ViewChild('input') input: ElementRef<HTMLInputElement>;
 
   @Input() parentId;
   @Input() parentApiId;
   @Input() set setContentData(data : FormElement ){
-    if ( data ) { 
+    if ( data ) {
       this.contentData = data;
     } else {
       this.contentData =  {} as FormElement;
@@ -46,13 +46,12 @@ export class FormularTextElementComponent implements OnInit, AfterViewInit, OnDe
       this.DOMself.self.subscribe((event: Result<any, any>) => this.processDOMEvent(event));
     }
   }
-  
+
   ngAfterViewInit () {
-    this.contentData.value
     this.input.nativeElement.value = this.contentData.value ? this.contentData.value : null;
     if (this.parentId) {
       this.onFocusout();
-    } 
+    }
   }
 
   processDOMEvent(event: Result<any, any>) {
@@ -60,8 +59,8 @@ export class FormularTextElementComponent implements OnInit, AfterViewInit, OnDe
   }
 
   onFocusout() {
-    if (!this.contentData || !this.parentId) {return} 
-    this.contentData.value = this.input.nativeElement.value; 
+    if (!this.contentData || !this.parentId) {return}
+    this.contentData.value = this.input.nativeElement.value;
     const _ = new  Result<any, FormElement>();
     _.toId = this.parentId;
     _.output = this.contentData;

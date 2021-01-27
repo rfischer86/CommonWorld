@@ -1,10 +1,9 @@
 <form [formGroup]="form" (onSubmit)="null">
   <div class="search-field-wrapper">
-    <div class="search-field" fxLayout="column" #searchField>
+    <div class="search-field" [class.full-width]="searchOption.fullWidth" fxLayout="column" #searchField>
       <div class="content" *ngIf="isLoaded">
         <input *ngIf="isEditMode" type="text" (keyup)="updateElementList($event)"
-          formControlName="searchString" placeholder="searchServices"
-        >
+          formControlName="searchString" placeholder="searchServices">
       </div>
       <div class="search-result">
         <button mat-menu-item *ngFor="let opt of elementList" [value]="opt"

@@ -19,9 +19,12 @@ export class OverlayComponent implements OnInit {
     if(!overlayEvent) {return}
     this.overlayData = overlayEvent;
     this.data = overlayEvent.input;
-    this.option = overlayEvent.option2;
+    this.option = overlayEvent.option;
+    this.option2 = overlayEvent.option2;
+    console.log('this.option2',this.option2)
   }
-  option; 
+  option;
+  option2;
   data;
   overlayData: Result<any, any>;
   DOMself: DOMElement;
@@ -47,7 +50,8 @@ export class OverlayComponent implements OnInit {
       this.overlayData = event;
       this.data = event.input;
       this.overlayType = event.option as OverlayTypes;
-      this.option = event.option2;
+      this.option = event.option;
+      this.option2 =event.option2;
     };
     if (event.action === ActionType.close) {
       this.closeOverlay();

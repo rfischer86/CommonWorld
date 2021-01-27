@@ -1,6 +1,8 @@
 export enum OverlayTypes {
   login = 'login',
   registerGroup = 'registerGroup',
-  addFormElement = 'addFormElement'
+  addFormElement = 'addFormElement',
+  selectFormular = 'selectFormular',
+  changeFormular = 'changeFormular',
 }
 

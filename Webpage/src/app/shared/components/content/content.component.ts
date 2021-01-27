@@ -36,6 +36,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   constructor (
     private DOM: DOMService,
     private textNodeService: TextNodeService,
+    private tableNodeService: TextNodeService,
     private formNodeService: FormNodeService
   ){  }
 
@@ -66,6 +67,16 @@ export class ContentComponent implements OnInit, OnDestroy {
         error => console.error(error)
       )
     }
+    if (event.option === ContentTypes.table) {
+      event.input.apiId = event.toApiId;
+      console.log('ToDo: implement save of table');
+      console.log(event);
+      this.tableNodeService.update(event).subscribe(
+        data => console.log(data),
+        error => console.error(error)
+      )
+    }
+
   }
 
   processDOMEvent(event: Result<any, any>) {

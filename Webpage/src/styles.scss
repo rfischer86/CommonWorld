@@ -2,6 +2,15 @@
 @import '~quill/dist/quill.bubble.css'; 
 @import '~quill/dist/quill.snow.css';
 
+
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+.ag-theme-alpine {
+    @include ag-theme-alpine();
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -56,4 +65,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   right: 0;
   position: absolute;
   bottom: 2em;
+  .mat-button-wrapper{
+    .mat-datepicker-toggle-default-icon{
+      width: 1.4em;
+      height: 1.4em;
+    }
+  }
+}
+
+
+.vertical-space-1em{
+  height: 1em;
 }

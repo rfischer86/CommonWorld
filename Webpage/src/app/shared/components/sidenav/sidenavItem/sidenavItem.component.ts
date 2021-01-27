@@ -75,7 +75,9 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
   createButtons() {
     this.buttonList.push(this.createToggleButton());
     this.buttonList.push(this.createAddButton());
-    this.content ? this.buttonList.push(this.createContentTypeButton()) : null;
+    if (this.content) {
+      this.buttonList.push(this.createContentTypeButton());
+    }
     this.buttonList.push(this.createDeleteButton());
   };
 
@@ -171,7 +173,7 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     const _ = new  Result<any, any>();
     _.toId = self.domId;
     _.input = self.domId;
-    _.type = DOMTypes.sidenavItem;
+    _.fromType = DOMTypes.sidenavItem;
     _.action = ActionType.close;
     self.DOM.processEvent(_);
   }
@@ -248,7 +250,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         break;
       case (ActionType.save):
         this.navData.name = event.input;
-        this.states.editMode.setTrue();
         this.entityService.update(this.navData).subscribe(
           data => { console.log(data)},
           error => {console.log(error)}
@@ -271,13 +272,14 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         this.states.open.setTrue();
         break;
       case (ActionType.close):
-        
         switch(event.fromType) {
-          case (DOMTypes.sidenav):
+          case (DOMTypes.sidenavItem):
             this.states.open.setFalse();
+            break;
           case (DOMTypes.contentTypePopup):
             this.openContentType.setFalse();
-        }
+            break;
+          }
         break;
       case (ActionType.open):
         this.states.open.setTrue()
@@ -297,7 +299,6 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
         );
         console.log('TODO: load content Data');
         break;
-    
       }
   }
 
@@ -307,6 +308,11 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
       this.states.editMode.setFalse();
       this.clickSave();
     }
+  }
+
+  saveName(){
+    this.states.editMode.setFalse();
+    this.clickSave();
   }
 
   deleteNavItem(navItem: NavData, event: Result<string, any>): boolean {
@@ -331,17 +337,18 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
     if (this.states.editMode) {
       this.clickEdit();
       this.states.editMode.setTrue();
-    } 
+    }
+    setTimeout(() => this.sidenavText.nativeElement.focus(), 100 );
   }
 
   clickNavElement(event: Event, data: NavData) {
     event.stopPropagation();
-    if(this.content) {return};
+    // if(this.content) {return};
     this.clickTimeout.toggleState();
     setTimeout(() => this.clickTimeout.setFalse(), 300);
     if (this.clickTimeout.isFalse()) {
       this.editSidenavText()
-    } 
+    }
     if (this.clickTimeout.isTrue()) {
       setTimeout(() => {
         if (this.clickTimeout.isTrue()) {
@@ -355,10 +362,9 @@ export class SidenavItemComponent implements OnInit, OnDestroy {
           _.option = data.type;
           _.action = ActionType.load;
           this.DOM.processEvent(_);
-        } 
+        }
       }, 290 );
     }
-    
   }
 
   clickButtonDiv(event: Event) {

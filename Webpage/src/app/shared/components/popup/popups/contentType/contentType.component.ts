@@ -25,9 +25,10 @@ export class ContentTypeComponent implements OnInit{
   ) { }
 
   ngOnInit() {
-    this.actions.push(this.createTextNodeButton())
-    this.actions.push(this.createCalenderNodeButton())
-    this.actions.push(this.createFormularNodeButton())
+    this.actions.push(this.createTextNodeButton());
+    this.actions.push(this.createCalenderNodeButton());
+    this.actions.push(this.createFormularNodeButton());
+    this.actions.push(this.createTableNodeButton());
   }
 
   createTextNodeButton(): PopupAction<ContentTypeComponent>{
@@ -51,6 +52,20 @@ export class ContentTypeComponent implements OnInit{
     action.self = this;
     return action;
   }
+
+
+  createTableNodeButton(): PopupAction<ContentTypeComponent>{
+    const action = {} as PopupAction<ContentTypeComponent>;
+    action.name = this.text.contentTypes.table
+    action.do = this.changeContentType;
+    action.apiId = this.parentId;
+    action.parentParentId = this.parentParentId;
+    action.data = ContentTypes.table;
+    action.self = this;
+    return action;
+  }
+
+
   createCalenderNodeButton(): PopupAction<ContentTypeComponent>{
     const action = {} as PopupAction<ContentTypeComponent>;
     action.name = this.text.contentTypes.calendar

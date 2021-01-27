@@ -15,8 +15,6 @@ import { Helper } from 'src/app/shared/services/Helper/helper.service';
 import { FormElement, Formular } from 'src/app/shared/interfaces/form.interface';
 import { FormTypes } from 'src/app/shared/enums/FormElement.enum';
 import { TitleTypes } from 'src/app/shared/enums/TitleTypes';
-import { PopupTypes } from 'src/app/shared/enums/popupTypes';
-
 enum Buttons{
   submit = 'submit',
   delete = 'delete'
@@ -31,12 +29,12 @@ enum Buttons{
 export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy{
   @Input() parentId: string ;
   @Input() option: ActionType;
-  @Input() set setFormElement(data: FormElement){ 
+  @Input() set setFormElement(data: FormElement){
     if (! data ) {
-      this.formElement = {} as FormElement;    
+      this.formElement = {} as FormElement;
     } else {
       this.formElement = data;
-    }     
+    }
   }
   titleTypes = TitleTypes;
   formElement: FormElement;
@@ -55,7 +53,6 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
   buttonList = [] as  Button[][];
   note = {} as Note;
   constructor(
-    // private userService: UserService,
     private DOM: DOMService,
     private helper: Helper
   ) {
@@ -89,14 +86,14 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
         switch(event.output.name) {
           case 'addFormElement':
             this.formularData = event.output;
-            this.states.valid.value = this.formularData.isValid; 
+            this.states.valid.value = this.formularData.isValid;
             const formTypetester: FormTypes = this.helper.getFormElementByLabel('formType', event.output).value as FormTypes;
               if (!!formTypetester && formTypetester !== this.formType) {
                 this.formType = formTypetester;
                 this.createMetaDataFormular();
               }
               this.changeButtonState();
-        } 
+        }
         break;
       case ActionType.close:
         _.toId = this.parentId;
@@ -115,14 +112,14 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
         _.nextActionType = this.option;
         this.DOM.processEvent(_);
         break;
-    }  
+    }
   }
 
   createFormElement(): FormElement {
     const formElement = {} as FormElement;
-    formElement.label = this.helper.getFormElementByLabel(this.text.addFormElement.label, this.formularData).value;    
-    formElement.formType = this.helper.getFormElementByLabel(this.text.addFormElement.formType, this.formularData).value;    
-    formElement.description = this.helper.getFormElementByLabel(this.text.addFormElement.description, this.formularData).value;    
+    formElement.label = this.helper.getFormElementByLabel(this.text.addFormElement.label, this.formularData).value;
+    formElement.formType = this.helper.getFormElementByLabel(this.text.addFormElement.formType, this.formularData).value;
+    formElement.description = this.helper.getFormElementByLabel(this.text.addFormElement.description, this.formularData).value;
     formElement.version = this.helper.getFormElementByLabel(this.text.addFormElement.version, this.formularData).value;
     if (this.formElement?.apiId) {
       formElement.apiId = this.formElement.apiId;
@@ -146,7 +143,7 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
 
   beforeCreateMetaDataFormular(): void {
     this.changeMetaDataFormular.setTrue();
-    this.metaDataFormular.name = 'metaDataFormular'; 
+    this.metaDataFormular.name = 'metaDataFormular';
     this.metaDataFormular = {} as Formular;
     this.metaDataFormular.parentFormularId = this.DOMself.id;
     this.metaDataFormular.formElements = [];
@@ -158,7 +155,13 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
       case FormTypes.select:
         this.beforeCreateMetaDataFormular();
         this.metaDataFormular.formElements.push(this.helper.createFormElement(
-          "", this.text.addFormularPopup.selectOptions, false, FormTypes.textArea, true, mdf.select.options, this.text.addFormularPopup.selectOptionsDescription 
+          '',
+          this.text.addFormularPopup.selectOptions,
+          false,
+          FormTypes.textArea,
+          true,
+          mdf.select.options,
+          this.text.addFormularPopup.selectOptionsDescription
         ));
         this.changeMetaDataFormular.setFalse()
         break;
@@ -171,10 +174,10 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
       case FormTypes.checkbox:
         this.beforeCreateMetaDataFormular();
         this.metaDataFormular.formElements.push(this.helper.createFormElement(
-          "", this.text.addFormularPopup.checkboxTrue, false, FormTypes.textField,true, mdf.checknox.trueLabel
+          '', this.text.addFormularPopup.checkboxTrue, false, FormTypes.textField,true, mdf.checknox.trueLabel
         ));
         this.metaDataFormular.formElements.push(this.helper.createFormElement(
-          "", this.text.addFormularPopup.checkboxFalse, false, FormTypes.textField, true, mdf.checknox.falseLabel
+          '', this.text.addFormularPopup.checkboxFalse, false, FormTypes.textField, true, mdf.checknox.falseLabel
         ));
         this.changeMetaDataFormular.setFalse()
         break;
@@ -207,7 +210,7 @@ export class AddFormElementComponent implements OnInit, AfterViewInit, OnDestroy
     this.formularData.parentFormularId = 'addFormElement';
   }
 
-  addFormElement(label: string, required: boolean, formType: FormTypes, valid: boolean, metaData: string = "{}") {
+  addFormElement(label: string, required: boolean, formType: FormTypes, valid: boolean, metaData: string = '{}') {
     const formElement = {} as FormElement;
     formElement.value = this.formElement[label];
     formElement.apiId = this.helper.getRrandomId();

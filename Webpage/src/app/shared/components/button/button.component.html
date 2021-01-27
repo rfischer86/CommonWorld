@@ -13,7 +13,9 @@
     [class.disabled]="button.buttonState===buttonStates.disabled"
     [class.hidden]="button.buttonState===buttonStates.hidden"
     [class.active]="button.buttonState===buttonStates.active"
-    (click)="doClick($event, i)">
+    (click)="doClick($event, i)"
+    [matTooltip]="button.tooltip"
+    >
       <mat-icon [style.font-size]="button.size" >{{button.icon}}</mat-icon>
       <span *ngIf="button.type===buttonTypes.normal">{{button.text}}</span>
     </div>

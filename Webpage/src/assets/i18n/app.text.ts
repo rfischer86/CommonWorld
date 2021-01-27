@@ -6,7 +6,7 @@ export class MetaDataFields{
   };
   checknox = {
     trueLabel: 'trueLabel',
-    falseLabel: 'falseLabel', 
+    falseLabel: 'falseLabel',
   }
 }
 
@@ -14,7 +14,7 @@ export class MetaDataFields{
 export class Text {
   sidenav =
   {
-    newElement: 'Neuese Element',
+    newElement: 'Neues Element',
     emptyElement: 'Neues Item'
   };
   login = {
@@ -47,33 +47,54 @@ export class Text {
     login: 'Sie sind nun angemeldet.',
     register: 'Sie haben sich erfolgreich angemeldet und sind bereits angemeldet.'
   };
-  tooltip = {
-  };
   note = {
+  };
+  table={
+    undefinedFormular: 'Formular Element',
+    tooltip: {
+      searchFormular: 'Suche existierende Tabelle',
+      editTable: 'Verändern der Tabelle',
+      newColumn: 'Hinzufügen einer Spalte',
+      newRow: 'Hinzufügen einer Zeile',
+    }
+  };
+  searchFormular={
+    groupName: 'Gruppen Name',
+    overlayTitle: 'Bestimme das Formular der Tabele',
+    createFormular: 'Formular erstellen'
+  };
+
+  changeFormular={
+    description: 'Beschreibung des Formulars',
+    formularName: 'Name des Formulars',
+    version: 'Versions Nummer',
+    title: 'Metadaten der Tabelle '
   };
   contentTypes = {
     text: 'Text',
     calendar: 'Kalender',
-    formular: 'Formular'
+    formular: 'Formular',
+    table: 'Table'
   };
   formularTypes = {
     textField: 'TextFeld',
     textLine: 'Textzeile',
     textarea: 'Text',
     date: 'Datum',
+    time: 'Uhrzeit',
     number: 'Zahl',
     checkbox: 'Checkbox',
     select: 'Selektion',
     range: 'Bereich',
-    document: 'Document',
+    file: 'Document',
     image: 'Bild',
     color: 'Farbe'
   };
   addFormularPopup = {
-    selectOptions: "Auswahlmöglichkeiten",
-    selectOptionsDescription: " Format: [ Option 1 ;  Option 2 ;  Option 3 ; ... ]   ",
-    checkboxTrue: "Bezeichnung Ja",
-    checkboxFalse: "Bezeichnung Nein",
+    selectOptions: 'Auswahlmöglichkeiten',
+    selectOptionsDescription: 'Format: [ Option 1 ;  Option 2 ;  Option 3 ; ... ] ',
+    checkboxTrue: 'Bezeichnung Ja',
+    checkboxFalse: 'Bezeichnung Nein',
     metaDataTitle: 'Einstellungen',
   };
   contentNodes = {

@@ -105,6 +105,7 @@ export class MainComponent implements OnInit {
       state = this.menueNavState;
     }
     if (event.option === NavTypes.profile) {
+      console.log(event,this.userService.isLoggedin())
       if (!this.userService.isLoggedin() ) {
         this.openLoginDialog();
         return;
@@ -155,7 +156,7 @@ export class MainComponent implements OnInit {
     _.toId = DOMTypes.overlay;
     _.fromType = DOMTypes.main;
     _.fromId = this.DOMself.id;
-    _.action = ActionType.load;
+    _.action = ActionType.open;
     _.option = OverlayTypes.login;
     this.DOM.processEvent(_);
   }

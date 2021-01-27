@@ -9,4 +9,7 @@
 }
 .date-element{
   @include removeInputCSS();
+  input{
+    
+  }
 }

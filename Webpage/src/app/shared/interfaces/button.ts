@@ -13,5 +13,6 @@ export interface Button {
   text: string,
   index: number,
   size: string,
-  data: any
+  data: any,
+  tooltip: string;
 }

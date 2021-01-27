@@ -2,12 +2,15 @@ using Microsoft.AspNetCore.Mvc;
 using Helper;
 using Form_Factory;
 using BuildLogger_DB_Context;
+using WebApi.Models;
+using System.Collections.Generic;
+
 
 namespace BuildLogger_ErrorControler
 {   
 
     [ApiController]
-    [Route("api/content/form")]
+    [Route("api/content/formulars")]
     public class FormController: ControllerBase
     {
         private FormFactory factory = new FormFactory();
@@ -59,6 +62,23 @@ namespace BuildLogger_ErrorControler
         public ActionResult Delete(string id)
         {
             ServerResult<Form> sr = factory.deleteById(id, true);
+            if (sr.success)
+            {
+                return Ok(sr);
+            } else
+            {
+                return BadRequest(sr);
+            }
+         }
+
+
+        [HttpPost]
+        [Route("search")]
+        public ActionResult Post(SearchModel searchData)
+        {
+            Helper.Helper.print("sr");
+            ServerResult<List<Form>> sr = factory.search(searchData, true);
+            Helper.Helper.printObject(sr);
             if (sr.success)
             {
                 return Ok(sr);

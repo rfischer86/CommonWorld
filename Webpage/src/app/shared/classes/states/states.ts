@@ -16,6 +16,7 @@ export class State {
 
 export class States {
   createMode = new State();
+  defined = new State();
   editMode = new State();
   loading = new State();
   expanded = new State();
@@ -31,6 +32,7 @@ export class States {
   toStateDict(): StateDict {
     const stateDict = {} as StateDict;
     stateDict.createMode = this.createMode.value;
+    stateDict.defined = this.defined.value;
     stateDict.editModt = this.expanded.value;
     stateDict.loading = this.loading.value;
     stateDict.expanded = this.expanded.value;
@@ -50,6 +52,7 @@ export class States {
 
 
 export interface StateDict {
+  defined?: boolean;
   createMode?: boolean;
   editModt?: boolean;
   loading?: boolean;

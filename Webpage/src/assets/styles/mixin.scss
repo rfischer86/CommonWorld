@@ -47,8 +47,12 @@
 }
 
 @mixin hoverNav() {
+  transition: 0.25s;
   &:hover{
     background-color: $gray-lighter;
+  }
+  &:active{
+    transform: translate(2px, 1px);
   }
 }
 

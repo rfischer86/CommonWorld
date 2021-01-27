@@ -68,7 +68,6 @@ export class Helper {
           output = true;
         }
       })
-      
     } else {
       output = true;
       formElement.condition.conditions.map(condition => {
@@ -109,7 +108,7 @@ export class Helper {
       case 1:
         return FormTypes.textField
       case 2:
-        return FormTypes.textLine
+        return FormTypes.image
       case 3:
         return FormTypes.textArea
       case 4:
@@ -123,13 +122,24 @@ export class Helper {
       case 8:
         return FormTypes.range
       case 9:
-        return FormTypes.document      
-    }
+        return FormTypes.file
+      case 10:
+        return FormTypes.time
+      }
     return FormTypes.textField
   }
 
 
-  createFormElement(value: string, label: string, required: boolean, formType: FormTypes, valid: boolean, id: string = null, description: string = null ): FormElement {
+  createFormElement(
+      value: string,
+      label: string,
+      required: boolean,
+      formType: FormTypes,
+      valid: boolean,
+      id: string = null,
+      description:
+      string = null
+  ): FormElement {
     const formElement = {} as FormElement;
     formElement.value = value;
     if (!!id) {
