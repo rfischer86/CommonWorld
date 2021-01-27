@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+@mixin custom-osm-popup ($theme) {
+  $primary: map-get($theme, primary);
+
+  .info-popup {
+    .leaflet-popup-content-wrapper {
+      border: 2px solid map-get($primary, 900);
+    }
+
+    .leaflet-popup-tip-container {
+      .leaflet-popup-tip {
+        background-color: map-get($primary, 900);
+      }
+    }
+  }
+
+  .info-logo {
+    border: 2px solid map-get($primary, 900);
+  }
+}

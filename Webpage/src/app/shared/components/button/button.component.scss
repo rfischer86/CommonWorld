@@ -1,0 +1,112 @@
+@import '../../../../assets/styles/variable.scss';
+@import '../../../../assets/styles/mixin.scss';
+@import '~@angular/material/theming';
+.mat-icon{
+  height: auto;
+  width: auto;
+  margin-right: 0 !important;
+}
+
+:host{
+  display: block;
+  box-sizing: content-box;
+  width: fit-content;
+  transition: 0.5s;
+  z-index: 0;
+  position: relative;
+  padding: 0 2px 2px 0;
+  filter: drop-shadow(3px 3px 2px $gray);
+  &:hover{
+    filter: drop-shadow(2px 2px 1px $gray);
+    padding: 2px 0 0 2px;
+  }
+}
+
+.button{
+  @include notSelectable();
+  @include notDragable();
+  cursor: pointer;
+  z-index: 0;
+  position: relative;
+  &.icon {
+    transition: 0.5s;
+    @include mat-elevation(0);
+    &.warn{
+      color: $warn;
+    }
+    &.primary{
+      color: $primary;
+    }
+    &.accent{
+      color: $accent;
+    }
+    &.hidden{
+      display: none;
+    }
+    &.disabled{
+      opacity: 0.33;
+      &:hover{
+        transition: 0.5s;
+        padding: 0 2px 2px 0;
+        filter: drop-shadow(3px 3px 2px $gray);
+      }
+    }
+    &:active {
+      &.warn {
+        color: $warn-dark;
+      }
+      &.primary{
+        color: $primary-dark;
+      }
+      &.accent{
+        color: $accent-dark;
+      }
+    }
+  }
+
+  &.normal {
+    transition: 0.5s;
+    z-index: 10;
+    background-color: $white-dark;
+    border-radius: 0.25em;
+    min-width: 9em;
+    width: auto;
+    max-width: 100%;
+    min-height: 1.5em;
+    padding: 0 2px 2px 0;
+    font-size: 1em;
+    span{
+      margin-left: 0.5em;
+    }
+    &.warn{
+      color: $warn;
+    }
+    &.primary{
+      color: $primary;
+    }
+    &.accent{
+      color: $accent;
+    }
+    &.hidden{
+      display: none !important;
+    }
+    &.disabled{
+      opacity: 0.25;
+      &:hover{
+        padding: 0 2px 2px 0;
+        filter: drop-shadow(3px 3px 2px $white);
+      }
+    }
+    &:active {
+      &.warn {
+        color: $warn-dark;
+      }
+      &.primary{
+        color: $primary-dark;
+      }
+      &.accent{
+        color: $accent-dark;
+      }
+    }
+  }
+}

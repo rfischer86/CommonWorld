@@ -1,0 +1,8 @@
+<div class="file-field" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="-0.5em" (click)="triggerFileSelect($event)">
+    <input  #fileLabel class="display-file" type="text" readonly />
+    <input #fileInput class="file-upload" type="file" multiple="false"
+    (change)="loadFile($event.target.files)" />
+    <!-- accept="application/pdf" -->
+    <mat-icon >attach_file</mat-icon>
+</div>
+

@@ -1,0 +1,17 @@
+<div *ngIf="states.finishInit.value" class="selct-formular-wrapper" fxLayout="column" fxLayoutGap="1em">
+  <app-title [title]="text.searchFormular.overlayTitle" [type]="titleTypes.standard"></app-title>
+
+  <app-search-field label="Details.Doc" [searchServices]="searchServices.formular"  
+    [isLast]="true" [isEditMode]="true" (updateSearchString)="updateSearchString($event)" 
+    [value]="" [setSearchOption]="searchOption" [parentId]="DOMself.id">
+  </app-search-field>
+  <div class="formular-content" fxLayout="column">
+    <div fxLayout="row" class="hover" *ngFor="let formular of formularSelection" (click)="selctFormular(formular)">
+      {{formular.name}}
+    </div>
+  </div>
+  <div class="buttons" fxLayout="row nowrap">
+    <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+  </div>
+
+</div>

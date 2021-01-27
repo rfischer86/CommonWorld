@@ -1,0 +1,9 @@
+<div class="popup-search-wrapper">
+  <div
+    class="menu-element noselect"
+    *ngFor="let action of popupAction"
+    (click)="clickEl(action)">
+    {{action.name}}
+  </div>
+
+</div>

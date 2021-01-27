@@ -1,0 +1,19 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+
+:host{
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+  width: 100%;
+}
+
+.checkbox{
+  font-size: 1em;
+  @include removeInputCSS();
+  width: 100%;
+  min-width: 10em;
+  height: fit-content;
+  padding-bottom: 0.2em;
+}

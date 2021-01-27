@@ -1,0 +1,15 @@
+@import '../../../../../../../../assets/styles/variable.scss';
+@import '../../../../../../../../assets/styles/mixin.scss';
+
+:host{
+  position: relative;
+  z-index: 100;
+  opacity: 1;
+  width: 100%;
+}
+.date-element{
+  @include removeInputCSS();
+  input{
+    
+  }
+}

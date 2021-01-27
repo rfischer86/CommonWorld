@@ -1,0 +1,20 @@
+<div *ngIf="formElementData" class="formular" fxLayout="column" fxLayoutAlign="start">
+    <div class="label"  fxLayout="row" fxLayoutAlign="space-between"  fxLayoutGap="0em">
+        <span>
+            {{formElementData.label}}
+        </span>
+        <span *ngIf="formElementData.required">*</span>
+    </div>
+    <div [matTooltip]="formElementData.description" fxLayout="row"  fxLayoutAlign="start" class="content" [ngSwitch]="formElementData.formType">
+        <app-form-text-element [parentId]="DOMid" *ngSwitchCase="formTypes.textField" [setContentData]="formElementData"></app-form-text-element>
+        <app-form-enum-element [parentId]="DOMid" *ngSwitchCase="formTypes.select" [setContentData]="formElementData"></app-form-enum-element>
+        <app-form-checkbox-element [parentId]="DOMid" *ngSwitchCase="formTypes.checkbox" [setContentData]="formElementData"></app-form-checkbox-element>
+        <app-form-textarea-element [parentId]="DOMid" *ngSwitchCase="formTypes.textArea" [setContentData]="formElementData"></app-form-textarea-element>
+        <app-form-date-element [parentId]="DOMid" *ngSwitchCase="formTypes.date" [setContentData]="formElementData"></app-form-date-element>
+        <app-form-number-element [parentId]="DOMid" *ngSwitchCase="formTypes.number" [setContentData]="formElementData"></app-form-number-element>
+        <app-form-file-element [parentId]="DOMid" *ngSwitchCase="formTypes.file" [setContentData]="formElementData"></app-form-file-element>
+        <app-form-time-element [parentId]="DOMid" *ngSwitchCase="formTypes.time" [setContentData]="formElementData"></app-form-time-element>
+    </div>
+    <div class="error"></div>
+</div>
+

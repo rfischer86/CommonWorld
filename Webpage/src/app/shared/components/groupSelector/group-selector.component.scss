@@ -1,0 +1,59 @@
+@import '../../../../assets/styles/variable.scss';
+@import '../../../../assets/styles/mixin.scss';
+
+:host{
+  z-index: 11;
+}
+
+.group-selector{
+  width: 100%;
+  background-color: rgba( green, 0);
+  margin-bottom: -3px;
+  @include notSelectable();
+  .link{
+    transition: 0.5s;
+    background-color: $white;
+    border-radius: 0.5em 1.5em 0 0;
+    border-bottom: 0px;
+    padding-bottom: 3px;
+    padding-right: 1em;
+    height: 1.25em;
+    @include hover-up-strong();
+    color: $primary;
+    &:hover{
+      padding-right: calc(1em - 2px);
+      color: $primary-dark;
+      background-color: $link-lighter;
+      .close{
+        font-weight: bolder;
+        display: block;
+      }
+    }
+    .close {
+      @include hoverButton-soft();
+      height: 1em;
+      // display: none;
+      color: $black;
+      font-weight: bold;
+      // position: absolute;
+    }
+    &.selected{
+      color: $white;
+      background-color: $primary;
+      height: 1.5em;
+    }
+    span{
+      width: 120%;
+      font-size: 0.7em;
+      display: block;
+      font-weight: bolder;
+    }
+    div{
+      .mat-icon{
+        font-size: 0.7em;
+        height: 0.7em !important;
+        width: 0.7em !important;
+        padding-left: 0.25em;     }
+    }
+  }
+}

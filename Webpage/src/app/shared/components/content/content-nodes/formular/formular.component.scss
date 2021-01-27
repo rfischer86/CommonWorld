@@ -1,0 +1,14 @@
+@import '../../../../../../assets/styles/variable.scss';
+@import '../../../../../../assets/styles/mixin.scss';
+
+.formular{
+  @include widthClasses();
+  width: auto;
+  height: 100%;
+  z-index: 20;
+  position: relative;
+
+  .button{
+    height: 2.5em;
+  }
+}

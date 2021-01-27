@@ -1,0 +1,89 @@
+@import '../../../../assets/styles/variable.scss';
+
+
+
+
+@mixin adjustBodyWidth($leftNav, $body, $rightNav) {
+  .nav-left {width: $leftNav;}
+  .nav-right {width: $rightNav;}
+  .app-body{ width: $body; }
+}
+
+
+.main {
+  height: 100% !important;
+  position: relative;
+  .main-body {
+    margin-top: 3em;
+    position: fixed;
+    height: 100% !important;
+    width: 100% !important;
+    .nav-left {
+      transition: 0.5s;
+      height: calc( 100% - 4.5em) !important;
+      display: block;
+      width: 0%;
+    }
+    .nav-right {
+      transition: 0.5s;
+      height: calc( 100% - 4.5em) !important;
+      display: block;
+      width: 0%;
+    }
+
+    .app-body{
+      transition: 0.5s;
+      height: calc(100% - 4.5em) !important;
+      display: block;
+      width: 100%;
+    }
+    &.body {
+      @include adjustBodyWidth(0%, 100% , 0% );
+    }
+    &.navBody{
+      @media screen and (max-width: $device-s) {
+        @include adjustBodyWidth(100%, 0% , 0% );
+      }
+      @media screen and (min-width: $device-s)  and (max-width: $device-m) {
+        @include adjustBodyWidth(50%, 50% , 0% );
+      }
+      @media screen and (min-width: $device-m) and (max-width: $device-l) {
+        @include adjustBodyWidth(30em, calc(100% - 30em) , 0% );
+
+      }
+      @media screen and (min-width: $device-l) {
+        @include adjustBodyWidth(30em, calc(100% - 30em) , 0% );
+      }
+    }
+    &.bodyNav{
+      @media screen and (max-width: $device-s) {
+        @include adjustBodyWidth(100%, 0% , 0% );
+      }
+      @media screen and (min-width: $device-s)  and (max-width: $device-m) {
+        @include adjustBodyWidth(0%, 50% , 50% );
+      }
+      @media screen and (min-width: $device-m) and (max-width: $device-l) {
+        @include adjustBodyWidth(0%, calc(100% - 30em) , 30em );
+
+      }
+      @media screen and (min-width: $device-l) {
+        @include adjustBodyWidth(0, calc(100% - 30em) , 30em );
+      }
+    }
+    &.navBodyNav{
+      @media screen and (max-width: $device-s) {
+        @include adjustBodyWidth(100%, 0% , 0% );
+      }
+      @media screen and (min-width: $device-s)  and (max-width: $device-m) {
+        @include adjustBodyWidth(50%, 0 , 50% );
+      }
+      @media screen and (min-width: $device-m) and (max-width: $device-l) {
+        @include adjustBodyWidth(30em, calc(100% - 60em) , 30em );
+      }
+      @media screen and (min-width: $device-l) {
+        @include adjustBodyWidth(30em, calc(100% - 60em) , 30em );
+      }
+    }
+
+  }
+}

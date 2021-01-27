@@ -1,0 +1,25 @@
+@import '../../../../assets/styles/variable.scss';
+
+
+.note-wrapper {
+  transition: 0.5s;
+  .box-note {
+    border-radius: 0.125em;
+    color: #fff;
+    padding: 1em;
+    margin-bottom: 1em;
+
+    &:empty {
+      display: none;
+    }
+
+    &.box-success {
+      background: $accent-dark;
+    }
+
+    &.box-error {
+      background: $warn-dark;
+    }
+  }
+
+}

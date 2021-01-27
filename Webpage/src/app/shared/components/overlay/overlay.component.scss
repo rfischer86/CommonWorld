@@ -1,0 +1,39 @@
+@import '../../../../assets/styles/variable.scss';
+// @import '../../../../assets/styles/mixin.scss';
+
+
+.overlay-outer-wrapper{
+  transition: 0.5s;
+  display: block;
+  position: absolute;
+  height: 100%;
+  background-color: rgba($white-dark, 0.5);
+  z-index: 100;
+  top: 0;
+  .overlay-inner-wrapper{
+    height: 100% !important;
+    background-color: none;
+    height: fit-content;
+    display: block;
+    position: relative;
+    .overlay-container{
+      .close{
+        position: absolute;
+        z-index: 1;
+        top: .5em;
+        right: 1em;
+        width: 1em;
+        height: 1em;
+        cursor: pointer;
+      }
+      opacity: 1;
+      background-color: $white;
+      filter: drop-shadow(8px 8px 12px $gray-dark);
+      box-sizing: border-box;
+      border-radius: 1em;
+      padding: 2em;
+
+    }
+  }
+
+}

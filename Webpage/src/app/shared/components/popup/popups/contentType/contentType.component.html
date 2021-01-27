@@ -1,0 +1,9 @@
+<div class="popup-content-type-wrapper">
+  <div
+    class="menu-element noselect"
+    *ngFor="let action of actions"
+    (click)="action.do(action)">
+      {{action.name}}
+  </div>
+
+</div>

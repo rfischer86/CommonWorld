@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+  <div *ngIf="states.finishInit.value" class="login-wrapper" fxLayout="column" fxLayoutGap="1em">
+    <div class="title">{{text.group.create}}</div>
+    <app-note [note]="note"></app-note>
+    <div class="field" fxLayout="row">
+      <input matInput #name type="name" [placeholder]="text.group.name" formControlName="name" />
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="0.5em">
+      <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+    </div>
+
+  </div>
+</form>

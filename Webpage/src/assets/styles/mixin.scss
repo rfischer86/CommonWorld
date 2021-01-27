@@ -1,0 +1,114 @@
+@import './variable.scss';
+
+@mixin notSelectable() {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@mixin notDragable() {
+  -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
+  user-drag: none;
+}
+
+@mixin widthClasses() {
+  .w100{
+    width: 100%;
+  }
+  .w75{
+    width: 75%;
+  }
+  .w50{
+    width: 50%;
+  }
+  .w25{
+    width: 25%;
+  }
+  .w20{
+    width: 20%;
+  }
+  .w10{
+    width: 10%;
+  }
+  .w33{
+    width: 33%;
+  }
+
+}
+@mixin removeInputCSS{
+  textarea:focus, input:focus{
+    outline: none;
+  }
+  textarea, input{
+    border: none;
+  }
+}
+
+@mixin hoverNav() {
+  transition: 0.25s;
+  &:hover{
+    background-color: $gray-lighter;
+  }
+  &:active{
+    transform: translate(2px, 1px);
+  }
+}
+
+
+@mixin hoverButton-strong() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 3px 3px 0px;
+  &:hover{
+    margin: 3px 0px 0px 3px;
+    filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  }
+}
+
+@mixin hoverButton-normal() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 2px 2px 0px;
+  &:hover{
+    margin: 2px 0px 0px 2px;
+    filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  }
+}
+
+@mixin hoverButton-soft() {
+  filter: drop-shadow(0.5px 0.5px 0.5px $gray-darker);
+  margin: 0px 1px 1px 0px;
+  &:hover{
+    margin: 1px 0px 0px 1px;
+    filter: drop-shadow(0.25px 0.25px 0.25px $black-lighter);
+  }
+}
+
+
+@mixin hover-up-strong() {
+  margin: 3px 3px 0px 0px;
+  filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+  &:hover{
+    filter: drop-shadow(1.5px -1.5px 1.5px $gray);
+    margin: 0px 0px 3px 3px;
+  }
+}
+
+@mixin hover-up-normal() {
+  margin: 2px  2px 0px 0px;
+  filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+  &:hover{
+    filter: drop-shadow(1px -1px 1px $gray);
+    margin: 0px 0px 2px 2px;
+  }
+}
+
+@mixin hover-up-soft() {
+  margin: 1px 1px 0px 0px;
+  filter: drop-shadow(0.25px -0.25px 0.25px $black-lighter);
+  &:hover{
+    filter: drop-shadow(0.5px -0.5px 0.5px $gray-darker);
+    margin: 0px 0px 1px 1px;
+  }
+}
+

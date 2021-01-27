@@ -1,0 +1,14 @@
+<div #menuTrigger="matMenuTrigger"  [matMenuTriggerFor]="menu" ></div>
+<mat-menu #menu="matMenu">
+  <div #popup class="popup-outer-wrapper"
+    [ngSwitch]="popupType" >
+    <div class="popup-container">       
+      <app-home-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.home"></app-home-popup>
+      <app-search-field-popup [parentId]="DOMid" *ngSwitchCase="popupTypes.search" [popupAction]="popupData"></app-search-field-popup>
+      <app-content-type-popup [parentParentId]="parentId" [parentId]="DOMid" *ngSwitchCase="popupTypes.contentType"></app-content-type-popup>
+      <app-formular-type-popup [parentParentId]="parentId" [parentId]="DOMid" *ngSwitchCase="popupTypes.formularType"></app-formular-type-popup>
+      <app-select-popup [parentParentId]="parentId" [popupData]="popupData" [parentId]="DOMid" *ngSwitchCase="popupTypes.select"></app-select-popup>
+    </div>
+  </div>
+</mat-menu>
+

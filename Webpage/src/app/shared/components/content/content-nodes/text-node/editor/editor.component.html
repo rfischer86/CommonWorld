@@ -1,0 +1,23 @@
+<div #editorWrapper >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <quill-editor
+      *ngIf="isEditMode"
+      #editor
+      formControlName="editor"
+      [styles]="{  }"
+      [modules]="quillConfig1">
+      </quill-editor>
+    <quill-editor
+      *ngIf="!isEditMode"
+      #editor
+      formControlName="editor"
+      [styles]="{  }"
+      [readOnly]="true"
+      [modules]="quillConfig2"
+      (blur)="onSubmit()"
+      >
+    </quill-editor><br>
+  </form>
+</div>
+
+

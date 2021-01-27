@@ -1,0 +1,13 @@
+ <div #infoPopup>
+   <div class="flex-row">
+     <div *ngIf="placeData.logoImage">
+        <img class="info-logo" [src]="placeData.logoImage" alt="image">
+     </div>
+     <div class="info-text">
+        <h4> {{ placeData.company }} </h4>
+        <span *ngIf="placeData.email"> {{ placeData.email }}</span>
+        <span *ngIf="placeData.phone"> {{ placeData.phone }}</span>
+        <a *ngIf="placeData.url" [href]="placeData.url"  target=”_blank”> {{ daplaceDatata.url }}</a>
+      </div>
+   </div>
+ </div>

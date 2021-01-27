@@ -1,0 +1,11 @@
+<app-group-selector [parentId]="DOMid"></app-group-selector>
+<div class="footer" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="0.5em">
+  <div
+    *ngFor="let link of footerLinks"
+    class="link"
+    (click)="clickLink(link)">
+    <span [class]="link.class">
+      {{link.name}}
+    </span>
+  </div>
+</div>

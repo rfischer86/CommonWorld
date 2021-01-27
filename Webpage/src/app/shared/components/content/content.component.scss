@@ -1,0 +1,9 @@
+@import '../../../../assets/styles/variable.scss';
+
+// @import '../../../../assets/styles/mixin.scss';
+:host {
+  height: 0;
+  width: 100%;
+  transition: 0.5s;
+}
+

@@ -1,0 +1,18 @@
+@import '../../../../../../assets/styles/variable.scss';
+
+
+.popup-content-type-wrapper {
+  .menu-element {
+    transition: 0.15s;
+    padding: 5px;
+    &:hover {
+      box-shadow: 0 0 0px $gray-darker;
+      background-color: $white-darker;
+    }
+    &:active{
+      margin: 2px 0px 0px 2px;
+    }
+    margin: 0px 2px 2px 0px;
+  }
+
+}
