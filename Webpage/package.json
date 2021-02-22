@@ -47,7 +47,7 @@
     "quill-delta": "^4.2.1",
     "quill-emoji": "^0.1.7",
     "quill-mention": "^2.2.4",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.3",
     "tslib": "^1.10.0",
     "zone.js": "^0.10.3"
   },
