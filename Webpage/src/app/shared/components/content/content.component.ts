@@ -6,7 +6,7 @@ import { DOMTypes } from '../../enums/DOMElement.enum';
 import { Logger } from '../../classes/Logger/logger';
 import { ContentTypes } from '../../enums/ContentType';
 import { TextNodeService } from './content-nodes/text-node/text-node.service';
-import { FormNodeService } from './content-nodes/formular/form-node.service';
+import { FormNodeService } from './content-nodes/formular-node/form-node.service';
 
 @Component({
   selector: 'app-content',

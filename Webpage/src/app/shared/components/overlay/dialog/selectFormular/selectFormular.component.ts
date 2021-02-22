@@ -57,7 +57,6 @@ export class SelectFormularComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(
     private formularService: FormularService,
     private DOM: DOMService,
-    // private helper: Helper
   ) {
     const _ = this.DOM.create(DOMTypes.overlay, DOMTypes.dialog, OverlayTypes.selectFormular);
     if (_.success.isFalse()) {

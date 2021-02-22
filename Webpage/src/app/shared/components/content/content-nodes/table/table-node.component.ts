@@ -6,12 +6,13 @@ import { ContentTypes } from 'src/app/shared/enums/ContentType';
 import { DOMTypes } from 'src/app/shared/enums/DOMElement.enum';
 import { Result, ActionType } from 'src/app/shared/classes/result/result';
 import { PopupSearchFormularComponent } from 'src/app/shared/components/popup/popups/searchFormular/searchFormular.component';
-import { AgGridHeaderComponent } from 'src/app/shared/components/bridges/agGridHeader/agGridHeader.component';
+import { AgGridHeaderComponent } from 'src/app/shared/bridges/agGridHeader/agGridHeader.component';
 import { Module } from 'ag-grid-community';
 import { OverlayTypes } from 'src/app/shared/enums/overlayTypes';
 import { Table, TableClass } from 'src/app/shared/interfaces/table.interface';
-import { TabelNodeAgGridBridge } from '../../../bridges/tabelNodeAgGrid/tabelNodeAgGrid';
-import { Formular } from 'src/app/shared/interfaces/form.interface';
+import { TabelNodeAgGridBridge } from '../../../../bridges/tabelNodeAgGrid/tabelNodeAgGrid';
+import { FormElementClass, Formular } from 'src/app/shared/interfaces/form.interface';
+import { TableAktionTypes } from 'src/app/shared/enums/TableAktionTypes';
 
 @Component({
   selector: 'app-table-node',
@@ -65,14 +66,24 @@ export class TableNodeComponent implements OnInit, OnDestroy {
   processDOMEvent(event: Result<any, any>) {
 
     if (!event) return;
-    console.log('event', event)
-    // const _ = new  Result<any, any>();
     switch(event.action) {
       case ActionType.update:
         if (event.option === OverlayTypes.selectFormular){
-          console.log('event.input', event.input)
           this.contentData.formular = event.input;
           this.columnDefs = this.agGridBridge.composeAgGrid(this.contentData.formular, this.DOMid);
+        }
+        if (event.option === OverlayTypes.changeFormular){
+          this.contentData.formular.version = event.input.version;
+          this.contentData.formular.name = event.input.name;
+          this.contentData.formular.description = event.input.description;
+          this.columnDefs = this.agGridBridge.composeAgGrid(this.contentData.formular, this.DOMid);
+        }
+        break;
+      case ActionType.add:
+        if (event.option === TableAktionTypes.column) {
+          this.contentData.formular.formElements.push(new FormElementClass().get())
+          this.columnDefs = this.agGridBridge.composeAgGrid(this.contentData.formular, this.DOMid);
+          console.log('this.columnDefs', this.columnDefs)
         }
         break;
       }

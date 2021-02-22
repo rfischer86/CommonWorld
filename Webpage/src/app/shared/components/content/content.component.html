@@ -1,7 +1,7 @@
 <div #popup class="content-outer-wrapper" [ngSwitch]="contentType">
   <div class="content-container">
     <app-text-node [parentId]="DOMid" *ngSwitchCase="contentTypes.text" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-text-node>
-    <app-form-node [parentId]="DOMid" *ngSwitchCase="contentTypes.form" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-form-node>
+    <app-formular-node [parentId]="DOMid" *ngSwitchCase="contentTypes.form" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-formular-node>
     <app-table-node [parentId]="DOMid" *ngSwitchCase="contentTypes.table" [setContentData]="contentData" [parentApiId]="parentApiId" ></app-table-node>
   </div>
 </div>

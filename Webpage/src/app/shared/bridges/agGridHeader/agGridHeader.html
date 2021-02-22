@@ -1,0 +1,11 @@
+
+<div  class="agGridHeader-wrapper" fxLayout="row" fxLayoutGap="0.5em" >
+  <div  fxLayoutAlign="start">{{formular.name}}</div>
+  <div  fxLayoutAlign="end">
+    <app-button *ngIf="actionButtonList[0]" [setButtons]="[actionButtonList[0]]" ></app-button>
+    <app-button *ngIf="actionButtonList[1]" [setButtons]="[actionButtonList[1]]" ></app-button>
+    <app-button *ngIf="actionButtonList[2]" [setButtons]="[actionButtonList[2]]" ></app-button>
+    <app-button *ngIf="actionButtonList[3]" [setButtons]="[actionButtonList[3]]" ></app-button>
+  </div>
+  
+</div>

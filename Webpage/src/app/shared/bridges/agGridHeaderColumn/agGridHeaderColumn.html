@@ -1,0 +1,9 @@
+
+<div  class="agGridHeader-wrapper" fxLayout="row" fxLayoutGap="0.5em" >
+  <div  fxLayoutAlign="start">{{formElement.label}}</div>
+  <div  fxLayoutAlign="end">
+    <app-button *ngIf="actionButtonList[0]" [setButtons]="[actionButtonList[0]]" ></app-button>
+    <app-button *ngIf="actionButtonList[1]" [setButtons]="[actionButtonList[1]]" ></app-button>
+  </div>
+  
+</div>

@@ -16,6 +16,7 @@ import { FormTypes } from 'src/app/shared/enums/FormElement.enum';
 import { TitleTypes } from 'src/app/shared/enums/TitleTypes';
 import { FormularClass } from 'src/app/shared/interfaces/form.interface'
 import { WidthClass } from 'src/app/shared/enums/WidthClass';
+import { FormularNodeComponentOption } from '../../../content/content-nodes/formular-node/formular/formular.component';
 
 enum Buttons{
   submit = 'submit',
@@ -33,15 +34,17 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
   @Input() tableId: string;
   @Input() option: ActionType;
   @Input() set setFormElement(data: Formular){
-      this.inputFormularData = data;
-      console.log('this.inputFormularData', this.inputFormularData);
+    console.log('setFormElement', data, this)
+    this.inputFormularData = data;
+    this.pullCollectDataTrigger(this, {submit: false});
   }
 
   titleTypes = TitleTypes;
   formTypes = FormTypes;
   formType: FormTypes;
-  displayFormularData: Formular = new FormularClass().get();
-  inputFormularData: Formular = new FormularClass().get();
+  formularContentData: Result<any,Formular>;
+  formularData: Formular;
+  inputFormularData: Formular;
   text = new Text();
   result = new Result();
   logger = new Logger();
@@ -51,6 +54,8 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
   data = {};
   buttonList = [] as  Button[][];
   note = {} as Note;
+  formularTransferObject = new Result<Formular,any>();
+
   constructor(
     private DOM: DOMService,
     private helper: Helper
@@ -66,9 +71,9 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit() {
-    this.result.log.printLog();
     this.createButtons();
     this.createForm();
+    this.createFormularContentData();
     this.states.finishInit.setTrue();
   }
 
@@ -76,12 +81,12 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
     if (!event) return;
     const _ = new  Result<any, any>();
     switch(event.action) {
-      case ActionType.update:
-        switch(event.output.name) {
-          case OverlayTypes.changeFormular:
-            this.inputFormularData = event.output;
-            this.states.valid.value = this.inputFormularData.isValid;
-            this.changeButtonState();
+      case ActionType.treeUp:
+        this.inputFormularData = event.output;
+        this.states.valid.value = this.inputFormularData.isValid;
+        this.changeButtonState();
+        if (this.states.submit.isTrue()){
+          this.emitFormularToTable();
         }
         break;
       case ActionType.close:
@@ -92,19 +97,21 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
         this.DOM.processEvent(_);
         break;
       case ActionType.submit:
-        _.toId = DOMTypes.overlay;
-        _.fromType = DOMTypes.dialog;
-        _.output = this.inputFormularData;
-        _.log = new Logger();
-        _.log.addLog('from AddFormElementComponent transmit data to overlay')
-        _.action = ActionType.transmit;
-        _.nextActionType = this.option;
-        this.DOM.processEvent(_);
+        this.states.collectData.setTrue();
+        // _.toId = DOMTypes.overlay;
+        // _.fromType = DOMTypes.dialog;
+        // _.output = this.inputFormularData;
+        // _.log = new Logger();
+        // _.log.addLog('from AddFormElementComponent transmit data to overlay')
+        // _.action = ActionType.transmit;
+        // _.nextActionType = this.option;
+        // this.DOM.processEvent(_);
         break;
     }
   }
 
   changeButtonState() {
+    console.log('changeButtonState',this.states.valid.value)
     this.buttonList.map(el => {
       if (el[0].name === Buttons.submit) {
         if (this.states.valid.isTrue()) {
@@ -118,8 +125,11 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
 
   createForm() {
     const displayFormularData = new FormularClass();
-    const formElement = new FormElementClass();
+    console.log('this.inputFormularData', this.inputFormularData)
 
+    const formElement = new FormElementClass();
+    formElement.valid = true;
+    formElement.createRandomApiId();
     formElement.formType = FormTypes.textField;
     formElement.label = this.text.changeFormular.formularName;
     formElement.value = this.inputFormularData.name;
@@ -127,17 +137,29 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
     displayFormularData.addFormElement(formElement.get());
 
     formElement.formType = FormTypes.textArea;
+    formElement.createRandomApiId();
+    formElement.apiId = new Helper().getRrandomId();
     formElement.label = this.text.changeFormular.description;
     formElement.value = this.inputFormularData.description;
     displayFormularData.addFormElement(formElement.get());
 
     formElement.formType = FormTypes.textField;
+    formElement.createRandomApiId();
+    formElement.apiId = new Helper().getRrandomId();
     formElement.label = this.text.changeFormular.version;
     formElement.value = this.inputFormularData.version;
     displayFormularData.addFormElement(formElement.get());
 
     displayFormularData.name = 'changFormularElement';
-    this.displayFormularData = displayFormularData.get()
+    this.formularData = displayFormularData.get();
+  }
+
+  createFormularContentData(): void {
+    this.formularContentData = new Result();
+    this.formularContentData.option = FormularNodeComponentOption.frontend;
+    this.formularContentData.input = this.formularData;
+    this.formularContentData.fromApiId = this.DOMself.id;
+    console.log('this.formularContentData', this.formularContentData)
   }
 
   createButtons() {
@@ -147,11 +169,12 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
   createSubmitButton(): Button[] {
     const submitButton = {} as Button;
     submitButton.name = Buttons.submit
-    submitButton.action = this.emitFormularToTable;
+    submitButton.action = this.pullCollectDataTrigger;
     submitButton.icon = 'save';
     submitButton.buttonState = ButtonState.disabled
     submitButton.text = this.text.general.save;
     submitButton.index = 0;
+    submitButton.data = {submit: true};
     submitButton.self = this;
     submitButton.htmlState = HtmlState.primary;
     submitButton.size = '1em';
@@ -160,15 +183,37 @@ export class ChangeFormularComponent implements OnInit, OnDestroy{
     return [submitButton];
   }
 
-  emitFormularToTable(formular: ChangeFormularComponent){
+  pullCollectDataTrigger(self, state) {
+    if (state.submit) {
+      self.states.submit.setTrue();
+    } else {
+      self.states.submit.setFalse();
+    }
+    self.states.collectData.setTrue();
+    setTimeout(()=>self.states.collectData.setFalse(), 1000)
+  }
+
+  emitFormularToTable(){
+    const helper = new Helper();
+    this.inputFormularData.version = helper.getFormElementByLabel(
+      this.text.changeFormular.version,this.inputFormularData
+    ).value;
+    this.inputFormularData.name = helper.getFormElementByLabel(
+      this.text.changeFormular.formularName,this.inputFormularData
+    ).value;
+    this.inputFormularData.description = helper.getFormElementByLabel(
+      this.text.changeFormular.description,this.inputFormularData
+    ).value;
     const _ = new  Result<any, any>();
     _.toId =  this.tableId;
     _.fromType = DOMTypes.overlay;
-    _.input = formular;
-    _.option = OverlayTypes.selectFormular;
+    _.input = this.inputFormularData;
+    _.option = OverlayTypes.changeFormular;
     _.action = ActionType.update;
     this.DOM.processEvent(_);
+    this.close();
   }
+
   close() {
     const _ = new  Result<any, any>();
     _.toId =  this.parentId;

@@ -20,9 +20,11 @@ export const enum DOMTypes {
   title = 'title',
   textNode = 'textNode',
   tableNode = 'tableNode',
-  formularNode = 'formular',
+  formularNode = 'formularNode',
+  formElement = 'formElement',
   contentTypePopup = 'contentTypePopup',
   formularTypePopup = 'formularTypePopup',
+  formulaDataNode = 'formulaDataNode',
   selectPopup = 'selectPopup',
   dateElement = 'dateElement',
 }

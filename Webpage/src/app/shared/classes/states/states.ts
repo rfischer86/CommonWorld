@@ -4,14 +4,24 @@
 
 export class State {
   value: boolean;
+  count: number;
+
   constructor(value: boolean = false) {
     this.value = value;
+    this.count = 0;
   }
   setTrue(): void     { this.value = true; }
   isTrue(): boolean   { return this.value; }
   setFalse(): void    { this.value = false; }
   isFalse(): boolean  { return !this.value; }
   toggleState(): void { this.value = this.value ? false : true; }
+  setCountDown(count: number): void { this.count = count }
+
+  decreaseCount(): void { this.count -= 1 }
+  increaseCount(): void { this.count += 1 }
+  isCountEqualTo(value: number = 0):boolean {return this.count === value}
+  isCountSmallerThan(value: number = 0): boolean {return this.count < value}
+  isCountGreaterThan(value: number = 0): boolean {return this.count > value}
 }
 
 export class States {
@@ -19,15 +29,16 @@ export class States {
   defined = new State();
   editMode = new State();
   loading = new State();
+  collectData = new State();
   expanded = new State();
   open = new State();
   finishInit = new State();
   visible = new State();
   valid = new State();
   loggedIn = new State();
+  submit = new State();
   dict = {} as {[key: string]: State}
   list = [] as State[];
-
 
   toStateDict(): StateDict {
     const stateDict = {} as StateDict;

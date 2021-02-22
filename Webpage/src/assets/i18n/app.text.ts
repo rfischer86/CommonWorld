@@ -51,10 +51,13 @@ export class Text {
   };
   table={
     undefinedFormular: 'Formular Element',
+    undefinedColumn: 'Name der Spalte',
     tooltip: {
       searchFormular: 'Suche existierende Tabelle',
       editTable: 'Verändern der Tabelle',
+      editFormElement: 'Verändern der Spalte',
       newColumn: 'Hinzufügen einer Spalte',
+      deleteColumn: 'Löschen dieser Spalte',
       newRow: 'Hinzufügen einer Zeile',
     }
   };
@@ -62,6 +65,19 @@ export class Text {
     groupName: 'Gruppen Name',
     overlayTitle: 'Bestimme das Formular der Tabele',
     createFormular: 'Formular erstellen'
+  };
+  editFormElement={
+    description: 'Beschreibung der Spalte',
+    formElementName: 'Name der Spalte',
+    title: 'Metadaten der Spalte',
+    required: 'Erforderlich',
+    formElementType: 'Datenart der Spalte',
+    metaDataFormElement: 'Meta Daten der Datenart',
+    selectOptions: 'Auswahlmöglichkeiten',
+    selectOptionsDescription: 'Format: [ Option 1 ;  Option 2 ;  Option 3 ; ... ] ',
+    checkboxTrue: 'Bezeichnung Ja',
+    checkboxFalse: 'Bezeichnung Nein',
+    metaDataTitle: 'Einstellungen',
   };
 
   changeFormular={
@@ -89,13 +105,6 @@ export class Text {
     file: 'Document',
     image: 'Bild',
     color: 'Farbe'
-  };
-  addFormularPopup = {
-    selectOptions: 'Auswahlmöglichkeiten',
-    selectOptionsDescription: 'Format: [ Option 1 ;  Option 2 ;  Option 3 ; ... ] ',
-    checkboxTrue: 'Bezeichnung Ja',
-    checkboxFalse: 'Bezeichnung Nein',
-    metaDataTitle: 'Einstellungen',
   };
   contentNodes = {
     formular: {

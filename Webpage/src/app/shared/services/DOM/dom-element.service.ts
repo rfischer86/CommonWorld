@@ -62,16 +62,6 @@ export class DOMElement {
     }
     return _;
   }
-
-  // destroy(): boolean {
-  //   this.references -= 1;
-  //   if (this.references <= 0) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
 }
 
 
@@ -83,9 +73,7 @@ export class DOMService {
   DOMElementSubscriptions: {[key: string]: BehaviorSubject<Result<any, any>>};
   eventQueue: {event: Result<any, any>, timestamp: Date, latency: number}[] = [];
   constructor(
-  ) {
-
-  }
+  ) { }
 
   getRrandomId(length: number = 10): string {
     return Math.floor(Math.random() * 10 ** length).toString();

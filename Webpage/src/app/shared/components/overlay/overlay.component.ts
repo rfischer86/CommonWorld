@@ -21,7 +21,7 @@ export class OverlayComponent implements OnInit {
     this.data = overlayEvent.input;
     this.option = overlayEvent.option;
     this.option2 = overlayEvent.option2;
-    console.log('this.option2',this.option2)
+    console.log('this.data',this.data)
   }
   option;
   option2;

@@ -33,30 +33,34 @@ import { EditorComponent } from './components/content/content-nodes/text-node/ed
 import { QuillModule, QUILL_CONFIG_TOKEN } from 'ngx-quill';
 import { EditorService } from './components/content/content-nodes/text-node/editor/editor.service';
 import { ContentTypeComponent } from './components/popup/popups/contentType/contentType.component';
-import { FormularNodeComponent } from './components/content/content-nodes/formular/formular.component';
-import { FormularTextElementComponent } from './components/content/content-nodes/formular/formElements/text/text.component';
-import { FormularElementComponent } from './components/content/content-nodes/formular/formElements/formElement.component';
-import { AddFormElementComponent } from './components/overlay/dialog/addFormElement/addFormElement.component';
+import { FormularTextElementComponent } from './components/content/content-nodes/formular-node/formElements/text/text.component';
+import { FormElementComponent } from './components/content/content-nodes/formular-node/formElements/formElement.component';
 import { CashService } from './services/REST/cash.service';
 import { TitleComponent } from './components/title/title.component';
-import { FormularEnumElementComponent } from './components/content/content-nodes/formular/formElements/enum/enum.component';
+import { FormularEnumElementComponent } from './components/content/content-nodes/formular-node/formElements/enum/enum.component';
 import { FormularTypeComponent } from './components/popup/popups/formularType/formularType.component';
-import { FormularCheckboxElementComponent } from './components/content/content-nodes/formular/formElements/checkbox/checkbox.component';
-import { FormularTextAreaElementComponent } from './components/content/content-nodes/formular/formElements/textarea/textarea.component';
 import { SelectComponent } from './components/popup/popups/select/select.component';
-import { FormularDateElementComponent } from './components/content/content-nodes/formular/formElements/date/date.component';
+import { FormularDateElementComponent } from './components/content/content-nodes/formular-node/formElements/date/date.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { FormularNumberElementComponent } from './components/content/content-nodes/formular/formElements/number/number.component';
-import { FormularFileElementComponent } from './components/content/content-nodes/formular/formElements/file/file.component';
-import { FormularTimeElementComponent } from './components/content/content-nodes/formular/formElements/time/time.component';
+import { FormularNumberElementComponent } from './components/content/content-nodes/formular-node/formElements/number/number.component';
+import { FormularFileElementComponent } from './components/content/content-nodes/formular-node/formElements/file/file.component';
+import { FormularTimeElementComponent } from './components/content/content-nodes/formular-node/formElements/time/time.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AgGridModule } from 'ag-grid-angular';
 import { TableNodeComponent } from './components/content/content-nodes/table/table-node.component';
 import { PopupSearchFormularComponent } from './components/popup/popups/searchFormular/searchFormular.component';
-import { AgGridHeaderComponent } from './components/bridges/agGridHeader/agGridHeader.component';
+import { AgGridHeaderComponent } from './bridges/agGridHeader/agGridHeader.component';
 import { SelectFormularComponent } from './components/overlay/dialog/selectFormular/selectFormular.component';
 import { ChangeFormularComponent } from './components/overlay/dialog/changeFormular/changeFormular.component';
+import { AgGridHeaderColumnComponent } from './bridges/agGridHeaderColumn/agGridHeaderColumn.component';
+import { AddEditFormElementComponent } from './components/overlay/dialog/editFormElement/editFormElement';
+import { FormularNodeComponent } from './components/content/content-nodes/formular-node/formular/formular.component';
+import { FormularElementComponent } from './components/content/content-nodes/formular-node/formularElement/formularElement.component';
+import { FormularCheckboxElementComponent }
+  from './components/content/content-nodes/formular-node/formElements/checkbox/checkbox.component';
+import { FormularTextAreaElementComponent }
+  from './components/content/content-nodes/formular-node/formElements/textarea/textarea.component';
 
 @NgModule({
   declarations:
@@ -81,10 +85,10 @@ import { ChangeFormularComponent } from './components/overlay/dialog/changeFormu
     TextNodeComponent,
     EditorComponent,
     ContentTypeComponent,
-    FormularNodeComponent,
-    FormularTextElementComponent,
     FormularElementComponent,
-    AddFormElementComponent,
+    FormElementComponent,
+    FormularTextElementComponent,
+    AddEditFormElementComponent,
     TitleComponent,
     FormularEnumElementComponent,
     FormularCheckboxElementComponent,
@@ -98,7 +102,9 @@ import { ChangeFormularComponent } from './components/overlay/dialog/changeFormu
     PopupSearchFormularComponent,
     AgGridHeaderComponent,
     SelectFormularComponent,
-    ChangeFormularComponent
+    ChangeFormularComponent,
+    AgGridHeaderColumnComponent,
+    FormularNodeComponent
   ],
   imports: [
     QuillModule,
@@ -116,7 +122,7 @@ import { ChangeFormularComponent } from './components/overlay/dialog/changeFormu
     ReactiveFormsModule,
     MatNativeDateModule,
     NgxMaterialTimepickerModule.setLocale('de-DE'),
-    AgGridModule.withComponents([AgGridHeaderComponent])
+    AgGridModule.withComponents([AgGridHeaderComponent, AgGridHeaderColumnComponent])
   ],
   exports:[
     EditorComponent,
@@ -138,15 +144,17 @@ import { ChangeFormularComponent } from './components/overlay/dialog/changeFormu
     ContentComponent,
     TextNodeComponent,
     ContentTypeComponent,
-    FormularNodeComponent,
-    FormularTextElementComponent,
     FormularElementComponent,
-    AddFormElementComponent,
+    FormElementComponent,
+    FormularTextElementComponent,
+    FormularNodeComponent,
+    AddEditFormElementComponent,
     TitleComponent,
     PopupSearchFormularComponent,
     AgGridHeaderComponent,
     SelectFormularComponent,
-    ChangeFormularComponent
+    ChangeFormularComponent,
+    AgGridHeaderColumnComponent
   ],
   providers: [
     EditorService,

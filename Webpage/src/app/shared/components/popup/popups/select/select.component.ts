@@ -27,13 +27,12 @@ export class SelectComponent implements OnInit, AfterViewInit{
 
   ngOnInit() {
   }
-  
+
   ngAfterViewInit(){
     if (this.popupData) {
       this.popupData.map(option => {
         this.actions.push(this.createSelectOptionButton(option, option));
       })
-      console.log('this.actions',this.actions)
       this.actions = [...this.actions];
     }
   }

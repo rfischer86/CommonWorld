@@ -18,9 +18,12 @@ export enum ActionType {
   open = 'open',
   load = 'load',
   getOrLoad = 'getOrLoad',
+  get = 'get',
   transmit = 'transmit',
   submit = 'submit',
-  change = 'change'
+  change = 'change',
+  treeDown = 'treeDown',
+  treeUp = 'treeUp',
 }
 
 export class Result <T, D> {

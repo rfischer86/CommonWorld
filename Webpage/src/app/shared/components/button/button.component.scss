@@ -41,7 +41,7 @@
       color: $accent;
     }
     &.hidden{
-      display: none;
+      display: none !important;
     }
     &.disabled{
       opacity: 0.33;

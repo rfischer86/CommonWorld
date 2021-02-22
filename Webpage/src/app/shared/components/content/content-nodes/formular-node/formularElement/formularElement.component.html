@@ -1,0 +1,25 @@
+<div *ngIf="shortFormular" class="formular" fxLayout="row wrap" fxLayoutAlign="space-between space-between">
+  <ng-container *ngFor="let formElementData of shortFormular.formElements; let l = last;let i=index;">
+    <div *ngIf="formElementData" [class]="formElementData.widthClass" [ngStyle]="{'z-index': zIndexStart-i}" >
+      <app-form-element  
+        [parentId]="DOMid"
+        [setFormElementData]="formElementData"
+        (click)="updateElement(formElementData)"
+        [notEditable]="notEditable">
+      </app-form-element>
+    </div>
+    <ng-container> 
+      <div *ngFor="let subFormular of formElementData.subFormulars" class="sub-form">
+        <app-formular-element 
+        [parentId]="DOMid"
+        [setContentData]="subFormular"
+        notEditable=true
+        zIndexStart=900
+        defaultElement="false"
+        ></app-formular-element>   
+      </div>
+    </ng-container>
+  
+
+  </ng-container>
+</div>
