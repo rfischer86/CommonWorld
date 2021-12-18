@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 @mixin custom-osm-popup ($theme) {
   $primary: map-get($theme, primary);

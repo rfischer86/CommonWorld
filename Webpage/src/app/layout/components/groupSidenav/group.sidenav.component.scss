@@ -45,11 +45,11 @@
         @include adjustBodyWidth(50%, 50% , 0% );
       }
       @media screen and (min-width: $device-m) and (max-width: $device-l) {
-        @include adjustBodyWidth(30em, calc(100%-30em) , 0% );
+        @include adjustBodyWidth(30em, calc(100% - 30em) , 0% );
 
       }
       @media screen and (min-width: $device-l) {
-        @include adjustBodyWidth(30em, calc(100%-30em) , 0% );
+        @include adjustBodyWidth(30em, calc(100% - 30em) , 0% );
       }
     }
     &.bodyNav{
@@ -60,11 +60,11 @@
         @include adjustBodyWidth(0%, 50% , 50% );
       }
       @media screen and (min-width: $device-m) and (max-width: $device-l) {
-        @include adjustBodyWidth(0%, calc(100%-30em) , 30em );
+        @include adjustBodyWidth(0%, calc(100% - 30em) , 30em );
 
       }
       @media screen and (min-width: $device-l) {
-        @include adjustBodyWidth(0, calc(100%-30em) , 30em );
+        @include adjustBodyWidth(0, calc(100% - 30em) , 30em );
       }
     }
     &.navBodyNav{
@@ -75,10 +75,10 @@
         @include adjustBodyWidth(50%, 0 , 50% );
       }
       @media screen and (min-width: $device-m) and (max-width: $device-l) {
-        @include adjustBodyWidth(30em, calc(100%-60em) , 30em );
+        @include adjustBodyWidth(30em, calc(100% - 60em) , 30em );
       }
       @media screen and (min-width: $device-l) {
-        @include adjustBodyWidth(30em, calc(100%-60em) , 30em );
+        @include adjustBodyWidth(30em, calc(100% - 60em) , 30em );
       }
     }
 
