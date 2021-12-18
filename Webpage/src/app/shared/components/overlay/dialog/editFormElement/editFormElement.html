@@ -1,12 +1,12 @@
 <div *ngIf="states.finishInit.value" class="login-wrapper" fxLayout="column" fxLayoutGap="1em">
   <app-title [title]="text.editFormElement.title" [type]="titleTypes.standard"></app-title>
-  <app-formular-node
+  <!-- <app-formular-node
     *ngIf="DOMself.id"  
     [parentId]="DOMself.id"
     [setContentData]="displayFormularData"
-  ></app-formular-node>
-  <div class="buttons" fxLayout="row nowrap">
-    <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
+    ></app-formular-node> -->
+    <div class="buttons" fxLayout="row nowrap">
+      <app-button *ngFor="let button of buttonList" [setButtons]="button"> </app-button>
   </div>
 
 </div>

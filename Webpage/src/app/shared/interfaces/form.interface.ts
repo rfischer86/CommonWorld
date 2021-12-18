@@ -22,7 +22,7 @@ export interface FormElement{
   widthClass: WidthClass;
 }
 
-@Injectable()
+
 export class FormElementClass implements FormElement{
   label = '';
   value = null;
@@ -112,7 +112,6 @@ export enum ConditionType {
 }
 
 
-@Injectable()
 export class FormularClass implements Formular{
   name ='';
   log =  new Logger();
